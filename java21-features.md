@@ -1,7 +1,7 @@
 ---
 title: Java 21 New Features
 parent: Java 21 OCP Flashcards
-nav_order: 2
+nav_order: 1
 ---
 
 ## 🃏 Pattern Matching with switch (Java 21)
