@@ -112,6 +112,7 @@ System.out.println(Arrays.mismatch(a, c));  // 2 (differ at index 2)
 
 **Rule:** Arrays class provides **utility methods** for common array operations like sorting, searching, and comparison.
 
+{% raw %}
 ```java
 import java.util.Arrays;
 
@@ -143,14 +144,6 @@ int[] arr3 = {1, 2, 4};
 System.out.println(arr1 == arr2);              // false (reference comparison)
 System.out.println(Arrays.equals(arr1, arr2)); // true (content comparison)
 System.out.println(Arrays.equals(arr1, arr3)); // false (different content)
-
-// Multi-dimensional arrays
-int[][] matrix1 = {{1, 2}, {3, 4}};
-int[][] matrix2 = {{1, 2}, {3, 4}};
-
-System.out.println(Arrays.equals(matrix1, matrix2));     // false (shallow comparison)
-System.out.println(Arrays.deepEquals(matrix1, matrix2)); // true (deep comparison)
-```
 
 **Array to String conversion:**
 ```java
