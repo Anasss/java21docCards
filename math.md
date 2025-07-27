@@ -145,6 +145,14 @@ System.out.println(arr1 == arr2);              // false (reference comparison)
 System.out.println(Arrays.equals(arr1, arr2)); // true (content comparison)
 System.out.println(Arrays.equals(arr1, arr3)); // false (different content)
 
+// Multi-dimensional arrays
+int[][] matrix1 = {{1, 2}, {3, 4}};
+int[][] matrix2 = {{1, 2}, {3, 4}};
+
+System.out.println(Arrays.equals(matrix1, matrix2));     // false (shallow comparison)
+System.out.println(Arrays.deepEquals(matrix1, matrix2)); // true (deep comparison)
+```
+
 **Array to String conversion:**
 ```java
 int[] array = {1, 2, 3, 4, 5};
@@ -155,6 +163,7 @@ int[][] twoDArray = {{1, 2}, {3, 4}};
 System.out.println(Arrays.toString(twoDArray));     // [references] (not useful)
 System.out.println(Arrays.deepToString(twoDArray)); // [[1, 2], [3, 4]]
 ```
+{% endraw %}
 
 **💡 Learning Tip:** Remember "ARRAYS = UTILITY BELT" - Arrays class has tools for every common array operation. Use deepEquals() and deepToString() for multi-dimensional arrays.
 
