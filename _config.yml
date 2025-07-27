@@ -6,3 +6,6 @@ url: https://anasss.github.io/java21docCards/
 
 nav_enabled: true
 back_to_top: true
+
+plugins:
+  - jekyll-remote-theme
