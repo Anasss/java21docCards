@@ -2,6 +2,7 @@
 title: I/O and NIO
 parent: Java 21 OCP Flashcards
 nav_order: 2
+layout: default
 ---
 
 ## 🃏 Java I/O - File Reading and Writing

@@ -2,6 +2,7 @@
 title: Exception Handling
 parent: Java 21 OCP Flashcards
 nav_order: 2
+layout: default
 ---
 
 ## 🃏 Try-With-Resources and Suppressed Exceptions
