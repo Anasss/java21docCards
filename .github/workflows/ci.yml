@@ -16,9 +16,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
-          bundler-cache: false  # Disable bundler cache because we’re bypassing lock consistency
+          bundler-cache: false  # Désactive cache Bundler pour éviter conflit lockfile
 
-      - name: Unfreeze bundler
+      - name: Disable bundler frozen mode
         run: bundle config set --local frozen false
 
       - name: Install dependencies
