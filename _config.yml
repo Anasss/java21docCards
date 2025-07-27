@@ -1,6 +1,6 @@
 title: Java 21 OCP Flashcards
 description: A Structured collection of flashcards to help you prepare for the Oracle Certified Professional (OCP) Java 21 exam.
-theme: just-the-docs
+remote_theme: just-the-docs
 
 plugins:
   - jekyll-remote-theme
