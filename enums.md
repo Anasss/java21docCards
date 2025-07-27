@@ -2,6 +2,7 @@
 title: Enums
 parent: Java 21 OCP Flashcards
 nav_order: 2
+layout: default
 ---
 
 ## 🃏 Enum with Fields, Methods, and Constructors
