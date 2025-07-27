@@ -1,12 +1,8 @@
 title: Java 21 OCP Flashcards
 description: A Structured collection of flashcards to help you prepare for the Oracle Certified Professional (OCP) Java 21 exam.
-theme: just-the-docs
+remote_theme: just-the-docs/just-the-docs
 
 url: https://anasss.github.io/java21docCards/
 
-# Enable or disable the side/mobile menu globally
-# Nav menu can also be selectively enabled or disabled using page variables or the minimal layout
 nav_enabled: true
-
-# Back to top link
 back_to_top: true
