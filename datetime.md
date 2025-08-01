@@ -339,6 +339,13 @@ DST End Day (25-hour day):
 **Q:** On DST end day, if you calculate hours between 4:00 AM and 2:00 AM, why might the result be -3 instead of -2?  
 **A:** Because the 2:00 AM hour occurs twice on DST end day. Going from 4:00 AM to 2:00 AM crosses the repeated hour, requiring an extra hour: 4→3→2(first)→2(repeated) = 3 hours backward = -3.
 
+| Method                      | DST-aware? | Use with                         | Notes                                                       |
+|-----------------------------|------------|---------------------------------|-------------------------------------------------------------|
+| Period.between()             | ❌ No      | LocalDate only                   | Measures difference in years, months, days; ignores time.   |
+| Duration.between()           | ✅ Yes     | ZonedDateTime, Instant, LocalTime | Measures difference in hours, minutes, seconds; affected by DST transitions. |
+| ChronoUnit.between()         | ✅ Yes     | ZonedDateTime, Instant, LocalDate, LocalTime | Flexible unit-based difference; DST-aware when used with ZonedDateTime. |
+| ChronoUnit.DAYS.between()    | ❌ No      | LocalDate                       | Simple day difference ignoring time and DST.                |
+
 ---
 
 ## 🃏 Localization - Locale and Resource Bundles
