@@ -290,6 +290,29 @@ try (Resource1 res1 = new Resource1();
 
 **Key Rule:** Exceptions thrown in **catch blocks are NOT caught** by subsequent catch blocks in the same try-catch structure. Only exceptions from the **try block** can be caught.
 
+**📚 Exception Hierarchy Reminder:**
+```java
+java.lang.Throwable
+├── java.lang.Error (unchecked - JVM errors, don't catch)
+└── java.lang.Exception
+    ├── java.lang.RuntimeException (unchecked - programming errors)
+    │   ├── IllegalArgumentException
+    │   ├── NullPointerException  
+    │   ├── IndexOutOfBoundsException
+    │   └── IllegalStateException
+    └── Checked Exceptions (must handle or declare)
+        ├── IOException
+        ├── SQLException
+        ├── FileNotFoundException (extends IOException)
+        └── ClassNotFoundException
+```
+
+**Exception Classification Rules:**
+- **Checked Exception:** Any exception that extends `java.lang.Exception` but is NOT a subclass of `java.lang.RuntimeException`
+- **Unchecked Exception:** Any exception that extends `java.lang.RuntimeException` (or `java.lang.Error`)
+- **Checked exceptions** must be handled with try-catch OR declared with `throws`
+- **Unchecked exceptions** can be handled but don't have to be
+
 ```java
 public class FamilyReunion {
     public static void main(String[] args) {
