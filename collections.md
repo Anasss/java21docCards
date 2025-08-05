@@ -83,43 +83,65 @@ public class FamilyGenericTest {
 **Q:** In `List<? super Parent> family`, why can't you read the result as `Parent`?  
 **A:** Because the list could actually be `List<Grandparent>`, and reading a Grandparent as Parent would be unsafe downcasting.
 
-## 🃏 Deque Stack vs Queue Operations
+## 🃏 Deque: Stack vs Queue Operations
 
-**Rule:** Deque can act as both **Stack (LIFO)** and **Queue (FIFO)** with different method behaviors.
-- **Stack operations**: `push()` and `pop()` work at the **front/head** (LIFO - Last In First Out).
-- **Queue operations**: `offer()/add()` at **tail**, `poll()/remove()` at **head** (FIFO - First In First Out).
-- **Mixed usage** can cause confusion - know which end each method operates on.
+**Rule:** Deque can act as both **Stack (LIFO)** and **Queue (FIFO)** - you can mix operations but understand which end each method operates on.
+
+### Core Structures:
+- **Queue (FIFO)**: Add to tail, remove from head - `offer()/add()` and `poll()/remove()`
+- **Stack (LIFO)**: Add and remove from head - `push()` and `pop()`
+
+### All Available Methods:
+- **Queue methods**: `offer(e)`, `add(e)` (add to tail), `poll()`, `remove()` (remove from head)
+- **Stack methods**: `push(e)` (add to head), `pop()` (remove from head)
+- **Deque-specific**: `addFirst(e)`, `addLast(e)`, `removeFirst()`, `removeLast()`
+- **Flexible**: `offerFirst(e)`, `offerLast(e)`, `pollFirst()`, `pollLast()`
+- **Peek methods**: `peek()`, `peekFirst()`, `peekLast()`, `element()` (look without removing)
+
+### Key Differences:
+- **Exception vs null**: `add()/remove()` throw exceptions when fail, `offer()/poll()` return false/null
+- **Same operations**: `poll()` = `pollFirst()`, `add()` = `addLast()`, `offer()` = `offerLast()`
 
 ```java
-public class FamilyLineup {
+public class FamilyDequeDemo {
     public static void main(String[] args) {
-        Deque<String> familyLine = new ArrayDeque<>();
+        Deque<String> family = new ArrayDeque<>();
         
-        // Using Stack operations (all work at FRONT/HEAD)
-        familyLine.push("Father");    // [Father]
-        familyLine.push("Mother");    // [Mother, Father] - Mother at front
-        familyLine.push("Child");     // [Child, Mother, Father] - Child at front
+        // Stack operations (LIFO)
+        family.push("Grandpa");     // [Grandpa] (head)
+        family.push("Dad");         // [Dad, Grandpa] (Dad at head)
+        family.push("Son");         // [Son, Dad, Grandpa] (Son at head)
         
-        // Mixed operations - be careful!
-        System.out.println(familyLine.pollFirst());  // Child (removes from front/head)
-        System.out.println(familyLine.poll());       // Mother (poll() = pollFirst(), removes from front/head)
-        System.out.println(familyLine.pollLast());   // Father (removes from back/tail)
+        // Queue operations mixed with stack
+        family.offerLast("Aunt");   // [Son, Dad, Grandpa, Aunt] (Aunt at tail)
+        family.addFirst("Uncle");   // [Uncle, Son, Dad, Grandpa, Aunt] (Uncle at head)
         
-        // Output:
-        // Child
-        // Mother  
-        // Father
+        // Various removal methods
+        System.out.println(family.pop());        // Uncle (stack: remove from head)
+        System.out.println(family.pollFirst());  // Son (queue: remove from head)
+        System.out.println(family.poll());       // Dad (same as pollFirst())
+        System.out.println(family.removeLast()); // Aunt (deque: remove from tail)
+        System.out.println(family.pollLast());   // Grandpa (remove from tail)
+        
+        // Peek operations (non-destructive)
+        family.offer("Mom");
+        family.push("Baby");        // [Baby, Mom]
+        System.out.println(family.peek());      // Baby (peek at head)
+        System.out.println(family.peekLast());  // Mom (peek at tail)
+        System.out.println(family.element());   // Baby (same as peek, but throws if empty)
+        
+        // Output: Uncle, Son, Dad, Aunt, Grandpa, Baby, Mom, Baby
     }
 }
-
-// Stack view: [Child, Mother, Father] (Child is top/front)
-// Queue view: [Child, Mother, Father] (Child is head, Father is tail)
 ```
 
-**💡 Learning Tip:** Remember "STACK FRONT, QUEUE ENDS" - Stack operations (push/pop) work at front only, Queue operations work at opposite ends (add tail, remove head).
+**💡 Learning Tips:**
+- **Method naming logic**: `offer`/`poll` = Queue style, `push`/`pop` = Stack style, `First`/`Last` = specify end
+- **You can mix operations**: Use stack methods and queue methods on the same Deque
+- **Exception handling**: Methods ending in exception (`remove`, `add`, `element`) vs safe (`poll`, `offer`, `peek`)
 
-**Q:** If you push three elements then call pollFirst(), poll(), and pollLast(), what's the removal order?  
-**A:** First element pushed, second element pushed, third element pushed - because pollFirst() and poll() both remove from head, pollLast() from tail.
+**Q:** What happens when you `push()` then `poll()`?  
+**A:** Both operate on the head, so `poll()` removes what `push()` just added - like using it as a stack.
 
 ## 🃏 Set Operations and Characteristics
 
