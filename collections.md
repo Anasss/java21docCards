@@ -5,21 +5,21 @@ nav_order: 2
 layout: default
 ---
 
-## 🃏 Generics: Bounded Wildcards (PECS Rule)
+## 🃏 Generics: Bounded Wildcards (READ-WRITE Rule)
 
-**PECS Rule:** **P**roducer **E**xtends, **C**onsumer **S**uper
+**READ-WRITE Rule:** **R**ead **E**xtends, **W**rite **S**uper
 
 - `? extends T`: **READ-ONLY** - Can read items of type T or its subtypes. Cannot add anything (except `null`)
 - `? super T`: **WRITE-ONLY** - Can write T or its subtypes. Cannot safely read (except as `Object`)
 
-### Basic PECS Example
+### Basic READ-WRITE Example
 ```java
-// Producer Extends - Reading from a collection
+// Read Extends - Reading from a collection
 List<? extends Number> numbers = List.of(1, 2.0, 3L);
 Number n = numbers.get(0);    // ✅ OK - can read as Number
 // numbers.add(3);            // ❌ Compile error - cannot write
 
-// Consumer Super - Writing to a collection  
+// Write Super - Writing to a collection  
 List<? super Integer> values = new ArrayList<Number>();
 values.add(10);       // ✅ OK - can write Integer/subtypes
 values.add(42);       // ✅ OK - can write Integer/subtypes
@@ -41,7 +41,7 @@ public class FamilyGenericTest {
     Child child = new Child();
     
     public void acceptOlderGenerations(List<? super Parent> familyList) {
-        // Can ADD Parent and younger generations (Child)
+        // Can WRITE Parent and younger generations (Child)
         familyList.add(new Parent());     // ✅ OK - Parent is exactly Parent
         familyList.add(child);            // ✅ OK - Child is subtype of Parent
         // familyList.add(grandparent);   // ❌ NO - Grandparent is not assignable to Parent
@@ -53,7 +53,7 @@ public class FamilyGenericTest {
     }
     
     public void acceptYoungerGenerations(List<? extends Parent> familyList) {
-        // Cannot ADD anything except null
+        // Cannot WRITE anything except null
         // familyList.add(grandparent);   // ❌ NO - cannot add to ? extends
         // familyList.add(new Parent());  // ❌ NO - cannot add to ? extends  
         // familyList.add(child);         // ❌ NO - cannot add to ? extends
@@ -77,12 +77,11 @@ public class FamilyGenericTest {
   - **Safe to read**: Whatever comes out is at least a Parent
 
 **💡 Learning Tip:** 
-- **`? super T`** = "I accept T and its parents" (write T, read Object)
-- **`? extends T`** = "I contain T and its children" (read T, write nothing)
+- **`? super T`** = "I can WRITE T and its children to this" (write T, read Object)
+- **`? extends T`** = "I can READ T and its children from this" (read T, write nothing)
 
 **Q:** In `List<? super Parent> family`, why can't you read the result as `Parent`?  
 **A:** Because the list could actually be `List<Grandparent>`, and reading a Grandparent as Parent would be unsafe downcasting.
-
 
 ## 🃏 Deque Stack vs Queue Operations
 
