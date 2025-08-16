@@ -501,7 +501,7 @@ class Implementation implements A, B {
 **Q:** What happens if a class implements two interfaces with conflicting default methods?  
 **A:** Compile error — the class must override the conflicting method to explicitly resolve which implementation to use or provide its own.
 
-## 🃏Nested Classes vs Inner Classes - Key Distinctions
+## 🃏 Nested Classes vs Inner Classes - Key Distinctions
 
 **Rule:** Inner class = NON-STATIC nested class. All inner classes are nested, but not all nested classes are inner.
 
@@ -513,6 +513,8 @@ class Implementation implements A, B {
     * Member inner class
     * Local inner class  
     * Anonymous inner class
+
+**Important:** Classes inside interfaces, nested enums, and nested records are **implicitly static** (not inner classes). The "static" keyword only applies to nested types, never top-level types.
 
 **Code Examples:**
 
@@ -570,6 +572,29 @@ interface MyInterface {
             System.out.println("Inside interface nested class");
         }
     }
+    
+    // Nested enum - implicitly static
+    enum Status { ACTIVE, INACTIVE }  // Cannot be inner class
+    
+    // Nested record - implicitly static  
+    record Data(String name, int value) { }  // Cannot be inner class
+}
+
+// Class with nested enum and record
+public class OuterWithSpecialTypes {
+    private String field = "outer";
+    
+    // Nested enum - always implicitly static
+    enum Priority { HIGH, MEDIUM, LOW }
+    
+    // Nested record - always implicitly static
+    record Person(String name, int age) { }
+    
+    void testAccess() {
+        // These cannot access instance fields because they're implicitly static
+        // Priority.HIGH cannot access 'field'
+        // Person cannot access 'field' in its methods
+    }
 }
 ```
 
@@ -588,6 +613,12 @@ OuterClass.MemberInnerClass inner2 = new OuterClass().new MemberInnerClass();
 
 // Interface nested class - implicitly static
 MyInterface.NestedInInterface interfaceNested = new MyInterface.NestedInInterface();
+
+// Nested enum - implicitly static (no outer instance needed)
+OuterWithSpecialTypes.Priority priority = OuterWithSpecialTypes.Priority.HIGH;
+
+// Nested record - implicitly static (no outer instance needed)
+OuterWithSpecialTypes.Person person = new OuterWithSpecialTypes.Person("John", 30);
 ```
 
 **Access Rules Summary:**
@@ -628,10 +659,18 @@ Outer.Inner correct = new Outer().new Inner();   // ✅ Correct
 
 // Pitfall 3: Interface nested class confusion
 interface Test {
-    class Helper { }  // Implicitly static, not inner!
+    class Helper { }     // Implicitly static, not inner!
+    enum Status { ON }   // Implicitly static, not inner!  
+    record Info(String data) { }  // Implicitly static, not inner!
 }
 
-// Pitfall 4: Static nested accessing instance members
+// Pitfall 4: Thinking you can make enum/record inner classes
+class BadExample {
+    // enum MyEnum { }     // Always implicitly static - cannot be inner!
+    // record MyRecord() { } // Always implicitly static - cannot be inner!
+}
+
+// Pitfall 5: Static nested accessing instance members
 class Example {
     String field = "test";
     static class BadNested {
@@ -642,7 +681,7 @@ class Example {
 }
 ```
 
-**💡 Learning Tip:** "Static nested = NO instance access, Inner = FULL access" - Static nested classes can't access instance members, while inner classes can access everything in the outer class.
+**💡 Learning Tip:** "Static nested = NO instance access, Inner = FULL access" - Static nested classes (including implicitly static enums/records/interface classes) can't access instance members, while inner classes can access everything in the outer class. Remember: "static" keyword only applies to nested types, never top-level types.
 
 **Q:** What's the key difference between a static nested class and an inner class?  
-**A:** A static nested class cannot access non-static members of the outer class and doesn't need an outer instance to be created, while an inner class (non-static nested) can access all outer class members and requires an outer instance.
+**A:** A static nested class cannot access non-static members of the outer class and doesn't need an outer instance to be created, while an inner class (non-static nested) can access all outer class members and requires an outer instance. Enums, records, and classes inside interfaces are always implicitly static.
