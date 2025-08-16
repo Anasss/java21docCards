@@ -500,3 +500,149 @@ class Implementation implements A, B {
 
 **Q:** What happens if a class implements two interfaces with conflicting default methods?  
 **A:** Compile error — the class must override the conflicting method to explicitly resolve which implementation to use or provide its own.
+
+## 🃏Nested Classes vs Inner Classes - Key Distinctions
+
+**Rule:** Inner class = NON-STATIC nested class. All inner classes are nested, but not all nested classes are inner.
+
+**Class Classification Hierarchy:**
+* **Top-level class** → Not nested (declared at package level)
+* **Nested class** → Declared inside another class/interface body
+  * **Static nested class** → Explicitly declared static
+  * **Inner class** → NOT static (non-static nested class)
+    * Member inner class
+    * Local inner class  
+    * Anonymous inner class
+
+**Code Examples:**
+
+```java
+// Top-level class
+public class OuterClass {
+    private String outerField = "outer";
+    private static String staticField = "static";
+    
+    // Static nested class (NOT an inner class)
+    static class StaticNestedClass {
+        void display() {
+            // Can access static members of outer class
+            System.out.println(staticField); // ✅ Works
+            // System.out.println(outerField); // ❌ Cannot access non-static
+        }
+    }
+    
+    // Inner class (non-static nested class)
+    class MemberInnerClass {
+        void display() {
+            // Can access ALL members of outer class
+            System.out.println(outerField);  // ✅ Works
+            System.out.println(staticField); // ✅ Works
+        }
+    }
+    
+    void localMethod() {
+        final String localVar = "local";
+        
+        // Local inner class
+        class LocalInnerClass {
+            void display() {
+                System.out.println(outerField);  // ✅ Outer class members
+                System.out.println(localVar);    // ✅ Final/effectively final locals
+            }
+        }
+        
+        // Anonymous inner class
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(outerField);  // ✅ Outer class members
+                System.out.println(localVar);    // ✅ Final/effectively final locals
+            }
+        };
+    }
+}
+
+// Interface with nested class
+interface MyInterface {
+    // Class inside interface is IMPLICITLY static
+    class NestedInInterface {  // This is static by default!
+        void method() {
+            System.out.println("Inside interface nested class");
+        }
+    }
+}
+```
+
+**Instantiation Examples:**
+
+```java
+// Static nested class - no outer instance needed
+OuterClass.StaticNestedClass staticNested = new OuterClass.StaticNestedClass();
+
+// Inner class - requires outer instance
+OuterClass outer = new OuterClass();
+OuterClass.MemberInnerClass inner = outer.new MemberInnerClass();
+
+// Alternative syntax for inner class
+OuterClass.MemberInnerClass inner2 = new OuterClass().new MemberInnerClass();
+
+// Interface nested class - implicitly static
+MyInterface.NestedInInterface interfaceNested = new MyInterface.NestedInInterface();
+```
+
+**Access Rules Summary:**
+
+```java
+public class AccessExample {
+    private String instanceVar = "instance";
+    private static String staticVar = "static";
+    
+    static class StaticNested {
+        void test() {
+            System.out.println(staticVar);     // ✅ Static members only
+            // System.out.println(instanceVar); // ❌ No instance access
+        }
+    }
+    
+    class Inner {
+        void test() {
+            System.out.println(staticVar);     // ✅ Static members
+            System.out.println(instanceVar);  // ✅ Instance members too
+        }
+    }
+}
+```
+
+**Common Pitfalls:**
+
+```java
+// Pitfall 1: Confusing terminology
+class Outer {
+    static class Nested { }  // This is NOT an inner class!
+    class Inner { }          // This IS an inner class
+}
+
+// Pitfall 2: Wrong instantiation syntax
+// Outer.Inner wrong = new Outer.Inner();        // ❌ Missing outer instance
+Outer.Inner correct = new Outer().new Inner();   // ✅ Correct
+
+// Pitfall 3: Interface nested class confusion
+interface Test {
+    class Helper { }  // Implicitly static, not inner!
+}
+
+// Pitfall 4: Static nested accessing instance members
+class Example {
+    String field = "test";
+    static class BadNested {
+        void method() {
+            // System.out.println(field);  // ❌ Cannot access instance field
+        }
+    }
+}
+```
+
+**💡 Learning Tip:** "Static nested = NO instance access, Inner = FULL access" - Static nested classes can't access instance members, while inner classes can access everything in the outer class.
+
+**Q:** What's the key difference between a static nested class and an inner class?  
+**A:** A static nested class cannot access non-static members of the outer class and doesn't need an outer instance to be created, while an inner class (non-static nested) can access all outer class members and requires an outer instance.
