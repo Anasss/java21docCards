@@ -1388,5 +1388,3 @@ int sum2 = numbers.stream()
 - ❌ Small datasets (overhead > benefit)
 
 ---
-
-This completes a comprehensive Java 21 OCP Q&A study guide covering all major exam topics with practical examples and expert insights. Each question targets common exam scenarios and tricky concepts that candidates often struggle with.
