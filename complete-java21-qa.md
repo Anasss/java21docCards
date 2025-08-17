@@ -1,6 +1,6 @@
 ---
 title: Java 21 OCP - Q&A Format
-parent: Java 21 OCP Practice
+parent: Java 21 OCP Flashcards
 nav_order: 2
 layout: default
 ---
