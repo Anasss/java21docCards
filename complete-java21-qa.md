@@ -462,7 +462,7 @@ String html = """
 **Formula:** If result is negative: `insertion point = -result - 1`
 
 ```java
-int[] sorted = {10, 20, 30, 40, 50};
+int[] sorted = {% raw %}{10, 20, 30, 40, 50}{% endraw %};
 int result = Arrays.binarySearch(sorted, 25);  // Returns -3
 int insertionPoint = -result - 1;              // -(-3) - 1 = 2
 // 25 would be inserted at index 2 (between 20 and 30)
@@ -497,8 +497,8 @@ System.out.println(c.equals(d)); // true (value comparison)
 - **Arrays.deepEquals()**: Deep comparison - recursively compares multi-dimensional arrays
 
 ```java
-int[][] array1 = {{1, 2}, {3, 4}};
-int[][] array2 = {{1, 2}, {3, 4}};
+int[][] array1 = {% raw %}{{1, 2}, {3, 4}}{% endraw %};
+int[][] array2 = {% raw %}{{1, 2}, {3, 4}}{% endraw %};
 
 Arrays.equals(array1, array2);     // false (compares references of sub-arrays)
 Arrays.deepEquals(array1, array2); // true (compares content recursively)
