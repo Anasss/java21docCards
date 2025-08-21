@@ -3,831 +3,559 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java 21 OCP Practice Quiz</title>
+    <title>Java 21 OCP Quiz</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
+            margin: 0;
+            padding: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
         }
-
-        .container {
-            max-width: 800px;
+        
+        .quiz-container {
+            max-width: 900px;
             margin: 0 auto;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             overflow: hidden;
         }
-
-        .header {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+        
+        .quiz-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
-            padding: 2rem;
+            padding: 30px;
             text-align: center;
         }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        
+        .quiz-header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 300;
         }
-
-        .header p {
-            font-size: 1.1rem;
+        
+        .quiz-header p {
+            margin: 10px 0 0 0;
             opacity: 0.9;
+            font-size: 1.1em;
         }
-
-        .quiz-container {
-            padding: 2rem;
+        
+        .quiz-body {
+            padding: 30px;
         }
-
-        .question-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border-left: 4px solid #3498db;
+        
+        .question {
             display: none;
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease-in;
         }
-
-        .question-card.active {
+        
+        .question.active {
             display: block;
-            animation: slideIn 0.3s ease-in-out;
         }
-
-        @keyframes slideIn {
+        
+        @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
+        
         .question-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
-            color: #666;
-            font-size: 0.9rem;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
         }
-
-        .question-title {
-            font-size: 1.3rem;
-            font-weight: 600;
+        
+        .question-number {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        
+        .question-text {
+            font-size: 1.15em;
+            margin-bottom: 25px;
             color: #2c3e50;
-            margin-bottom: 1.5rem;
+            line-height: 1.8;
         }
-
+        
         .code-block {
             background: #1e1e1e;
             color: #d4d4d4;
-            padding: 1rem;
-            border-radius: 6px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            margin: 1rem 0;
-            overflow-x: auto;
-        }
-
-        .answers {
-            display: grid;
-            gap: 0.8rem;
-            margin: 1.5rem 0;
-        }
-
-        .answer {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            border: 2px solid #e9ecef;
+            padding: 20px;
             border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;
+            border: 1px solid #333;
+            white-space: pre;
+        }
+        
+        .options {
+            display: grid;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             background: white;
+            position: relative;
         }
-
-        .answer:hover {
-            border-color: #3498db;
+        
+        .option:hover {
+            border-color: #667eea;
             background: #f8f9ff;
+            transform: translateX(5px);
         }
-
-        .answer.selected {
-            border-color: #3498db;
-            background: #e3f2fd;
+        
+        .option.selected {
+            border-color: #667eea;
+            background: #e8f0ff;
         }
-
-        .answer.correct {
+        
+        .option.correct {
             border-color: #27ae60;
-            background: #d5f5d5;
-            color: #155724;
+            background: #d5f4e6;
+            color: #27ae60;
         }
-
-        .answer.incorrect {
+        
+        .option.incorrect {
             border-color: #e74c3c;
-            background: #f8d7da;
-            color: #721c24;
+            background: #fdeaea;
+            color: #e74c3c;
         }
-
-        .answer input[type="radio"] {
-            margin-right: 12px;
-            transform: scale(1.2);
+        
+        .option-label {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #667eea;
         }
-
-        .feedback {
-            margin: 1rem 0;
-            padding: 1rem;
-            border-radius: 6px;
-            display: none;
-        }
-
-        .feedback.show {
-            display: block;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .feedback.correct {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-        }
-
-        .feedback.incorrect {
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
-        }
-
-        .buttons {
+        
+        .controls {
             display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding: 20px 0;
+            border-top: 1px solid #eee;
         }
-
+        
         .btn {
-            padding: 12px 24px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 25px;
             cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
+        
         .btn-primary {
-            background: #3498db;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
         }
-
-        .btn-primary:hover {
-            background: #2980b9;
+        
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-
+        
         .btn-secondary {
-            background: #95a5a6;
+            background: #6c757d;
             color: white;
         }
-
-        .btn-secondary:hover {
-            background: #7f8c8d;
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: #545b62;
         }
-
-        .btn-success {
-            background: #27ae60;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #219a52;
-        }
-
+        
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
-
+        
         .progress-bar {
-            background: #ecf0f1;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 2rem;
+            width: 100%;
+            height: 6px;
+            background: #e1e8ed;
+            border-radius: 3px;
             overflow: hidden;
+            margin-bottom: 20px;
         }
-
+        
         .progress-fill {
-            background: linear-gradient(90deg, #3498db, #2ecc71);
             height: 100%;
-            transition: width 0.3s ease;
-            border-radius: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s ease;
         }
-
-        .results {
+        
+        .score-display {
             text-align: center;
-            padding: 2rem;
+            font-size: 1.2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .explanation {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #17a2b8;
+            border-radius: 5px;
             display: none;
         }
-
+        
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .explanation h4 {
+            margin: 0 0 10px 0;
+            color: #17a2b8;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
         .results.show {
             display: block;
-            animation: slideIn 0.5s ease-in-out;
+            animation: fadeIn 0.5s ease-in;
         }
-
-        .score-display {
-            font-size: 3rem;
-            font-weight: bold;
+        
+        .results h2 {
             color: #2c3e50;
-            margin: 1rem 0;
+            margin-bottom: 20px;
+            font-size: 2.5em;
         }
-
+        
+        .final-score {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
         .score-message {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+            font-size: 1.3em;
+            color: #6c757d;
+            margin-bottom: 30px;
         }
-
-        .score-excellent { color: #27ae60; }
-        .score-good { color: #f39c12; }
-        .score-needs-improvement { color: #e74c3c; }
-
-        @media (max-width: 600px) {
-            .header h1 { font-size: 2rem; }
-            .quiz-container { padding: 1rem; }
-            .buttons { flex-direction: column; }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .quiz-body {
+                padding: 20px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Java 21 OCP Practice Quiz</h1>
-            <p>Test your knowledge of Java 21 features and OCP exam concepts</p>
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1>Java 21 OCP Quiz</h1>
+            <p>Test your knowledge of Java 21 OCP exam topics</p>
         </div>
-
-        <div class="quiz-container">
+        
+        <div class="quiz-body">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-
-            <!-- Questions will be dynamically inserted here -->
-            <div id="questionsContainer"></div>
-
+            
+            <div class="score-display">
+                <span id="currentQuestion">1</span> / <span id="totalQuestions">10</span> | 
+                Score: <span id="currentScore">0</span> / <span id="maxScore">10</span>
+            </div>
+            
+            <div id="questionContainer">
+                <!-- Questions will be inserted here -->
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+            </div>
+            
             <div class="results" id="results">
                 <h2>Quiz Complete!</h2>
-                <div class="score-display" id="finalScore"></div>
-                <div class="score-message" id="scoreMessage"></div>
-                <button class="btn btn-primary" onclick="restartQuiz()">Take Quiz Again</button>
+                <div class="final-score" id="finalScore">0/10</div>
+                <div class="score-message" id="scoreMessage">Great job!</div>
+                <button class="btn btn-primary" onclick="restartQuiz()">Restart Quiz</button>
             </div>
         </div>
     </div>
 
     <script>
-        const quizData = [
+        // Define questions as simple objects
+        var questions = [
             {
-                question: "What is the READ-WRITE rule for bounded wildcards in Java generics?",
-                code: `List<? extends Number> readList = List.of(1, 2.0, 3L);
-List<? super Integer> writeList = new ArrayList<Number>();`,
-                options: [
-                    "Read Extends, Write Super - ? extends allows reading as supertype, ? super allows writing subtypes",
-                    "Read Super, Write Extends - ? super allows reading as supertype, ? extends allows writing subtypes", 
-                    "Both ? extends and ? super allow both reading and writing with no restrictions",
-                    "Read Extends, Write Extends - both wildcards only allow reading operations"
-                ],
+                question: "What will be the output of the following code?",
+                code: "class Parent {\n    public void show() {\n        System.out.print(\"Parent \");\n    }\n}\n\nclass Child extends Parent {\n    public void show() {\n        System.out.print(\"Child \");\n    }\n    \n    public static void main(String[] args) {\n        Parent dad = new Child();\n        Child son = new Child();\n        Parent mom = new Parent();\n        \n        dad.show();\n        son.show();\n        mom.show();\n    }\n}",
+                options: ["Child Child Parent", "Parent Child Parent", "Child Child Child", "Parent Parent Parent"],
                 correct: 0,
-                explanation: "The READ-WRITE rule states: Read Extends, Write Super. ? extends T allows reading items as type T but prevents writing (except null). ? super T allows writing T and its subtypes but only allows reading as Object."
+                explanation: "Dynamic method dispatch occurs at runtime. The actual object type determines which method is called, not the reference type. 'dad' references a Child object, so Child's show() method is called."
             },
             {
-                question: "How do Deque stack and queue operations work together?",
-                code: `Deque<String> deque = new ArrayDeque<>();
-deque.push("First");        // [First] (head)
-deque.offerLast("Last");    // [First, Last] (tail)
-deque.push("New First");    // [New First, First, Last] (head)
-System.out.println(deque.poll()); // What does this print?`,
-                options: [
-                    "\"New First\" - poll() removes from head where push() adds",
-                    "\"Last\" - poll() removes from tail where offerLast() adds",
-                    "\"First\" - poll() removes the middle element",
-                    "Throws an exception because you cannot mix stack and queue operations"
-                ],
-                correct: 0,
-                explanation: "Deque can act as both Stack (LIFO) and Queue (FIFO). Stack operations (push/pop) work on the head, Queue operations (offer/poll) work on head for removal and tail for addition. poll() removes from head, so it returns \"New First\"."
+                question: "Which statement about record classes in Java 21 is correct?",
+                code: "public record Family(String fatherName, String motherName, int children) {\n    public Family {\n        if (children < 0) {\n            throw new IllegalArgumentException(\"Children cannot be negative\");\n        }\n    }\n    \n    public String getParents() {\n        return fatherName + \" and \" + motherName;\n    }\n}",
+                options: ["Records cannot have instance methods", "Records automatically generate equals(), hashCode(), and toString() methods", "Records can extend other classes", "Record fields are mutable by default"],
+                correct: 1,
+                explanation: "Records automatically generate equals(), hashCode(), toString(), and accessor methods. They cannot extend classes (only implement interfaces), and their fields are final by default."
             },
             {
-                question: "What are the key differences between HashSet, LinkedHashSet, and TreeSet?",
-                code: `Set<String> hashSet = new HashSet<>();
-Set<String> linkedSet = new LinkedHashSet<>(); 
-Set<String> treeSet = new TreeSet<>();`,
-                options: [
-                    "HashSet: no ordering, O(1); LinkedHashSet: insertion order, O(1); TreeSet: sorted order, O(log n)",
-                    "HashSet: sorted order, O(1); LinkedHashSet: no ordering, O(log n); TreeSet: insertion order, O(1)",
-                    "All three maintain insertion order and have O(1) operations",
-                    "HashSet: insertion order, O(log n); LinkedHashSet: sorted order, O(1); TreeSet: no ordering, O(1)"
-                ],
+                question: "What happens when this code is compiled and run?",
+                code: "class Parent {\n    static String family = \"Jones\";\n    \n    static {\n        System.out.print(\"Parent static \");\n    }\n    \n    {\n        System.out.print(\"Parent instance \");\n    }\n}\n\nclass Child extends Parent {\n    static {\n        System.out.print(\"Child static \");\n    }\n    \n    {\n        System.out.print(\"Child instance \");\n    }\n    \n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+                options: ["Parent static Child static Parent instance Child instance", "Child static Parent static Child instance Parent instance", "Parent static Child static Child instance Parent instance", "Parent instance Child instance Parent static Child static"],
                 correct: 0,
-                explanation: "HashSet provides no ordering with O(1) operations and allows null. LinkedHashSet maintains insertion order with O(1) operations and allows null. TreeSet maintains natural/comparator ordering with O(log n) operations and does not allow null."
+                explanation: "Static blocks execute during class loading, parent class first, then child class. Instance blocks execute during object creation, parent class first, then child class."
             },
             {
-                question: "How does Map.merge() work when the key exists vs doesn't exist?",
-                code: `Map<String, Integer> map = new HashMap<>();
-map.put("Alice", 85);
-map.merge("Alice", 10, Integer::sum);
-map.merge("Bob", 88, Integer::sum);
-System.out.println(map);`,
-                options: [
-                    "{Alice=95, Bob=88} - merge function called for existing key, new value inserted for non-existing key",
-                    "{Alice=10, Bob=88} - merge function replaces existing values, inserts new values", 
-                    "{Alice=85, Bob=88} - merge function is ignored for existing keys",
-                    "Compilation error - cannot use method references in merge function"
-                ],
-                correct: 0,
-                explanation: "Map.merge() combines the existing value with the new value using the merge function when the key exists (85 + 10 = 95). When the key doesn't exist, it simply inserts the new value without calling the merge function."
+                question: "Which sealed class declaration is valid in Java 21?",
+                options: ["public sealed class Family permits Child, Parent, Sibling { }", "public sealed class Family permits Child, Parent { } // where Child and Parent are in different packages", "public sealed class Family { } // with no permits clause", "public sealed class Family permits Child, Parent { } // where Child and Parent are in the same compilation unit"],
+                correct: 3,
+                explanation: "Sealed classes must specify permitted subclasses with 'permits' clause, unless all permitted classes are in the same compilation unit (same file or same package), where 'permits' can be omitted."
             },
             {
-                question: "Can enum constructors be called directly with the new keyword?",
-                code: `public enum Planet {
-    EARTH(5.976e+24, 6.37814e6),
-    MARS(6.421e+23, 3.3972e6);
-    
-    private final double mass;
-    Planet(double mass, double radius) {
-        this.mass = mass;
-    }
-}
-// Planet p = new Planet(1.0, 2.0);`,
-                options: [
-                    "No - enum constructors are implicitly private and can only be called when declaring enum constants",
-                    "Yes - enum constructors are public by default and can be called anywhere",
-                    "Yes - but only from within the same package as the enum",
-                    "No - enum constructors don't exist, values are created using static factory methods"
-                ],
-                correct: 0,
-                explanation: "Enum constructors are implicitly private and cannot be called directly with the new keyword. They can only be called when declaring enum constants. The enum constants are the only instances that can ever exist."
+                question: "What will this switch expression return?",
+                code: "public class Family {\n    public static String getRole(String member) {\n        return switch (member.toLowerCase()) {\n            case \"dad\", \"father\" -> \"Parent\";\n            case \"mom\", \"mother\" -> \"Parent\";\n            case \"son\", \"daughter\" -> \"Child\";\n            case \"grandpa\", \"grandma\" -> {\n                String role = \"Grandparent\";\n                yield role.toUpperCase();\n            }\n            default -> \"Unknown\";\n        };\n    }\n    \n    public static void main(String[] args) {\n        System.out.println(getRole(\"Grandma\"));\n    }\n}",
+                options: ["Grandparent", "GRANDPARENT", "Parent", "Unknown"],
+                correct: 1,
+                explanation: "The switch expression uses yield to return 'role.toUpperCase()' which converts 'Grandparent' to 'GRANDPARENT'. The case matches 'grandma' (case-insensitive)."
             },
             {
-                question: "What does Files.mismatch() return when comparing two files?",
-                code: `Path file1 = Path.of("doc1.txt");  // Content: "Hello World"
-Path file2 = Path.of("doc2.txt");  // Content: "Hello Mars"
-long result = Files.mismatch(file1, file2);`,
-                options: [
-                    "6 - the index of the first mismatching byte (0-based)",
-                    "-1 - indicates files are different",
-                    "5 - the number of matching characters before difference", 
-                    "Throws IOException because files have different content"
-                ],
+                question: "What happens when this code runs?",
+                code: "class Parent {\n    private void secret() {\n        System.out.print(\"Parent secret \");\n    }\n    \n    public void reveal() {\n        secret();\n    }\n}\n\nclass Child extends Parent {\n    private void secret() {  // This is NOT overriding\n        System.out.print(\"Child secret \");\n    }\n    \n    public static void main(String[] args) {\n        Parent dad = new Child();\n        dad.reveal();\n        \n        Child son = new Child();\n        son.reveal();\n    }\n}",
+                options: ["Parent secret Parent secret", "Child secret Child secret", "Parent secret Child secret", "Compilation error: cannot override private method"],
                 correct: 0,
-                explanation: "Files.mismatch() returns the index of the first mismatching byte (0-based). In this case, 'W' vs 'M' occurs at index 6. It returns -1 only when files are identical, and throws IOException if paths are invalid."
+                explanation: "Private methods cannot be overridden - they're not inherited. Child.secret() is a completely different method. Parent.reveal() always calls Parent.secret() regardless of the actual object type."
             },
             {
-                question: "What happens if you chain multiple intermediate operations without a terminal operation?",
-                code: `Stream<String> pipeline = Stream.of("a", "bb", "ccc")
-    .filter(s -> {
-        System.out.println("Filtering: " + s);
-        return s.length() > 1;
-    })
-    .map(String::toUpperCase);
-
-System.out.println("Pipeline created");`,
-                options: [
-                    "Nothing executes - intermediate operations are lazy until a terminal operation is called",
-                    "All operations execute immediately when the pipeline is built",
-                    "Only the filter operation executes, map waits for terminal operation",
-                    "Compilation error - you must have a terminal operation in the same statement"
-                ],
+                question: "What is the output of this lambda and stream code?",
+                code: "import java.util.*;\nimport java.util.stream.*;\n\npublic class Family {\n    public static void main(String[] args) {\n        var members = List.of(\"Dad\", \"Mom\", \"Son\", \"Daughter\");\n        \n        var result = members.stream()\n            .filter(member -> member.length() >= 3)\n            .map(String::toUpperCase)\n            .sorted((a, b) -> b.compareTo(a))\n            .limit(2)\n            .collect(Collectors.joining(\", \"));\n            \n        System.out.println(result);\n    }\n}",
+                options: ["SON, MOM", "DAD, DAUGHTER", "SON, DAUGHTER", "DAD, MOM"],
                 correct: 0,
-                explanation: "Intermediate operations are lazy and don't execute until a terminal operation triggers evaluation. Only 'Pipeline created' will print. The filtering won't print until you add a terminal operation like collect() or forEach()."
+                explanation: "All members have length >= 3, converted to uppercase: [DAD, MOM, SON, DAUGHTER]. Sorted in reverse order: [SON, MOM, DAUGHTER, DAD]. Limited to 2: [SON, MOM]."
             },
             {
-                question: "What's the difference between Collectors.partitioningBy() and groupingBy()?",
-                code: `List<String> words = List.of("a", "bb", "ccc", "dddd");
-Map<?, List<String>> result1 = words.stream()
-    .collect(Collectors.partitioningBy(w -> w.length() > 2));
-Map<?, List<String>> result2 = words.stream()
-    .collect(Collectors.groupingBy(String::length));`,
-                options: [
-                    "partitioningBy creates exactly 2 groups (Boolean keys), groupingBy creates multiple groups based on classifier",
-                    "partitioningBy creates multiple groups, groupingBy creates exactly 2 groups",
-                    "Both create the same number of groups, only the key types differ",
-                    "partitioningBy is for primitive streams, groupingBy is for object streams"
-                ],
-                correct: 0,
-                explanation: "partitioningBy() always creates exactly 2 groups based on a boolean predicate (true/false keys). groupingBy() creates multiple groups based on the classifier function return values."
+                question: "Which statement about this exception handling is correct?",
+                code: "class Parent {\n    void cook() throws Exception {\n        throw new Exception(\"Parent cooking\");\n    }\n}\n\nclass Child extends Parent {\n    @Override\n    void cook() throws IOException {\n        throw new IOException(\"Child cooking\");\n    }\n    \n    public static void main(String[] args) {\n        Parent dad = new Child();\n        try {\n            dad.cook();\n        } catch (Exception e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}",
+                options: ["Compilation error: Child.cook() cannot throw IOException", "Compilation error: must catch IOException specifically", "Prints: Child cooking", "Prints: Parent cooking"],
+                correct: 2,
+                explanation: "Overriding methods can throw same or narrower exceptions. IOException is a subclass of Exception, so it's allowed. At runtime, Child.cook() is called, throwing IOException with message 'Child cooking'."
             },
             {
-                question: "Why are LocalDate/LocalTime objects immutable and how does this affect method calls?",
-                code: `LocalDate today = LocalDate.now();
-today.plusDays(1);
-System.out.println(today);  // What prints?`,
-                options: [
-                    "Today's date - the original object is unchanged because LocalDate is immutable",
-                    "Tomorrow's date - plusDays() modifies the original object",
-                    "Compilation error - cannot call plusDays() on immutable objects",
-                    "Runtime exception - immutable objects throw exceptions when modified"
-                ],
+                question: "What will this generic method produce?",
+                code: "import java.util.*;\n\nclass Family<T> {\n    private T member;\n    \n    public Family(T member) {\n        this.member = member;\n    }\n    \n    public static <U> List<U> createFamily(U father, U mother) {\n        List<U> family = new ArrayList<>();\n        family.add(father);\n        family.add(mother);\n        return family;\n    }\n    \n    public static void main(String[] args) {\n        var parents = createFamily(\"Dad\", \"Mom\");\n        var ages = createFamily(45, 42);\n        \n        System.out.println(parents.get(0) + \" \" + ages.get(1));\n    }\n}",
+                options: ["Dad 42", "Compilation error: type mismatch", "Mom 45", "Dad Mom"],
                 correct: 0,
-                explanation: "LocalDate objects are immutable. All methods return new instances - the original object never changes. You must assign the result: LocalDate tomorrow = today.plusDays(1);"
+                explanation: "Generic method createFamily() infers type U from parameters. First call creates List<String>, second creates List<Integer>. parents.get(0) is 'Dad', ages.get(1) is 42."
             },
             {
-                question: "In try-with-resources, which exception takes priority when both try block and close() throw exceptions?",
-                code: `try (MyResource res = new MyResource()) {
-    throw new RuntimeException("Primary");
-    // close() throws RuntimeException("Close")
-} catch (Exception e) {
-    // What is e.getMessage()?
-}`,
-                options: [
-                    "\"Primary\" - try block exception is primary, close() exceptions are suppressed",
-                    "\"Close\" - close() exceptions take priority over try block exceptions", 
-                    "Both exceptions are thrown simultaneously causing compilation error",
-                    "The first exception chronologically becomes primary"
-                ],
+                question: "What will this nested class code output?",
+                code: "class Family {\n    private static String surname = \"Johnson\";\n    private String role = \"Parent\";\n    \n    static class Child {\n        void introduce() {\n            System.out.print(\"Child \" + surname + \" \");\n            // System.out.print(role); // This would cause compilation error\n        }\n    }\n    \n    class Grandchild {\n        void introduce() {\n            System.out.print(\"Grandchild \" + surname + \" \" + role + \" \");\n        }\n    }\n    \n    public static void main(String[] args) {\n        new Child().introduce();\n        new Family().new Grandchild().introduce();\n    }\n}",
+                options: ["Child Johnson Grandchild Johnson Parent", "Compilation error: static nested class cannot access instance members", "Child Johnson Grandchild Johnson", "Child Grandchild Johnson Parent"],
                 correct: 0,
-                explanation: "The try block exception is primary. Exceptions from close() are suppressed and attached to the primary exception. You can access suppressed exceptions with getSuppressed()."
-            },
-            {
-                question: "How do guarded patterns work in switch expressions?",
-                code: `Object obj = "Hello World";
-return switch (obj) {
-    case String s when s.length() > 5 -> "Long string";
-    case String s when s.isEmpty() -> "Empty string";  
-    case String s -> "Short string: " + s;
-    default -> "Not a string";
-};`,
-                options: [
-                    "\"Long string\" - patterns are checked in order until one matches",
-                    "\"Short string: Hello World\" - the most general pattern always wins",
-                    "Compilation error - cannot have multiple case labels for the same type",
-                    "\"Empty string\" - the when clause reverses the matching order"
-                ],
-                correct: 0,
-                explanation: "Guarded patterns use 'when' to add conditions and are checked in order until one matches. \"Hello World\" has length > 5, so the first case matches and returns \"Long string\"."
-            },
-            {
-                question: "What are the key rules for sealed classes?",
-                code: `public sealed class Shape permits Circle, Rectangle, Triangle {}
-final class Circle extends Shape {}
-sealed class Rectangle extends Shape permits Square {}
-non-sealed class Triangle extends Shape {}`,
-                options: [
-                    "Permitted subclasses must be final, sealed, or non-sealed",
-                    "Permitted subclasses can only be final classes",
-                    "Sealed classes cannot have any subclasses",
-                    "Permitted subclasses are automatically abstract"
-                ],
-                correct: 0,
-                explanation: "Sealed classes restrict inheritance through the permits clause. Permitted subclasses must be: final (cannot be extended), sealed (can only be extended by specific classes), or non-sealed (can be extended by anyone)."
-            },
-            {
-                question: "What do records automatically generate?",
-                code: `public record Person(String name, int age) {
-    public Person {
-        if (age < 0) throw new IllegalArgumentException("Age cannot be negative");
-    }
-}`,
-                options: [
-                    "Constructor with all fields, accessor methods (not getters), equals(), hashCode(), toString()",
-                    "Only getter methods and toString(), you must write constructor manually",
-                    "All methods including setters for mutable fields",
-                    "Static factory methods instead of constructors"
-                ],
-                correct: 0,
-                explanation: "Records automatically generate: a constructor with all fields as parameters, accessor methods (just field names, not getXxx), equals(), hashCode(), and toString(). The compact constructor syntax allows validation."
-            },
-            {
-                question: "How does Arrays.binarySearch() indicate when an element is not found?",
-                code: `int[] sorted = {10, 20, 30, 40, 50};
-int result = Arrays.binarySearch(sorted, 25);
-// result = ?`,
-                options: [
-                    "-3 (negative insertion point minus 1: -(2) - 1)",
-                    "-1 (standard not found indicator)",
-                    "2 (the insertion point where element should go)",
-                    "Throws NoSuchElementException when element not found"
-                ],
-                correct: 0,
-                explanation: "Arrays.binarySearch() returns -(insertion point) - 1 when element not found. For value 25, insertion point is 2 (between 20 and 30), so result is -(2) - 1 = -3."
-            },
-            {
-                question: "What are the wrapper class caching rules?",
-                code: `Integer a = 127, b = 127;
-Integer c = 128, d = 128;
-System.out.println(a == b);  // ?
-System.out.println(c == d);  // ?`,
-                options: [
-                    "true, false - Integer caches -128 to 127, larger values create new objects",
-                    "false, false - wrapper classes never use same object references", 
-                    "true, true - all wrapper classes always cache their values",
-                    "false, true - caching works opposite to the range"
-                ],
-                correct: 0,
-                explanation: "Integer caches values from -128 to 127. Within this range, == returns true (same object reference). Outside this range, new objects are created, so == returns false. Always use .equals() for wrapper comparisons."
-            },
-            {
-                question: "What's the difference between named modules, automatic modules, and the unnamed module?",
-                code: `// module-info.java
-module com.myapp {
-    requires jackson.core;  // What type of module is jackson.core?
-}`,
-                options: [
-                    "Automatic module - JAR on module path without module-info.java gets automatic name from filename",
-                    "Named module - all required modules must have explicit module-info.java",
-                    "Unnamed module - modules without requires declarations", 
-                    "System module - provided by the JDK runtime"
-                ],
-                correct: 0,
-                explanation: "jackson.core is likely an automatic module - a JAR on the module path without module-info.java. The module name is derived from the JAR filename (jackson-core-2.13.jar → jackson.core)."
-            },
-            {
-                question: "What's the difference between method hiding and method overriding?",
-                code: `Parent ref = new Child();
-ref.instanceMethod();  // Child's version
-ref.staticMethod();    // Which version?
-ref.field;             // Which field?`,
-                options: [
-                    "Parent's static method and field - static methods are hidden (compile-time), fields are always hidden",
-                    "Child's static method and field - everything follows runtime polymorphism",
-                    "Compilation error - cannot access static methods through instance references",
-                    "Child's static method, Parent's field - different rules for methods vs fields"
-                ],
-                correct: 0,
-                explanation: "Instance methods are overridden (runtime resolution). Static methods are hidden (compile-time resolution based on reference type). Fields are always hidden (compile-time resolution)."
-            },
-            {
-                question: "When is super() automatically inserted by the compiler?",
-                code: `class Parent {
-    Parent(String msg) { }  // No no-arg constructor
-}
-class Child extends Parent {
-    Child() { }  // What happens here?
-}`,
-                options: [
-                    "Compilation error - must explicitly call super(args) because parent has no no-arg constructor",
-                    "Compiler automatically inserts super() and creates no-arg constructor in Parent",
-                    "Child constructor works fine, super() is optional when parent has parameterized constructor",
-                    "Runtime error when Child constructor is called"
-                ],
-                correct: 0,
-                explanation: "The compiler only inserts super() if the superclass has a no-argument constructor. When parent has only parameterized constructors, you must explicitly call super(args)."
-            },
-            {
-                question: "What happens when you try to add null to different Collection types?",
-                code: `List<String> list = new ArrayList<>();
-list.add(null);              // ?
-
-Set<String> treeSet = new TreeSet<>();
-treeSet.add(null);           // ?`,
-                options: [
-                    "ArrayList allows null, TreeSet throws NullPointerException",
-                    "Both allow null values without any issues",
-                    "Both throw NullPointerException for null values",
-                    "ArrayList throws exception, TreeSet allows null"
-                ],
-                correct: 0,
-                explanation: "ArrayList, LinkedList, HashSet, LinkedHashSet, HashMap, LinkedHashMap allow null. TreeSet and TreeMap throw NullPointerException because they cannot compare null values for ordering."
-            },
-            {
-                question: "What's the difference between findFirst() and findAny() in streams?",
-                code: `List<String> words = List.of("apple", "banana", "cherry");
-Optional<String> first = words.parallelStream().findFirst();
-Optional<String> any = words.parallelStream().findAny();`,
-                options: [
-                    "findFirst() returns first element in encounter order, findAny() returns any element (optimized for parallel)",
-                    "findFirst() and findAny() always return the same element",
-                    "findFirst() works only on sequential streams, findAny() only on parallel streams",
-                    "findFirst() returns Optional.empty(), findAny() returns the last element"
-                ],
-                correct: 0,
-                explanation: "findFirst() returns the first element in encounter order. findAny() returns any element and is optimized for parallel streams where it can return any element without maintaining order."
+                explanation: "Static nested classes can access static members of outer class but not instance members. Inner classes can access both static and instance members of outer class."
             }
         ];
 
-        let currentQuestion = 0;
-        let score = 0;
-        let answers = [];
-        let quizCompleted = false;
+        var currentQuestionIndex = 0;
+        var score = 0;
+        var selectedAnswer = null;
+        var answered = false;
 
-        function initializeQuiz() {
-            currentQuestion = 0;
-            score = 0;
-            answers = [];
-            quizCompleted = false;
-            document.getElementById('results').classList.remove('show');
-            renderQuestion();
+        function initQuiz() {
+            document.getElementById('totalQuestions').textContent = questions.length;
+            document.getElementById('maxScore').textContent = questions.length;
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            var container = document.getElementById('questionContainer');
+            var question = questions[currentQuestionIndex];
+            
+            var html = '<div class="question active">';
+            html += '<div class="question-header">';
+            html += '<span class="question-number">Question ' + (currentQuestionIndex + 1) + '</span>';
+            html += '</div>';
+            html += '<div class="question-text">' + question.question + '</div>';
+            
+            if (question.code) {
+                html += '<div class="code-block">' + question.code + '</div>';
+            }
+            
+            html += '<div class="options" id="options">';
+            for (var i = 0; i < question.options.length; i++) {
+                html += '<div class="option" onclick="selectOption(' + i + ')">';
+                html += '<span class="option-label">' + String.fromCharCode(65 + i) + '.</span>';
+                html += question.options[i];
+                html += '</div>';
+            }
+            html += '</div>';
+            
+            html += '<div class="explanation" id="explanation">';
+            html += '<h4>Explanation:</h4>';
+            html += '<p>' + question.explanation + '</p>';
+            html += '</div>';
+            html += '</div>';
+            
+            container.innerHTML = html;
+            
             updateProgress();
+            updateControls();
+            selectedAnswer = null;
+            answered = false;
         }
 
-        function renderQuestion() {
-            const container = document.getElementById('questionsContainer');
-            container.innerHTML = '';
+        function selectOption(index) {
+            if (answered) return;
             
-            const question = quizData[currentQuestion];
-            const questionCard = document.createElement('div');
-            questionCard.className = 'question-card active';
-            questionCard.innerHTML = `
-                <div class="question-header">
-                    <span>Question ${currentQuestion + 1} of ${quizData.length}</span>
-                    <span>Java 21 OCP</span>
-                </div>
-                <div class="question-title">${question.question}</div>
-                ${question.code ? `<div class="code-block">${question.code}</div>` : ''}
-                <div class="answers" id="answers-${currentQuestion}">
-                    ${question.options.map((option, index) => `
-                        <div class="answer" onclick="selectAnswer(${index})">
-                            <input type="radio" name="question-${currentQuestion}" value="${index}" id="option-${index}">
-                            <label for="option-${index}">${option}</label>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="feedback" id="feedback-${currentQuestion}"></div>
-                <div class="buttons">
-                    <button class="btn btn-primary" onclick="submitAnswer()" id="submitBtn">Submit Answer</button>
-                    ${currentQuestion > 0 ? '<button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>' : ''}
-                    <button class="btn btn-success" onclick="nextQuestion()" id="nextBtn" style="display: none;">
-                        ${currentQuestion === quizData.length - 1 ? 'View Results' : 'Next Question'}
-                    </button>
-                </div>
-            `;
+            var options = document.querySelectorAll('.option');
+            for (var i = 0; i < options.length; i++) {
+                options[i].classList.remove('selected');
+            }
+            options[index].classList.add('selected');
             
-            container.appendChild(questionCard);
-        }
-
-        function selectAnswer(answerIndex) {
-            const answers = document.querySelectorAll(`#answers-${currentQuestion} .answer`);
-            answers.forEach(answer => answer.classList.remove('selected'));
-            answers[answerIndex].classList.add('selected');
-            
-            const radio = document.getElementById(`option-${answerIndex}`);
-            radio.checked = true;
-            
-            document.getElementById('submitBtn').disabled = false;
-        }
-
-        function submitAnswer() {
-            const selectedAnswer = document.querySelector(`input[name="question-${currentQuestion}"]:checked`);
-            if (!selectedAnswer) return;
-            
-            const answerIndex = parseInt(selectedAnswer.value);
-            const question = quizData[currentQuestion];
-            const isCorrect = answerIndex === question.correct;
-            
-            answers[currentQuestion] = {
-                selected: answerIndex,
-                correct: isCorrect
-            };
-            
-            if (isCorrect) score++;
-            
-            // Show feedback
-            const feedback = document.getElementById(`feedback-${currentQuestion}`);
-            feedback.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
-            feedback.innerHTML = `
-                <strong>${isCorrect ? 'Correct!' : 'Incorrect!'}</strong><br>
-                ${question.explanation}
-            `;
-            
-            // Update answer styling
-            const answerElements = document.querySelectorAll(`#answers-${currentQuestion} .answer`);
-            answerElements.forEach((element, index) => {
-                element.onclick = null; // Disable clicking
-                if (index === question.correct) {
-                    element.classList.add('correct');
-                } else if (index === answerIndex && !isCorrect) {
-                    element.classList.add('incorrect');
-                }
-            });
-            
-            // Show next button, hide submit button
-            document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'inline-block';
+            selectedAnswer = index;
+            document.getElementById('nextBtn').disabled = false;
         }
 
         function nextQuestion() {
-            if (currentQuestion < quizData.length - 1) {
-                currentQuestion++;
-                renderQuestion();
-                updateProgress();
-            } else {
-                showResults();
+            if (selectedAnswer === null) return;
+            
+            var question = questions[currentQuestionIndex];
+            var options = document.querySelectorAll('.option');
+            
+            // Show correct/incorrect answers
+            for (var i = 0; i < options.length; i++) {
+                if (i === question.correct) {
+                    options[i].classList.add('correct');
+                } else if (i === selectedAnswer && i !== question.correct) {
+                    options[i].classList.add('incorrect');
+                }
             }
+            
+            // Update score
+            if (selectedAnswer === question.correct) {
+                score++;
+            }
+            
+            // Show explanation
+            document.getElementById('explanation').classList.add('show');
+            
+            answered = true;
+            document.getElementById('nextBtn').textContent = 
+                currentQuestionIndex === questions.length - 1 ? 'Finish Quiz' : 'Next Question';
+            
+            // Move to next question or finish quiz
+            if (document.getElementById('nextBtn').textContent === 'Next Question') {
+                setTimeout(function() {
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < questions.length) {
+                        displayQuestion();
+                    } else {
+                        showResults();
+                    }
+                }, 2000);
+            } else {
+                setTimeout(function() {
+                    showResults();
+                }, 2000);
+            }
+            
+            updateScore();
         }
 
         function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                renderQuestion();
-                updateProgress();
-                
-                // If question was already answered, show the result
-                if (answers[currentQuestion]) {
-                    const question = quizData[currentQuestion];
-                    const answer = answers[currentQuestion];
-                    
-                    // Select the previously chosen answer
-                    const radio = document.getElementById(`option-${answer.selected}`);
-                    radio.checked = true;
-                    selectAnswer(answer.selected);
-                    
-                    // Auto-submit to show feedback
-                    setTimeout(() => submitAnswer(), 100);
-                }
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
             }
         }
 
         function updateProgress() {
-            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            var progress = ((currentQuestionIndex) / questions.length) * 100;
             document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+        }
+
+        function updateControls() {
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').disabled = selectedAnswer === null && !answered;
+        }
+
+        function updateScore() {
+            document.getElementById('currentScore').textContent = score;
         }
 
         function showResults() {
-            document.querySelector('.quiz-container').style.display = 'none';
-            const results = document.getElementById('results');
-            results.classList.add('show');
+            document.getElementById('questionContainer').style.display = 'none';
+            document.querySelector('.controls').style.display = 'none';
+            document.getElementById('results').classList.add('show');
             
-            const percentage = Math.round((score / quizData.length) * 100);
-            document.getElementById('finalScore').textContent = `${score}/${quizData.length} (${percentage}%)`;
+            var percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('finalScore').textContent = score + '/' + questions.length;
             
-            const messageElement = document.getElementById('scoreMessage');
-            let message, className;
-            
+            var message = '';
             if (percentage >= 90) {
-                message = "Excellent! You're well-prepared for the Java 21 OCP exam!";
-                className = "score-excellent";
-            } else if (percentage >= 70) {
-                message = "Good job! Keep studying and you'll be ready for the OCP exam.";
-                className = "score-good";
-            } else if (percentage >= 50) {
-                message = "Not bad, but you need more practice with Java 21 concepts.";
-                className = "score-needs-improvement";
+                message = 'Excellent! You\'re ready for the OCP exam!';
+            } else if (percentage >= 75) {
+                message = 'Good job! Review the topics you missed and you\'ll be ready!';
+            } else if (percentage >= 60) {
+                message = 'Not bad! Study more and practice additional questions.';
             } else {
-                message = "Keep studying! Focus on the fundamentals of Java 21.";
-                className = "score-needs-improvement";
+                message = 'Keep studying! Focus on the fundamentals and try again.';
             }
             
-            messageElement.textContent = message;
-            messageElement.className = `score-message ${className}`;
-            
-            quizCompleted = true;
+            document.getElementById('scoreMessage').textContent = message;
         }
 
         function restartQuiz() {
-            document.querySelector('.quiz-container').style.display = 'block';
-            initializeQuiz();
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            answered = false;
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('questionContainer').style.display = 'block';
+            document.querySelector('.controls').style.display = 'flex';
+            
+            updateScore();
+            displayQuestion();
         }
 
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (quizCompleted) return;
-            
-            if (e.key >= '1' && e.key <= '4') {
-                const answerIndex = parseInt(e.key) - 1;
-                if (answerIndex < quizData[currentQuestion].options.length) {
-                    selectAnswer(answerIndex);
-                }
-            } else if (e.key === 'Enter') {
-                const submitBtn = document.getElementById('submitBtn');
-                const nextBtn = document.getElementById('nextBtn');
-                
-                if (submitBtn && submitBtn.style.display !== 'none') {
-                    submitAnswer();
-                } else if (nextBtn && nextBtn.style.display !== 'none') {
-                    nextQuestion();
-                }
-            } else if (e.key === 'ArrowLeft') {
-                previousQuestion();
-            } else if (e.key === 'ArrowRight') {
-                const nextBtn = document.getElementById('nextBtn');
-                if (nextBtn && nextBtn.style.display !== 'none') {
-                    nextQuestion();
-                }
-            }
-        });
-
-        // Initialize quiz on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeQuiz();
-        });
-
-        // Prevent accidental page refresh
-        window.addEventListener('beforeunload', function(e) {
-            if (!quizCompleted && answers.length > 0) {
-                e.preventDefault();
-                e.returnValue = '';
-                return 'You have unsaved progress. Are you sure you want to leave?';
-            }
-        });
+        // Initialize quiz when page loads
+        document.addEventListener('DOMContentLoaded', initQuiz);
     </script>
 </body>
 </html>
