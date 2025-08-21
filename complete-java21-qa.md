@@ -1252,6 +1252,30 @@ words.stream().map(StringBuilder::new);        // new StringBuilder(s)
 
 ---
 
+### **Q61:** How do you identify invalid lambda expressions?
+
+**Answer:**  
+- A lambda must match the functional interface method.  
+- **Syntax rules:** `(params)` or `singleVar` → `{ block }` **OR** `singleExpression`  
+- Compiler can infer: parameter types, `return` (for single-expression), braces (if single expression)  
+- **Check validity:** ensure all required pieces are present and syntax is correct  
+
+**Examples of valid lambdas:**  
+```java
+x -> x + 1
+(x) -> { return x + 1; }
+(x, y) -> x * y
+```
+**Examples of invvalid lambdas:**  
+```java
+x, y -> x + y             // missing parentheses around multiple parameters
+(x) -> x + 1;             // semicolon not allowed in single-expression lambda
+() -> { "Hello"; }        // block without return for non-void
+x -> { return; }           // returning void in lambda expecting a value
+```
+
+---
+
 ### Q62: What is currying and how can it be implemented in Java?
 **Answer:** **Currying** transforms a function with multiple parameters into a series of functions with single parameters:
 
