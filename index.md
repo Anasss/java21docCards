@@ -9,4 +9,4 @@ layout: default
 
 This is a structured collection of flashcards to help you prepare for the Java 21 OCP certification exam.
 
-[Take the Java 21 OCP Quiz](/java21docCards/java21-quiz.html)
+[Try a free Java 21 OCP mini mock exam](/java21docCards/java21-quiz.html)
