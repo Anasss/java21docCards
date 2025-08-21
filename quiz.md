@@ -6,6 +6,6 @@ layout: default
 <iframe 
   src="assets/quizzes/java21-quiz.html" 
   width="100%" 
-  height="1200px" 
+  height="1600" 
   style="border:none; overflow:hidden;">
 </iframe>
