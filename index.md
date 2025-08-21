@@ -13,4 +13,4 @@ Use the left navigation to browse by topic.
 
 Take the interactive quiz below:
 
-<iframe src="/assets/quizzes/java21-quiz.html" width="100%" height="700px" style="border:1px solid #ccc;"></iframe>
+<iframe src="assets/quizzes/java21-quiz.html" width="100%" height="700px" style="border:1px solid #ccc;"></iframe>
