@@ -328,210 +328,199 @@
         // Define questions as simple objects
 var questions = [
   {
-    question: "What will be the output of the following code?",
-    code: "class Parent {\n    public void show() { System.out.print(\"Parent \"); }\n}\nclass Child extends Parent {\n    public void show() { System.out.print(\"Child \"); }\n    public static void main(String[] args) {\n        Parent dad = new Child();\n        Child son = new Child();\n        Parent mom = new Parent();\n        dad.show(); son.show(); mom.show();\n    }\n}",
-    options: ["Parent Parent Parent", "Child Child Child", "Child Child Parent", "Parent Child Parent"],
-    correct: 2,
-    explanation: "Dynamic method dispatch ensures the method executed depends on the runtime type. dad (Child) → Child, son (Child) → Child, mom (Parent) → Parent."
+    question: "Which method calls will execute in this inheritance scenario?",
+    code: "class Parent {\n    public void show() { System.out.print(\"Parent \"); }\n}\nclass Child extends Parent {\n    public void show() { System.out.print(\"Child \"); }\n    public static void main(String[] args) {\n        Parent dad = new Child();\n        dad.show();\n        new Child().show();\n        new Parent().show();\n    }\n}",
+    options: ["Parent Parent Parent", "Child Child Parent", "Child Parent Child", "Parent Child Parent"],
+    correct: 1,
+    explanation: "Overridden methods in subclasses are executed according to the runtime type of the object."
   },
   {
-    question: "Which statement about record classes in Java 21 is correct?",
-    code: "public record Family(String father, String mother, int children) { }",
-    options: ["Records can extend other classes", "Record fields are mutable", "Records automatically generate equals(), hashCode(), and toString()", "Records cannot have methods"],
+    question: "Which statement about record classes is correct?",
+    options: ["Records are mutable by default", "Records cannot define methods", "Record fields are final by default", "Records can extend other classes"],
     correct: 2,
-    explanation: "Records generate equals(), hashCode(), toString(), and accessors automatically. Fields are final, cannot extend other classes, but can have methods."
+    explanation: "Records are implicitly final and their fields are final. They can have methods but cannot extend other classes."
   },
   {
-    question: "What is printed when running this code?",
-    code: "class Parent {\n    static { System.out.print(\"Parent static \"); }\n    { System.out.print(\"Parent instance \"); }\n}\nclass Child extends Parent {\n    static { System.out.print(\"Child static \"); }\n    { System.out.print(\"Child instance \"); }\n    public static void main(String[] args) { new Child(); }\n}",
-    options: ["Parent instance Child instance Parent static Child static", "Parent static Child static Child instance Parent instance", "Parent static Child static Parent instance Child instance", "Child static Parent static Child instance Parent instance"],
-    correct: 2,
-    explanation: "Static blocks run at class loading: Parent first, then Child. Instance blocks run when objects are created: Parent first, then Child."
+    question: "How are static and instance initialization blocks executed in this inheritance scenario?",
+    code: "class Parent {\n    static { System.out.print(\"Parent static \" ); }\n    { System.out.print(\"Parent instance \" ); }\n}\nclass Child extends Parent {\n    static { System.out.print(\"Child static \" ); }\n    { System.out.print(\"Child instance \" ); }\n    public static void main(String[] args) { new Child(); }\n}",
+    options: ["Parent static Child static Child instance Parent instance", "Parent static Child static Parent instance Child instance", "Child static Parent static Child instance Parent instance", "Parent instance Child instance Parent static Child static"],
+    correct: 1,
+    explanation: "Static blocks execute first (parent then child), followed by instance blocks (parent then child)."
   },
   {
     question: "Which sealed class declaration is valid?",
-    code: "sealed class Family permits Son, Daughter { }\nfinal class Son extends Family { }\nfinal class Daughter extends Family { }",
-    options: ["sealed class Family permits Son, Daughter, Cousin { }", "sealed class Family { }", "non-sealed class Family permits Son, Daughter { }", "sealed class Family permits Son, Daughter { }"],
-    correct: 3,
-    explanation: "A sealed class must explicitly declare all permitted subclasses. The valid form is `sealed class Family permits Son, Daughter`."
+    options: ["public sealed class Family permit Unknown { }", "public sealed class Family permits Child { }", "public sealed class Family extends Object { }", "public sealed class Family { } // subclasses are in a different package"],
+    correct: 1,
+    explanation: "A sealed class must list its permitted subclasses. Only the second option is valid."
   },
   {
-    question: "What will this switch expression return?",
-    code: "String role = switch (\"Grandma\".toLowerCase()) {\n    case \"dad\", \"father\" -> \"Parent\";\n    case \"mom\", \"mother\" -> \"Parent\";\n    case \"son\", \"daughter\" -> \"Child\";\n    case \"grandma\", \"grandpa\" -> { yield \"GRANDPARENT\"; }\n    default -> \"Unknown\";\n};\nSystem.out.println(role);",
-    options: ["Grandparent", "Unknown", "Parent", "GRANDPARENT"],
+    question: "Which value does this switch expression evaluate to?",
+    code: "String role = switch (\"Grandma\") {\n    case \"Dad\", \"Father\" -> \"Parent\";\n    case \"Mom\", \"Mother\" -> \"Parent\";\n    case \"Son\", \"Daughter\" -> \"Child\";\n    case \"Grandpa\", \"Grandma\" -> { yield \"Grandparent\".toUpperCase(); }\n    default -> \"Unknown\";\n};\nSystem.out.println(role);",
+    options: ["Parent", "Unknown", "Grandparent", "GRANDPARENT"],
     correct: 3,
-    explanation: "The 'grandma' branch yields 'GRANDPARENT'."
+    explanation: "Yield block returns \"Grandparent\" converted to uppercase."
   },
   {
-    question: "What happens when this code runs?",
-    code: "class Parent {\n    private void secret() { System.out.print(\"Parent secret \"); }\n    public void reveal() { secret(); }\n}\nclass Child extends Parent {\n    private void secret() { System.out.print(\"Child secret \"); }\n    public static void main(String[] args) {\n        new Child().reveal();\n    }\n}",
-    options: ["Child secret", "Parent secret Child secret", "Compilation error", "Parent secret"],
+    question: "Which private method is invoked in this inheritance scenario?",
+    code: "class Parent {\n    private void secret() { System.out.print(\"Parent secret \" ); }\n    public void reveal() { secret(); }\n}\nclass Child extends Parent {\n    private void secret() { System.out.print(\"Child secret \" ); }\n    public static void main(String[] args) {\n        new Child().reveal();\n    }\n}",
+    options: ["Compilation error", "Parent secret Child secret", "Child secret", "Parent secret"],
     correct: 3,
-    explanation: "Private methods are not overridden. Parent.reveal() always calls Parent.secret()."
+    explanation: "Private methods are not overridden. Parent.reveal() calls Parent.secret()."
   },
   {
-    question: "What will this stream pipeline output?",
-    code: "var members = java.util.List.of(\"Dad\", \"Mom\", \"Son\", \"Daughter\");\nvar result = members.stream()\n    .filter(m -> m.length() >= 3)\n    .map(String::toUpperCase)\n    .sorted((a, b) -> b.compareTo(a))\n    .limit(2)\n    .toList();\nSystem.out.println(result);",
-    options: ["[SON, MOM]", "[SON, DAUGHTER]", "[DAD, MOM]", "[DAD, DAUGHTER]"],
+    question: "Which strings are selected after mapping and sorting this stream?",
+    code: "import java.util.*;\nimport java.util.stream.*;\nclass Family {\n  public static void main(String[] args) {\n    var members = List.of(\"Dad\",\"Mom\",\"Son\",\"Daughter\");\n    var result = members.stream()\n      .map(String::toUpperCase)\n      .sorted((a,b) -> b.compareTo(a))\n      .limit(2)\n      .collect(Collectors.joining(\", \"));\n    System.out.println(result);\n  }\n}",
+    options: ["SON, MOM", "DAD, MOM", "SON, DAUGHTER", "DAD, DAUGHTER"],
     correct: 0,
-    explanation: "After filtering and sorting reverse, the first two are SON, MOM."
+    explanation: "After mapping to uppercase and sorting descending, the first two elements are SON and MOM."
   },
   {
-    question: "Which statement about overriding exceptions is correct?",
-    code: "class Parent { void cook() throws Exception { throw new Exception(); } }\nclass Child extends Parent {\n    @Override void cook() throws java.io.IOException { throw new java.io.IOException(); }\n}",
-    options: ["Compilation error", "Must catch IOException specifically", "Child.cook() cannot throw IOException", "This compiles fine because IOException is narrower"],
-    correct: 3,
-    explanation: "An overriding method can throw narrower checked exceptions. IOException is allowed."
+    question: "Is this override declaration valid considering checked exceptions?",
+    code: "class Parent {\n  void cook() throws Exception { throw new Exception(\"Parent\"); }\n}\nclass Child extends Parent {\n  @Override void cook() throws java.io.IOException { throw new java.io.IOException(\"Child\"); }\n  public static void main(String[] args) throws Exception {\n    new Child().cook();\n  }\n}",
+    options: ["Compilation error: must catch IOException", "Compiles and prints Child", "Prints Parent", "Compilation error: IOException not allowed"],
+    correct: 1,
+    explanation: "Child's cook() throws IOException, which is allowed as it is a subclass of Exception."
   },
   {
-    question: "What will this generic method produce?",
-    code: "static <T> java.util.List<T> createFamily(T father, T mother) {\n    return java.util.List.of(father, mother);\n}\npublic static void main(String[] args) {\n    var parents = createFamily(\"Dad\", \"Mom\");\n    var ages = createFamily(45, 42);\n    System.out.println(parents.get(0) + \" \" + ages.get(1));\n}",
+    question: "Which output results from these generic method calls?",
+    code: "import java.util.*;\nclass Family<T> {\n  public static <U> List<U> create(U a, U b){ return List.of(a,b); }\n  public static void main(String[] args) {\n    var parents = create(\"Dad\",\"Mom\");\n    var ages = create(45,42);\n    System.out.println(parents.get(0)+\" \"+ages.get(1));\n  }\n}",
     options: ["Dad Mom", "Dad 42", "Compilation error", "Mom 45"],
     correct: 1,
-    explanation: "Type inference works per call. Prints Dad 42."
+    explanation: "Generic method infers types separately. Output: Dad 42."
   },
   {
-    question: "What will this nested class code output?",
-    code: "class Family {\n    private static String surname = \"Johnson\";\n    private String role = \"Parent\";\n    static class Child { void introduce() { System.out.print(\"Child \" + surname + \" \"); } }\n    class Grandchild { void introduce() { System.out.print(\"Grandchild \" + surname + \" \" + role); } }\n    public static void main(String[] args) {\n        new Child().introduce();\n        new Family().new Grandchild().introduce();\n    }\n}",
-    options: ["Child Johnson", "Child Johnson Grandchild Johnson", "Compilation error", "Child Johnson Grandchild Johnson Parent"],
+    question: "Which instanceof check evaluates to true?",
+    code: "sealed class Parent permits Child {}\nfinal class Child extends Parent {}\nclass Family { public static void main(String[] args){ Parent p=new Child(); System.out.println(p instanceof Child); }}",
+    options: ["Compilation error", "true", "Runtime exception", "false"],
+    correct: 1,
+    explanation: "Child is the only permitted subclass. instanceof returns true."
+  },
+  {
+    question: "Which result is returned by orElse on an empty Optional?",
+    code: "import java.util.*;\nclass Family {\n  public static void main(String[] args){\n    Optional<String> dad = Optional.ofNullable(null);\n    System.out.println(dad.orElse(\"Unknown\"));\n  }\n}",
+    options: ["Compilation error", "Unknown", "Throws NoSuchElementException", "null"],
+    correct: 1,
+    explanation: "ofNullable(null) creates empty Optional. orElse supplies fallback."
+  },
+  {
+    question: "How many characters are in this text block?",
+    code: "class Family { public static void main(String[] args){ String s = \"\"\"\nDad\nMom\n\"\"\"; System.out.println(s.length()); }}",
+    options: ["7", "8", "9", "10"],
+    correct: 1,
+    explanation: "Text block includes a trailing newline. 'Dad\\nMom\\n' → length 8."
+  },
+  {
+    question: "Which branch executes in this pattern matching switch?",
+    code: "class Family {\n  static void who(Object o){ switch(o){ case String s -> System.out.println(\"String: \"+s); case Integer i -> System.out.println(\"Int: \"+i); default -> System.out.println(\"Other\"); }}\n  public static void main(String[] args){ who(\"Dad\"); }}",
+    options: ["Compilation error", "Other", "Int: Dad", "String: Dad"],
     correct: 3,
-    explanation: "Static nested class sees static members only. Inner class sees both static and instance members."
+    explanation: "Pattern matching for switch matches the String branch."
   },
   {
-    question: "What is the result of calling Arrays.binarySearch() when key is not found?",
-    options: ["It returns 0", "It returns -1", "It throws an exception", "It returns -(insertion point) - 1"],
-    correct: 3,
-    explanation: "binarySearch returns -(insertionPoint) - 1 when key not found."
-  },
-  {
-    question: "What happens if a switch expression with only guarded cases matches none at runtime?",
-    options: ["It returns Optional.empty()", "It compiles and returns null", "It throws a MatchException", "It doesn’t compile"],
-    correct: 2,
-    explanation: "If no case matches at runtime, it throws MatchException."
-  },
-  {
-    question: "What is the difference between Duration and Period?",
-    options: ["Duration and Period are identical", "Duration is time-based, Period is date-based", "Period is for time zones, Duration is not", "Both represent time-based amounts"],
-    correct: 1,
-    explanation: "Duration measures time (hours, minutes, seconds). Period measures date-based amounts (years, months, days)."
-  },
-  {
-    question: "What does Arrays.deepEquals() do?",
-    options: ["Always returns false for nested arrays", "Compares array references only", "Performs deep comparison of array elements", "Throws an exception on nested arrays"],
-    correct: 2,
-    explanation: "deepEquals compares nested array contents recursively."
-  },
-  {
-    question: "What happens when a StringBuilder is passed to a method and reassigned?",
-    options: ["Changes are visible to caller", "Reassignment is local only", "Caller reference is updated", "Method fails to compile"],
-    correct: 1,
-    explanation: "Java passes object references by value. Reassigning inside method doesn’t affect caller."
-  },
-  {
-    question: "When does .equals() behave like == ?",
-    options: ["Always", "When class doesn’t override equals()", "When class overrides equals()", "Never"],
-    correct: 1,
-    explanation: "If equals() is not overridden, it uses Object.equals(), same as ==."
-  },
-  {
-    question: "What happens if a superclass has no no-arg constructor and subclass omits super()?",
-    options: ["Subclass compiles anyway", "Compilation error", "Compiler inserts super()", "Runtime error"],
-    correct: 1,
-    explanation: "Compiler inserts super() only if superclass has a no-arg constructor. Otherwise compilation error."
-  },
-  {
-    question: "Which methods use dynamic dispatch?",
-    options: ["Constructors", "Private methods", "Static methods", "Instance methods"],
-    correct: 3,
-    explanation: "Dynamic dispatch applies to overridden instance methods. Static, private, constructors do not use it."
-  },
-  {
-    question: "How is a protected member accessed from a subclass?",
-    options: ["Only in same package", "Not accessible at all", "Accessible everywhere", "Inherited by subclass and accessible inside it"],
-    correct: 3,
-    explanation: "Protected members are inherited and accessible in subclasses (and same-package classes)."
-  },
-  {
-	question: "What is the output when adding 1h30 on 30 March 2025 at 1:30 AM in Europe/Paris, when the clock moves forward 1 hour for spring time?",
-	code: "var zone = java.time.ZoneId.of(\"Europe/Paris\");\nvar start = java.time.ZonedDateTime.of(2025, 3, 30, 1, 30, 0, 0, zone);\nvar end = start.plusMinutes(90);\nSystem.out.println(java.time.Duration.between(start, end).toHours());",
-	options: ["3", "1", "2", "Throws exception"],
-	correct: 2,
-	explanation: "On 30 March 2025, the clock moves forward 1 hour (1:59 → 3:00). Adding 90 minutes to 1:30 results in 3:00, so the Duration between start and end is 2 hours."
-  },
-  {
-    question: "What is the output of this pattern matching switch?",
-    code: "Object obj = \"Dad\";\nString result = switch (obj) {\n  case String s -> s + \" is String\";\n  case Integer i -> i + \" is Integer\";\n  default -> \"Unknown\";\n};\nSystem.out.println(result);",
-    options: ["Unknown", "Dad is String", "Compilation error", "Dad"],
-    correct: 1,
-    explanation: "Pattern switch matches obj type. 'Dad' is a String, so first case executes."
-  },
-  {
-    question: "Which record feature will fail compilation?",
-    code: "public record Person(String name) {\n    String surname;\n}",
-    options: ["Cannot declare additional instance fields", "Cannot have compact constructor", "Cannot declare methods", "Cannot have record components"],
+    question: "Europe/Paris moves clocks forward 1 hour for spring DST on 30 March 2025. What is the Duration in hours when adding 3 hours to 01:30 across this transition?",
+    code: "import java.time.*;\nclass Family {\n  public static void main(String[] args){\n    ZonedDateTime z1 = ZonedDateTime.of(2025, 3, 30, 1, 30, 0, 0, ZoneId.of(\"Europe/Paris\"));\n    ZonedDateTime z2 = z1.plusHours(3);\n    Duration d = Duration.between(z1, z2);\n    System.out.println(d.toHours());\n  }\n}",
+    options: ["2", "3", "4", "Throws exception"],
     correct: 0,
-    explanation: "Records cannot declare additional instance fields outside their record components."
+    explanation: "DST starts at 2:00 AM on 30 March 2025, moving clocks forward 1 hour. Duration.between counts actual elapsed hours: 2."
   },
   {
-    question: "What happens if a switch pattern has overlapping type patterns?",
-    code: "Object obj = 42;\nvar result = switch(obj) {\n  case Object o -> \"Object\";\n  case Integer i -> \"Integer\";\n};",
-    options: ["Compilation error", "Returns Object", "Returns Integer", "Throws exception"],
+    question: "Which key does firstKey() return for a TreeMap with these entries?",
+    code: "import java.util.*;\nclass Family { public static void main(String[] args){ var map=new TreeMap<String,Integer>(); map.put(\"Dad\",1); map.put(\"Mom\",2); map.put(\"Son\",3); System.out.println(map.firstKey()); }}",
+    options: ["Son", "Dad", "null", "Mom"],
+    correct: 1,
+    explanation: "TreeMap orders keys naturally. firstKey() returns the smallest key: Dad."
+  },
+  {
+    question: "Which order of constructor execution occurs in this inheritance example?",
+    code: "class Parent { Parent(){ System.out.print(\"P \"); }}\nclass Child extends Parent { Child(){ System.out.print(\"C \"); }}\nclass Family { public static void main(String[] args){ new Child(); }}",
+    options: ["C P", "P C", "C only", "Compilation error"],
+    correct: 1,
+    explanation: "Superclass constructor runs before subclass constructor."
+  },
+  {
+    question: "Which elements are processed by dropWhile in this stream?",
+    code: "import java.util.*;\nclass Family { public static void main(String[] args){ List<String> list=List.of(\"Dad\",\"Mom\",\"Son\"); list.stream().dropWhile(s->s.length()>2).forEach(System.out::print); }}",
+    options: ["Son", "", "MomSon", "DadMomSon"],
+    correct: 2,
+    explanation: "dropWhile removes elements from the start while the predicate is true. Prints MomSon."
+  },
+  {
+    question: "Which value is returned by Arrays.binarySearch when the key is absent?",
+    code: "class Family { public static void main(String[] args){ int[] arr={10,20,30}; int pos=java.util.Arrays.binarySearch(arr,25); System.out.println(pos); }}",
+    options: ["2", "-3", "-2", "Compilation error"],
+    correct: 1,
+    explanation: "Not found → returns -(insertion point) - 1. 25 would be at index 2 → -(2)-1 = -3."
+  },
+  {
+    question: "What is the effect of reassignment inside a method on a StringBuilder?",
+    code: "class Family { static void test(StringBuilder sb){ sb.append(\"Mom\"); sb=new StringBuilder(\"Dad\"); }\n public static void main(String[] args){ StringBuilder s=new StringBuilder(\"Son\"); test(s); System.out.println(s); }}",
+    options: ["Son", "SonMom", "Dad", "Compilation error"],
+    correct: 1,
+    explanation: "Append modifies the original. Reassignment inside the method has no effect on the caller."
+  },
+  {
+    question: "How does equals behave with StringBuilder references?",
+    code: "class Family { public static void main(String[] args){ Object o=new StringBuilder(\"Dad\"); System.out.println(o.equals(new StringBuilder(\"Dad\"))); }}",
+    options: ["true", "false", "Compilation error", "Throws exception"],
+    correct: 1,
+    explanation: "StringBuilder does not override equals. Uses reference equality."
+  },
+  {
+    question: "Which instanceof expression evaluates to true for a Child reference stored in a Parent variable?",
+    code: "class Parent {}\nclass Child extends Parent {}\nclass Family { public static void main(String[] args){ Parent p=new Child(); System.out.println(p instanceof Parent); }}",
+    options: ["false", "true", "Compilation error", "Runtime exception"],
+    correct: 1,
+    explanation: "A Child is also a Parent. instanceof returns true."
+  },
+  {
+    question: "Which branch of this switch executes with arrow labels?",
+    code: "class Family { public static void main(String[] args){ int x=10; switch(x){ case 5 -> System.out.print(\"A\"); case 10 -> System.out.print(\"B\"); default -> System.out.print(\"C\"); } }}",
+    options: ["B", "C", "Compilation error", "A"],
     correct: 0,
-    explanation: "Pattern matching switch evaluates top to bottom. Overlapping types cause compilation error."
+    explanation: "Switch with arrow labels is valid. Case 10 matches → B."
   },
   {
-    question: "What is the output of this instanceof pattern?",
-    code: "Object o = \"Hello\";\nif (o instanceof String s) System.out.println(s.length());",
-    options: ["Throws exception", "5", "0", "Compilation error"],
+    question: "Which sequence prints in a for-loop with initialization side-effect?",
+    code: "class Family { public static void main(String[] args){ int i=0; for(System.out.print(\"Dad\"); i<2; i++){ System.out.print(\"Son\"); }}",
+    options: ["DadSon", "DadSonSon", "SonDadSon", "Compilation error"],
     correct: 1,
-    explanation: "Pattern variable 's' is bound if instanceof succeeds. 'Hello'.length() = 5."
+    explanation: "Init prints Dad once. Loop runs twice printing Son Son."
   },
   {
-    question: "Which of the following causes a runtime MatchException?",
-    code: "sealed interface Animal permits Dog, Cat {}\nrecord Dog() implements Animal {}\nrecord Cat() implements Animal {}\nvar a = new Animal() {};",
-    options: ["Compilation error", "Throws runtime exception", "Nothing, works fine", "Returns null"],
+    question: "Which instanceof check returns false for a null reference?",
+    code: "class Family { public static void main(String[] args){ String s=null; System.out.println(s instanceof String); }}",
+    options: ["true", "false", "Compilation error", "Throws exception"],
     correct: 1,
-    explanation: "Anonymous class not permitted by sealed interface causes MatchException at runtime."
+    explanation: "instanceof returns false when the reference is null."
   },
   {
-    question: "What does `requires transitive` do in a module declaration?",
-    code: "module com.app {\n    requires transitive com.utils;\n}",
-    options: [
-      "Other modules cannot use com.utils",
-      "`requires transitive` is the same as `requires static`",
-      "`requires transitive` only affects compile-time",
-      "The module com.app exports all packages automatically",
-      "Other modules requiring com.app also implicitly require com.utils"
-    ],
-    correct: 4,
-    explanation: "Modules that `require transitive` another module automatically expose it to modules that depend on them, making it available at compile-time and runtime."
+    question: "Which method call inside a static context can access instance fields?",
+    code: "class Family {\n  private String role = \"Parent\";\n  static void test(){ /* ??? */ }\n}",
+    options: ["Cannot access instance fields", "Can access directly", "Can access via static import", "Can access via this"],
+    correct: 0,
+    explanation: "Static methods cannot access instance fields directly."
   },
   {
-	question: "What is the output of this stream code using groupingBy and counting?",
-	code: "import java.util.*;\nimport java.util.function.Function;\nimport java.util.stream.*;\n\npublic class FamilyCounter {\n    public static void main(String[] args) {\n        Stream<String> members = Stream.of(\"Dad\", \"Son\", \"Mom\", \"Son\", \"Dad\", \"Daughter\");\n        Map<String, Long> counts = members.collect(\n            Collectors.groupingBy(Function.identity(), Collectors.counting())\n        );\n        counts.keySet().stream()\n            .sorted()\n            .parallel()\n            .forEachOrdered(key -> System.out.print(counts.get(key)));\n    }\n}",
-	options: [
-	"2 1 1 2",
-	"1 1 2 2",
-	"2 2 1 1",
-	"1 2 1 2"
-	],
+	question: "Which expression correctly handles a TreeMap key search?",
+	code: "import java.util.*;\nclass Family { public static void main(String[] args){ var map=new TreeMap<String,Integer>(); map.put(\"Dad\",1); map.put(\"Mom\",2); map.put(\"Son\",3); /* ??? */ }}",
+	options: ["map.firstKey()", "map.getKey(0)", "map.firstEntryKey()", "map.head()"],
 	correct: 0,
-	explanation: "The stream groups by member name: Dad=2, Daughter=1, Mom=1, Son=2. Sorted keys alphabetically: Dad, Daughter, Mom, Son → counts printed in order: 2 1 1 2."
+	explanation: "TreeMap.firstKey() returns the least key according to natural order."
   },
   {
-	question: "In a top-down migration, how can named modules interact with automatic modules?",
-	code: "// Legacy JAR: utils.jar\n// Main module: module-info.java exists",
-	options: [
-	"All legacy JARs must be rewritten as named modules immediately",
-	"Automatic modules cannot be read by named modules",
-	"A named module can require an automatic module without issues",
-	"Automatic modules export packages only to modules in the same package",
-	"Top-down migration requires removing all transitive dependencies first"
-	],
-	correct: 2,
-	explanation: "Named modules can 'require' automatic modules. Automatic modules export all packages to all modules on the module path, enabling gradual migration without rewriting JARs."
+	question: "Which statement evaluates to true for 'instanceof' when the reference is a subclass?",
+	code: "class Parent {} class Child extends Parent {} class Family { public static void main(String[] args){ Parent p=new Child(); /* ??? */ }}",
+	options: ["p instanceof Parent", "p instanceof String", "p instanceof Child[]", "p instanceof Object[]"],
+	correct: 0,
+	explanation: "A Child is also a Parent, so instanceof returns true."
+  },
+  {
+    question: "Which substring is extracted from a text block with escaped newline?",
+    code: "public class Family {\n    public static void main(String[] args) {\n        String familyMessage = \"\"\"\n            Hello! You inherited a fortune \\\n            from your grandma!\n        \"\"\";\n\n        String part = familyMessage.substring(7, 15);\n        System.out.println(part);\n    }\n}",
+    options: ["inherited", "Hello! Yo", "You inher", "fortune"],
+    correct: 0,
+    explanation: "The backslash escapes the newline, text block is single line. Substring(7,15) → 'inherited'."
   }
-
 ];
 
 
