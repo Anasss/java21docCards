@@ -362,7 +362,7 @@ var questions = [
   },
   {
     question: "Which private method is invoked in this inheritance scenario?",
-    code: "class Parent {\n    private void secret() { System.out.print(\"Parent secret \" ); }\n    public void reveal() { secret(); }\n}\nclass Child extends Parent {\n    private void secret() { System.out.print(\"Child secret \" ); }\n    public static void main(String[] args) {\n        new Child().reveal();\n    }\n}",
+    code: "class Parent {\n    private void secret() { System.out.print(\"Parent secret \" ); }\n    public void reveal() { secret(); }\n}\nclass Child extends Parent {\n    private void secret() { System.out.print(\"Child secret \" ); }\n    public static void main(String[] args) {\n        new Parent().reveal();\n    }\n}",
     options: ["Compilation error", "Parent secret Child secret", "Child secret", "Parent secret"],
     correct: 3,
     explanation: "Private methods are not overridden. Parent.reveal() calls Parent.secret()."
@@ -382,145 +382,289 @@ var questions = [
     explanation: "Child's cook() throws IOException, which is allowed as it is a subclass of Exception."
   },
   {
-    question: "Which output results from these generic method calls?",
-    code: "import java.util.*;\nclass Family<T> {\n  public static <U> List<U> create(U a, U b){ return List.of(a,b); }\n  public static void main(String[] args) {\n    var parents = create(\"Dad\",\"Mom\");\n    var ages = create(45,42);\n    System.out.println(parents.get(0)+\" \"+ages.get(1));\n  }\n}",
-    options: ["Dad Mom", "Dad 42", "Compilation error", "Mom 45"],
-    correct: 1,
-    explanation: "Generic method infers types separately. Output: Dad 42."
+	question: "Which output results from these generic method calls?",
+	code: "import java.util.*;\n" +
+		"class Family&lt;T&gt; {\n" +
+		"    public static &lt;U&gt; List&lt;U&gt; create(U a, U b) {\n" +
+		"        return List.of(a, b);\n" +
+		"    }\n\n" +
+		"    public static void main(String[] args) {\n" +
+		"        var parents = create(\"Dad\", \"Mom\");\n" +
+		"        var ages = create(45, 42);\n" +
+		"        System.out.println(parents.get(0) + \" \" + ages.get(1));\n" +
+		"    }\n" +
+		"}",
+	options: ["Dad Mom", "Dad 42", "Compilation error", "Mom 45"],
+	correct: 1,
+	explanation: "Generic method infers types separately. Output: Dad 42."
   },
   {
-    question: "Which instanceof check evaluates to true?",
-    code: "sealed class Parent permits Child {}\nfinal class Child extends Parent {}\nclass Family { public static void main(String[] args){ Parent p=new Child(); System.out.println(p instanceof Child); }}",
-    options: ["Compilation error", "true", "Runtime exception", "false"],
-    correct: 1,
-    explanation: "Child is the only permitted subclass. instanceof returns true."
+	question: "Which instanceof check evaluates to true?",
+	code: "sealed class Parent permits Child {}\n" +
+		"final class Child extends Parent {}\n" +
+		"class Family {\n" +
+		"    public static void main(String[] args) {\n" +
+		"        Parent p = new Child();\n" +
+		"        System.out.println(p instanceof Child);\n" +
+		"    }\n" +
+		"}",
+	options: ["Compilation error", "true", "Runtime exception", "false"],
+	correct: 1,
+	explanation: "Child is the only permitted subclass. instanceof returns true."
   },
   {
-    question: "Which result is returned by orElse on an empty Optional?",
+    question: "What does the following code return?",
     code: "import java.util.*;\nclass Family {\n  public static void main(String[] args){\n    Optional<String> dad = Optional.ofNullable(null);\n    System.out.println(dad.orElse(\"Unknown\"));\n  }\n}",
-    options: ["Compilation error", "Unknown", "Throws NoSuchElementException", "null"],
+    options: ["Compilation error", "Unknown", "Throws NullPointerException", "null"],
     correct: 1,
     explanation: "ofNullable(null) creates empty Optional. orElse supplies fallback."
   },
   {
-    question: "How many characters are in this text block?",
-    code: "class Family { public static void main(String[] args){ String s = \"\"\"\nDad\nMom\n\"\"\"; System.out.println(s.length()); }}",
-    options: ["7", "8", "9", "10"],
-    correct: 1,
-    explanation: "Text block includes a trailing newline. 'Dad\\nMom\\n' → length 8."
+	question: "How many characters are in this text block?",
+	code: "class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        String s = \"\"\"\n" +
+	"Dad\n" +
+	"Mom\n" +
+	"\"\"\";\n" +
+	"        System.out.println(s.length());\n" +
+	"    }\n" +
+	"}",
+	options: ["7", "8", "9", "10"],
+	correct: 1,
+	explanation: "Text block includes a trailing newline. 'Dad\\nMom\\n' → length 8."
   },
   {
-    question: "Which branch executes in this pattern matching switch?",
-    code: "class Family {\n  static void who(Object o){ switch(o){ case String s -> System.out.println(\"String: \"+s); case Integer i -> System.out.println(\"Int: \"+i); default -> System.out.println(\"Other\"); }}\n  public static void main(String[] args){ who(\"Dad\"); }}",
-    options: ["Compilation error", "Other", "Int: Dad", "String: Dad"],
-    correct: 3,
-    explanation: "Pattern matching for switch matches the String branch."
+	question: "Which branch executes in this pattern matching switch?",
+	code: "class Family {\n" +
+	"    static void who(Object o) {\n" +
+	"        switch(o) {\n" +
+	"            case String s -> System.out.println(\"String: \" + s);\n" +
+	"            case Integer i -> System.out.println(\"Int: \" + i);\n" +
+	"            default -> System.out.println(\"Other\");\n" +
+	"        }\n" +
+	"    }\n" +
+	"    public static void main(String[] args) {\n" +
+	"        who(\"Dad\");\n" +
+	"    }\n" +
+	"}",
+	options: ["Compilation error", "Other", "Int: Dad", "String: Dad"],
+	correct: 3,
+	explanation: "Pattern matching for switch matches the String branch."
   },
   {
-    question: "Europe/Paris moves clocks forward 1 hour for spring DST on 30 March 2025. What is the Duration in hours when adding 3 hours to 01:30 across this transition?",
-    code: "import java.time.*;\nclass Family {\n  public static void main(String[] args){\n    ZonedDateTime z1 = ZonedDateTime.of(2025, 3, 30, 1, 30, 0, 0, ZoneId.of(\"Europe/Paris\"));\n    ZonedDateTime z2 = z1.plusHours(3);\n    Duration d = Duration.between(z1, z2);\n    System.out.println(d.toHours());\n  }\n}",
-    options: ["2", "3", "4", "Throws exception"],
-    correct: 0,
-    explanation: "DST starts at 2:00 AM on 30 March 2025, moving clocks forward 1 hour. Duration.between counts actual elapsed hours: 2."
+	question: "Europe/Paris moves clocks forward 1 hour for spring DST on 30 March 2025. What is the Duration in hours when adding 3 hours to 01:30 across this transition?",
+	code: "import java.time.*;\n" +
+	"class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        ZonedDateTime z1 = ZonedDateTime.of(2025, 3, 30, 1, 30, 0, 0, ZoneId.of(\"Europe/Paris\"));\n" +
+	"        ZonedDateTime z2 = z1.plusHours(3);\n" +
+	"        Duration d = Duration.between(z1, z2);\n" +
+	"        System.out.println(d.toHours());\n" +
+	"    }\n" +
+	"}",
+	options: ["2", "3", "4", "Throws exception"],
+	correct: 0,
+	explanation: "DST starts at 2:00 AM on 30 March 2025, moving clocks forward 1 hour. Duration.between counts actual elapsed hours: 2."
   },
   {
-    question: "Which key does firstKey() return for a TreeMap with these entries?",
-    code: "import java.util.*;\nclass Family { public static void main(String[] args){ var map=new TreeMap<String,Integer>(); map.put(\"Dad\",1); map.put(\"Mom\",2); map.put(\"Son\",3); System.out.println(map.firstKey()); }}",
-    options: ["Son", "Dad", "null", "Mom"],
-    correct: 1,
-    explanation: "TreeMap orders keys naturally. firstKey() returns the smallest key: Dad."
+	question: "Which key does firstKey() return for a TreeMap with these entries?",
+	code: "import java.util.*;\n" +
+	"class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        var map = new TreeMap<String,Integer>();\n" +
+	"        map.put(\"Dad\", 1);\n" +
+	"        map.put(\"Mom\", 2);\n" +
+	"        map.put(\"Son\", 3);\n" +
+	"        System.out.println(map.firstKey());\n" +
+	"    }\n" +
+	"}",
+	options: ["Son", "Dad", "null", "Mom"],
+	correct: 1,
+	explanation: "TreeMap orders keys naturally. firstKey() returns the smallest key: Dad."
   },
   {
-    question: "Which order of constructor execution occurs in this inheritance example?",
-    code: "class Parent { Parent(){ System.out.print(\"P \"); }}\nclass Child extends Parent { Child(){ System.out.print(\"C \"); }}\nclass Family { public static void main(String[] args){ new Child(); }}",
-    options: ["C P", "P C", "C only", "Compilation error"],
-    correct: 1,
-    explanation: "Superclass constructor runs before subclass constructor."
+	question: "Which order of constructor execution occurs in this inheritance example?",
+	code: "class Parent {\n" +
+	"    Parent() { System.out.print(\"P \"); }\n" +
+	"}\n" +
+	"class Child extends Parent {\n" +
+	"    Child() { System.out.print(\"C \"); }\n" +
+	"}\n" +
+	"class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        new Child();\n" +
+	"    }\n" +
+	"}",
+	options: ["C P", "P C", "C only", "Compilation error"],
+	correct: 1,
+	explanation: "Superclass constructor runs before subclass constructor."
   },
   {
-    question: "Which elements are processed by dropWhile in this stream?",
-    code: "import java.util.*;\nclass Family { public static void main(String[] args){ List<String> list=List.of(\"Dad\",\"Mom\",\"Son\"); list.stream().dropWhile(s->s.length()>2).forEach(System.out::print); }}",
-    options: ["Son", "", "MomSon", "DadMomSon"],
-    correct: 2,
-    explanation: "dropWhile removes elements from the start while the predicate is true. Prints MomSon."
+	question: "Which elements are processed by dropWhile in this stream?",
+	code: "import java.util.*;\n" +
+	"class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        List<String> list = List.of(\"Dad\",\"Mom\",\"Son\");\n" +
+	"        list.stream().dropWhile(s -> s.length() > 2).forEach(System.out::print);\n" +
+	"    }\n" +
+	"}",
+	options: ["Son", "", "MomSon", "DadMomSon"],
+	correct: 2,
+	explanation: "dropWhile removes elements from the start while the predicate is true. Prints MomSon."
   },
   {
-    question: "Which value is returned by Arrays.binarySearch when the key is absent?",
-    code: "class Family { public static void main(String[] args){ int[] arr={10,20,30}; int pos=java.util.Arrays.binarySearch(arr,25); System.out.println(pos); }}",
-    options: ["2", "-3", "-2", "Compilation error"],
-    correct: 1,
-    explanation: "Not found → returns -(insertion point) - 1. 25 would be at index 2 → -(2)-1 = -3."
+	question: "Which value is returned by Arrays.binarySearch when the key is absent?",
+	code: "class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        int[] arr = {10,20,30};\n" +
+	"        int pos = java.util.Arrays.binarySearch(arr,25);\n" +
+	"        System.out.println(pos);\n" +
+	"    }\n" +
+	"}",
+	options: ["2", "-3", "-2", "Compilation error"],
+	correct: 1,
+	explanation: "Not found → returns -(insertion point) - 1. 25 would be at index 2 → -(2)-1 = -3."
   },
   {
-    question: "What is the effect of reassignment inside a method on a StringBuilder?",
-    code: "class Family { static void test(StringBuilder sb){ sb.append(\"Mom\"); sb=new StringBuilder(\"Dad\"); }\n public static void main(String[] args){ StringBuilder s=new StringBuilder(\"Son\"); test(s); System.out.println(s); }}",
-    options: ["Son", "SonMom", "Dad", "Compilation error"],
-    correct: 1,
-    explanation: "Append modifies the original. Reassignment inside the method has no effect on the caller."
+	question: "What is the effect of reassignment inside a method on a StringBuilder?",
+	code: "class Family {\n" +
+	"    static void test(StringBuilder sb) {\n" +
+	"        sb.append(\"Mom\");\n" +
+	"        sb = new StringBuilder(\"Dad\");\n" +
+	"    }\n" +
+	"    public static void main(String[] args) {\n" +
+	"        StringBuilder s = new StringBuilder(\"Son\");\n" +
+	"        test(s);\n" +
+	"        System.out.println(s);\n" +
+	"    }\n" +
+	"}",
+	options: ["Son", "SonMom", "Dad", "Compilation error"],
+	correct: 1,
+	explanation: "Append modifies the original. Reassignment inside the method has no effect on the caller."
   },
   {
-    question: "How does equals behave with StringBuilder references?",
-    code: "class Family { public static void main(String[] args){ Object o=new StringBuilder(\"Dad\"); System.out.println(o.equals(new StringBuilder(\"Dad\"))); }}",
-    options: ["true", "false", "Compilation error", "Throws exception"],
-    correct: 1,
-    explanation: "StringBuilder does not override equals. Uses reference equality."
+	question: "How does equals behave with StringBuilder references?",
+	code: "class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        Object o = new StringBuilder(\"Dad\");\n" +
+	"        System.out.println(o.equals(new StringBuilder(\"Dad\")));\n" +
+	"    }\n" +
+	"}",
+	options: ["true", "false", "Compilation error", "Throws exception"],
+	correct: 1,
+	explanation: "StringBuilder does not override equals. Uses reference equality."
   },
   {
-    question: "Which instanceof expression evaluates to true for a Child reference stored in a Parent variable?",
-    code: "class Parent {}\nclass Child extends Parent {}\nclass Family { public static void main(String[] args){ Parent p=new Child(); System.out.println(p instanceof Parent); }}",
-    options: ["false", "true", "Compilation error", "Runtime exception"],
-    correct: 1,
-    explanation: "A Child is also a Parent. instanceof returns true."
+	question: "Which instanceof expression evaluates to true for a Child reference stored in a Parent variable?",
+	code: "class Parent {}\n" +
+	"class Child extends Parent {}\n" +
+	"class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        Parent p = new Child();\n" +
+	"        System.out.println(p instanceof Parent);\n" +
+	"    }\n" +
+	"}",
+	options: ["false", "true", "Compilation error", "Runtime exception"],
+	correct: 1,
+	explanation: "A Child is also a Parent. instanceof returns true."
   },
   {
-    question: "Which branch of this switch executes with arrow labels?",
-    code: "class Family { public static void main(String[] args){ int x=10; switch(x){ case 5 -> System.out.print(\"A\"); case 10 -> System.out.print(\"B\"); default -> System.out.print(\"C\"); } }}",
-    options: ["B", "C", "Compilation error", "A"],
-    correct: 0,
-    explanation: "Switch with arrow labels is valid. Case 10 matches → B."
+	question: "Which branch of this switch executes with arrow labels?",
+	code: "class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        int x = 10;\n" +
+	"        switch(x) {\n" +
+	"            case 5 -> System.out.print(\"A\");\n" +
+	"            case 10 -> System.out.print(\"B\");\n" +
+	"            default -> System.out.print(\"C\");\n" +
+	"        }\n" +
+	"    }\n" +
+	"}",
+	options: ["B", "C", "Compilation error", "A"],
+	correct: 0,
+	explanation: "Switch with arrow labels is valid. Case 10 matches → B."
   },
   {
-    question: "Which sequence prints in a for-loop with initialization side-effect?",
-    code: "class Family { public static void main(String[] args){ int i=0; for(System.out.print(\"Dad\"); i<2; i++){ System.out.print(\"Son\"); }}",
-    options: ["DadSon", "DadSonSon", "SonDadSon", "Compilation error"],
-    correct: 1,
-    explanation: "Init prints Dad once. Loop runs twice printing Son Son."
+	question: "Which sequence prints in a for-loop with initialization side-effect?",
+	code: "class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        int i = 0;\n" +
+	"        for(System.out.print(\"Dad\"); i < 2; i++) {\n" +
+	"            System.out.print(\"Son\");\n" +
+	"        }\n" +
+	"    }\n" +
+	"}",
+	options: ["DadSon", "DadSonSon", "SonDadSon", "Compilation error"],
+	correct: 1,
+	explanation: "Init prints Dad once. Loop runs twice printing Son Son."
   },
   {
-    question: "Which instanceof check returns false for a null reference?",
-    code: "class Family { public static void main(String[] args){ String s=null; System.out.println(s instanceof String); }}",
-    options: ["true", "false", "Compilation error", "Throws exception"],
-    correct: 1,
-    explanation: "instanceof returns false when the reference is null."
+	question: "Which instanceof check returns false for a null reference?",
+	code: "class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        String s = null;\n" +
+	"        System.out.println(s instanceof String);\n" +
+	"    }\n" +
+	"}",
+	options: ["true", "false", "Compilation error", "Throws exception"],
+	correct: 1,
+	explanation: "instanceof returns false when the reference is null."
   },
   {
-    question: "Which method call inside a static context can access instance fields?",
-    code: "class Family {\n  private String role = \"Parent\";\n  static void test(){ /* ??? */ }\n}",
-    options: ["Cannot access instance fields", "Can access directly", "Can access via static import", "Can access via this"],
-    correct: 0,
-    explanation: "Static methods cannot access instance fields directly."
+	question: "Which method call inside a static context can access instance fields?",
+	code: "class Family {\n" +
+	"    private String role = \"Parent\";\n" +
+	"    static void test() { /* ??? */ }\n" +
+	"}",
+	options: ["Cannot access instance fields", "Can access directly", "Can access via static import", "Can access via this"],
+	correct: 0,
+	explanation: "Static methods cannot access instance fields directly."
   },
   {
 	question: "Which expression correctly handles a TreeMap key search?",
-	code: "import java.util.*;\nclass Family { public static void main(String[] args){ var map=new TreeMap<String,Integer>(); map.put(\"Dad\",1); map.put(\"Mom\",2); map.put(\"Son\",3); /* ??? */ }}",
+	code: "import java.util.*;\n" +
+	"class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        var map = new TreeMap<String,Integer>();\n" +
+	"        map.put(\"Dad\", 1);\n" +
+	"        map.put(\"Mom\", 2);\n" +
+	"        map.put(\"Son\", 3);\n" +
+	"        /* ??? */\n" +
+	"    }\n" +
+	"}",
 	options: ["map.firstKey()", "map.getKey(0)", "map.firstEntryKey()", "map.head()"],
 	correct: 0,
 	explanation: "TreeMap.firstKey() returns the least key according to natural order."
   },
   {
 	question: "Which statement evaluates to true for 'instanceof' when the reference is a subclass?",
-	code: "class Parent {} class Child extends Parent {} class Family { public static void main(String[] args){ Parent p=new Child(); /* ??? */ }}",
+	code: "class Parent {} class Child extends Parent {} class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        Parent p = new Child(); /* ??? */\n" +
+	"    }\n" +
+	"}",
 	options: ["p instanceof Parent", "p instanceof String", "p instanceof Child[]", "p instanceof Object[]"],
 	correct: 0,
 	explanation: "A Child is also a Parent, so instanceof returns true."
   },
   {
-    question: "Which substring is extracted from a text block with escaped newline?",
-    code: "public class Family {\n    public static void main(String[] args) {\n        String familyMessage = \"\"\"\n            Hello! You inherited a fortune \\\n            from your grandma!\n        \"\"\";\n\n        String part = familyMessage.substring(7, 15);\n        System.out.println(part);\n    }\n}",
-    options: ["inherited", "Hello! Yo", "You inher", "fortune"],
-    correct: 0,
-    explanation: "The backslash escapes the newline, text block is single line. Substring(7,15) → 'inherited'."
+	question: "Which substring is extracted from a text block with escaped newline?",
+	code: "public class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        String familyMessage = \"\"\"\n" +
+	"            Hello! You inherited a fortune \\\n" +
+	"            from your grandma!\n" +
+	"        \"\"\";\n" +
+	"        String part = familyMessage.substring(7, 15);\n" +
+	"        System.out.println(part);\n" +
+	"    }\n" +
+	"}",
+	options: ["inherited", "Hello! Yo", "You inher", "fortune"],
+	correct: 0,
+	explanation: "The backslash escapes the newline, text block is single line. Substring(7,15) → 'inherited'."
   }
+
 ];
 
 
