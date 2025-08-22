@@ -401,16 +401,24 @@ var questions = [
   {
 	question: "Which instanceof check evaluates to true?",
 	code: "sealed class Parent permits Child {}\n" +
-		"final class Child extends Parent {}\n" +
-		"class Family {\n" +
-		"    public static void main(String[] args) {\n" +
-		"        Parent p = new Child();\n" +
-		"        System.out.println(p instanceof Child);\n" +
-		"    }\n" +
-		"}",
-	options: ["Compilation error", "true", "Runtime exception", "false"],
-	correct: 1,
-	explanation: "Child is the only permitted subclass. instanceof returns true."
+	"final class Child extends Parent {}\n" +
+	"class Family {\n" +
+	"    public static void main(String[] args) {\n" +
+	"        Parent p = new Child();\n" +
+	"        System.out.println(p instanceof Parent); // line 1\n" +
+	"        System.out.println(p instanceof Child);  // line 2\n" +
+	"        System.out.println(p instanceof String); // line 3\n" +
+	"        System.out.println(p instanceof Object); // line 4\n" +
+	"    }\n" +
+	"}",
+	options: [
+	"line 1 and 2",
+	"line 3 and 4",
+	"line 1, 2 and 4",
+	"line 2",
+	"line 1" ],
+	correct: 2,
+	explanation: "Since p references a Child object, both 'p instanceof Parent' and 'p instanceof Child' evaluate to true. 'Parent' is the superclass, and 'Child' is the actual object type. 'p instanceof Object' is always true."
   },
   {
     question: "What does the following code return?",
@@ -453,7 +461,7 @@ var questions = [
 	explanation: "Pattern matching for switch matches the String branch."
   },
   {
-	question: "Europe/Paris moves clocks forward 1 hour for spring DST on 30 March 2025. What is the Duration in hours when adding 3 hours to 01:30 across this transition?",
+	question: "Europe/Paris moves clocks forward 1 hour for spring DST on 30 March 2025 (The clock jumps from 02:00 AM to 03:00 AM). What is the Duration in hours when adding 3 hours to 01:30 across this transition?",
 	code: "import java.time.*;\n" +
 	"class Family {\n" +
 	"    public static void main(String[] args) {\n" +
@@ -463,9 +471,9 @@ var questions = [
 	"        System.out.println(d.toHours());\n" +
 	"    }\n" +
 	"}",
-	options: ["2", "3", "4", "Throws exception"],
+	options: ["2", "3", "-2", "-3", "Throws exception"],
 	correct: 0,
-	explanation: "DST starts at 2:00 AM on 30 March 2025, moving clocks forward 1 hour. Duration.between counts actual elapsed hours: 2."
+	explanation: "On 30 March 2025, Europe/Paris starts Daylight Saving Time at 02:00 AM. The clock jumps forward to 03:00 AM, effectively skipping one hour. Starting at 01:30, adding 3 hours would normally reach 04:30 on the clock, but because 02:00–03:00 does not exist, only 2 actual hours pass. Duration.between measures actual elapsed time, so it returns 2 hours."
   },
   {
 	question: "Which key does firstKey() return for a TreeMap with these entries?",
@@ -473,8 +481,8 @@ var questions = [
 	"class Family {\n" +
 	"    public static void main(String[] args) {\n" +
 	"        var map = new TreeMap<String,Integer>();\n" +
-	"        map.put(\"Dad\", 1);\n" +
-	"        map.put(\"Mom\", 2);\n" +
+	"        map.put(\"Mom\", 1);\n" +
+	"        map.put(\"Dad\", 2);\n" +
 	"        map.put(\"Son\", 3);\n" +
 	"        System.out.println(map.firstKey());\n" +
 	"    }\n" +
@@ -556,34 +564,50 @@ var questions = [
 	explanation: "StringBuilder does not override equals. Uses reference equality."
   },
   {
-	question: "Which instanceof expression evaluates to true for a Child reference stored in a Parent variable?",
-	code: "class Parent {}\n" +
-	"class Child extends Parent {}\n" +
-	"class Family {\n" +
-	"    public static void main(String[] args) {\n" +
-	"        Parent p = new Child();\n" +
-	"        System.out.println(p instanceof Parent);\n" +
-	"    }\n" +
-	"}",
-	options: ["false", "true", "Compilation error", "Runtime exception"],
-	correct: 1,
-	explanation: "A Child is also a Parent. instanceof returns true."
+	question: "Consider a try-with-resources block that uses an AutoCloseable resource and also has a finally block. Which output is correct?",
+	code: "class Resource implements AutoCloseable {\n" +
+		"    public void use() { System.out.print(\"Using\"); }\n" +
+		"    public void close() { System.out.print(\"Closed\"); }\n" +
+		"}\n" +
+		"class Family {\n" +
+		"    public static void main(String[] args) {\n" +
+		"        Resource r = new Resource();\n" +
+		"        try (r) {\n" +
+		"            r.use();\n" +
+		"        } finally {\n" +
+		"            System.out.print(\"Finally\");\n" +
+		"        }\n" +
+		"    }\n" +
+		"}",
+	options: [
+	"UsingFinallyClosed",
+	"FinallyUsingClosed",
+	"UsingClosedFinally",
+	"UsingClosed",
+	"FinallyClosedUsing"
+	],
+	correct: 2,
+	explanation: "Even when the resource is declared outside the try (Java 9+ feature), try-with-resources still calls close() after the try block completes. Then the finally block executes. So the output order is 'Using' (try body) → 'Closed' (resource auto-close) → 'Finally' (finally block)."
   },
   {
-	question: "Which branch of this switch executes with arrow labels?",
-	code: "class Family {\n" +
-	"    public static void main(String[] args) {\n" +
-	"        int x = 10;\n" +
-	"        switch(x) {\n" +
-	"            case 5 -> System.out.print(\"A\");\n" +
-	"            case 10 -> System.out.print(\"B\");\n" +
-	"            default -> System.out.print(\"C\");\n" +
-	"        }\n" +
-	"    }\n" +
-	"}",
-	options: ["B", "C", "Compilation error", "A"],
+	question: "Given the following family hierarchy and variable declarations, which statements compile without error?",
+	code: "import java.util.*;\\n" +
+		"class Grandparent {}\\n" +
+		"class Parent extends Grandparent {}\\n" +
+		"class Child extends Parent {}\\n" +
+		"class Family {\\n" +
+		"    List?\u0020super\u0020Grandparent> ancestors = null;\\n" +
+		"    List?\u0020extends\u0020Child> descendants = null;\\n" +
+		"}",
+	options: [
+	"ancestors.add(new Grandparent()); ancestors.add(new Parent()); ancestors.add(new Child());",
+	"descendants.add(new Child()); descendants.add(new Parent());",
+	"Grandparent g = ancestors.get(0);",
+	"Parent p = ancestors.get(0);",
+	"Child c = descendants.get(0);"
+	],
 	correct: 0,
-	explanation: "Switch with arrow labels is valid. Case 10 matches → B."
+	explanation: "For List?\u0020super\u0020Grandparent> you can add Grandparent or any subclass. For List?\u0020extends\u0020Child> you cannot add anything except null. The return type of get() cannot be assumed without casting, so assignments to specific types other than Object are compilation errors. Option 0 compiles fully; the others do not."
   },
   {
 	question: "Which sequence prints in a for-loop with initialization side-effect?",
@@ -612,15 +636,22 @@ var questions = [
 	explanation: "instanceof returns false when the reference is null."
   },
   {
-	question: "Which method call inside a static context can access instance fields?",
+	question: "Inside a static method in Java 21, which of the following can be used to access an instance field?",
 	code: "class Family {\n" +
-	"    private String role = \"Parent\";\n" +
-	"    static void test() { /* ??? */ }\n" +
-	"}",
-	options: ["Cannot access instance fields", "Can access directly", "Can access via static import", "Can access via this"],
-	correct: 0,
-	explanation: "Static methods cannot access instance fields directly."
-  },
+		"    private String role = \"Parent\";\n" +
+		"    static void test() {\n" +
+		"        // ???\n" +
+		"    }\n" +
+		"}",
+	options: [
+	"Cannot access instance fields directly",
+	"Access via creating an instance: new Family().role",
+	"Access via 'this.role'",
+	"Access via static import"
+	],
+	correct: 1,
+	explanation: "Static methods cannot access instance fields directly. To access an instance field, you need a reference to an object, e.g., 'new Family().role'. 'this' cannot be used in a static context, and static import does not help."
+},
   {
 	question: "Which expression correctly handles a TreeMap key search?",
 	code: "import java.util.*;\n" +
@@ -638,15 +669,16 @@ var questions = [
 	explanation: "TreeMap.firstKey() returns the least key according to natural order."
   },
   {
-	question: "Which statement evaluates to true for 'instanceof' when the reference is a subclass?",
-	code: "class Parent {} class Child extends Parent {} class Family {\n" +
-	"    public static void main(String[] args) {\n" +
-	"        Parent p = new Child(); /* ??? */\n" +
-	"    }\n" +
-	"}",
-	options: ["p instanceof Parent", "p instanceof String", "p instanceof Child[]", "p instanceof Object[]"],
-	correct: 0,
-	explanation: "A Child is also a Parent, so instanceof returns true."
+	question: "In a bottom-up migration to the Java module system, what is the recommended first step?",
+	options: [
+	"Move all existing JARs to the module path",
+	"Convert all JARs to automatic modules at once",
+	"Start by converting the module with the most dependencies",
+	"Add a module-info.class to every JAR before running the application",
+	"Start by converting the module with the fewest dependencies into a named module"
+	],
+	correct: 4,
+	explanation: "In bottom-up migration, you begin by converting the module with the fewest dependencies into a named module. Other JARs stay on the classpath initially. This avoids breaking the build and allows gradual migration."
   },
   {
 	question: "Which substring is extracted from a text block with escaped newline?",
