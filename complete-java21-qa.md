@@ -570,6 +570,41 @@ ref.field;             // Parent's field (hidden - compile time)
 
 ---
 
+### Q33: When Java encounters overloaded methods, what determines which method is called at compile-time vs runtime?**
+
+**Answer: Two-Phase Resolution Process**
+
+**Compile-Time (Method Overloading)**
+* **What's decided:** Which overloaded method signature to use
+* **Based on:** Reference type of the variable (not object type)
+* **Rule:** Exact match first, then compatible types (widening/inheritance)
+
+**Runtime (Method Overriding)**
+* **What's decided:** Which implementation of the chosen method to execute
+* **Based on:** Actual object type (polymorphism)
+* **Rule:** Most specific implementation in inheritance hierarchy
+
+```java
+interface Person { default void speak() { System.out.println("Person speaking"); } }
+class Father implements Person { public void speak() { System.out.println("Father speaking"); } }
+class Mother implements Person { public void speak() { System.out.println("Mother speaking"); } }
+
+static void speak(Person p) { System.out.print("Person: "); p.speak(); }
+static void speak(Father f) { System.out.print("Father: "); f.speak(); }
+
+public static void main(String[] args) {
+    Person p = new Father();
+    Father f = new Father();
+    Mother m = new Mother();
+    
+    speak(p);  // Compile-time: speak(Person) - Runtime: Father.speak() → "Person: Father speaking"
+    speak(f);  // Compile-time: speak(Father) - Runtime: Father.speak() → "Father: Father speaking"
+    speak(m);  // Compile-time: speak(Person) - Runtime: Mother.speak() → "Person: Mother speaking"
+}
+```
+
+---
+
 ### Q34: When is super() automatically inserted by the compiler?
 **Answer:** The compiler inserts `super()` **only if**:
 1. Constructor doesn't explicitly call `super()` or `this()`
