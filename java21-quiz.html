@@ -335,6 +335,25 @@ var questions = [
     explanation: "Overridden methods in subclasses are executed according to the runtime type of the object."
   },
   {
+	question: "What is the output of this family membership code?",
+	code: "var isMother = false;\n" +
+		"var isFather = false;\n" +
+		"if (isFather = isMother != isFather) {\n" +
+		"    System.out.println(\"You are part of the family!\");\n" +
+		"} else {\n" +
+		"    System.out.println(\"You are not part of the family!\");\n" +
+		"}",
+	options: [
+		"You are part of the family!",
+		"You are not part of the family!",
+		"Compilation error",
+		"Runtime exception",
+		"Unreachable code error"
+	],
+	correct: 1,
+	explanation: "The expression 'isFather = isMother != isFather' is evaluated as 'isFather = (isMother != isFather)'. Since isMother is false and isFather is false, (false != false) evaluates to false. However, this false value is then assigned to isFather, and the assignment expression returns the assigned value (false). The if condition gets false, so it goes to else and prints 'You are not part of the family!'."
+  },
+  {
     question: "Which statement about record classes is correct?",
     options: ["Records are mutable by default", "Records cannot define methods", "Record fields are final by default", "Records can extend other classes"],
     correct: 2,
@@ -695,6 +714,33 @@ var questions = [
 	options: ["So", "on", "\n S", "Son"],
 	correct: 0,
 	explanation: "The text block contains 'Hello! \\nSon'. Substring(7, 9) extracts characters at indexes 7 and 8: 'S' + 'o' = 'So'."
+  },
+  {
+	question: "What is the output of this ExecutorService code?",
+	code: "import java.util.concurrent.*;\n" +
+		"public class Test {\n" +
+		"    public static void main(String[] args) throws Exception {\n" +
+		"        ExecutorService service = Executors.newFixedThreadPool(1);\n" +
+		"        Runnable r = () -&gt; System.out.print(\"Runnable executed\");\n" +
+		"        Callable&lt;String&gt; c = () -&gt; \"Callable executed\";\n" +
+		"\n" +
+		"        Future&lt;?&gt; f1 = service.submit(r);\n" +
+		"        Future&lt;String&gt; f2 = service.submit(c);\n" +
+		"\n" +
+		"        System.out.print(f1.get());\n" +
+		"        System.out.print(f2.get());\n" +
+		"        service.shutdown();\n" +
+		"    }\n" +
+		"}",
+	options: [
+		"Runnable executedCallable executed",
+		"Runnable executednullCallable executed",
+		"nullCallable executed", 
+		"Compilation error",
+		"Runtime exception"
+	],
+	correct: 1,
+	explanation: "submit(Runnable) returns a Future&lt;?&gt; whose get() returns null upon successful completion. submit(Callable&lt;T&gt;) returns a Future&lt;T&gt; whose get() returns the callable result. The output is: 'Runnable executed' (from the Runnable), then 'null' (from f1.get()), then 'Callable executed' (from f2.get()) - all printed consecutively without newlines since print() is used."
   }
 ];
 
