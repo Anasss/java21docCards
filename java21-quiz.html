@@ -591,23 +591,23 @@ var questions = [
   },
   {
 	question: "Given the following family hierarchy and variable declarations, which statements compile without error?",
-	code: "import java.util.*;\\n" +
-		"class Grandparent {}\\n" +
-		"class Parent extends Grandparent {}\\n" +
-		"class Child extends Parent {}\\n" +
-		"class Family {\\n" +
-		"    List?\u0020super\u0020Grandparent> ancestors = null;\\n" +
-		"    List?\u0020extends\u0020Child> descendants = null;\\n" +
+	code: "import java.util.*;\n" +
+		"class Grandparent {}\n" +
+		"class Parent extends Grandparent {}\n" +
+		"class Child extends Parent {}\n" +
+		"class Family {\n" +
+		"    List&lt;? super Grandparent&gt; ancestors = null;\n" +
+		"    List&lt;? extends Child&gt; descendants = null;\n" +
 		"}",
 	options: [
-	"ancestors.add(new Grandparent()); ancestors.add(new Parent()); ancestors.add(new Child());",
-	"descendants.add(new Child()); descendants.add(new Parent());",
-	"Grandparent g = ancestors.get(0);",
-	"Parent p = ancestors.get(0);",
-	"Child c = descendants.get(0);"
+		"ancestors.add(new Grandparent()); ancestors.add(new Parent()); ancestors.add(new Child());",
+		"descendants.add(new Child()); descendants.add(new Parent());",
+		"Grandparent g = ancestors.get(0);",
+		"Parent p = ancestors.get(0);",
+		"Child c = descendants.get(0);"
 	],
 	correct: 0,
-	explanation: "For List?\u0020super\u0020Grandparent> you can add Grandparent or any subclass. For List?\u0020extends\u0020Child> you cannot add anything except null. The return type of get() cannot be assumed without casting, so assignments to specific types other than Object are compilation errors. Option 0 compiles fully; the others do not."
+	explanation: "For List&lt;? super Grandparent&gt; you can add Grandparent or any subclass. For List&lt;? extends Child&gt; you cannot add anything except null. The return type of get() cannot be assumed without casting, so assignments to specific types other than Object are compilation errors. Option 0 compiles fully; the others do not."
   },
   {
 	question: "Which sequence prints in a for-loop with initialization side-effect?",
@@ -681,24 +681,22 @@ var questions = [
 	explanation: "In bottom-up migration, you begin by converting the module with the fewest dependencies into a named module. Other JARs stay on the classpath initially. This avoids breaking the build and allows gradual migration."
   },
   {
-	question: "Which substring is extracted from a text block with escaped newline?",
+	question: "Which substring is extracted from this short text block?",
 	code: "public class Family {\n" +
-	"    public static void main(String[] args) {\n" +
-	"        String familyMessage = \"\"\"\n" +
-	"            Hello! You inherited a fortune \\\n" +
-	"            from your grandma!\n" +
-	"        \"\"\";\n" +
-	"        String part = familyMessage.substring(7, 15);\n" +
-	"        System.out.println(part);\n" +
-	"    }\n" +
-	"}",
-	options: ["inherited", "Hello! Yo", "You inher", "fortune"],
+		"    public static void main(String[] args) {\n" +
+		"        String familyMessage = \"\"\"\n" +
+		"Hello! \n" +
+		"Son\n" +
+		"\"\"\";\n" +
+		"        String part = familyMessage.substring(7, 9);\n" +
+		"        System.out.println(part);\n" +
+		"    }\n" +
+		"}",
+	options: ["So", "on", "\n S", "Son"],
 	correct: 0,
-	explanation: "The backslash escapes the newline, text block is single line. Substring(7,15) → 'inherited'."
+	explanation: "The text block contains 'Hello! \\nSon'. Substring(7, 9) extracts characters at indexes 7 and 8: 'S' + 'o' = 'So'."
   }
-
 ];
-
 
 var currentQuestionIndex = 0;
     var score = 0;
