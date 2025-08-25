@@ -195,7 +195,6 @@ Brief description of what this PR adds or changes.
 Contributors will be acknowledged in:
 - GitHub contributor list
 - Project documentation
-- Release notes for significant contributions
 
 ---
 
