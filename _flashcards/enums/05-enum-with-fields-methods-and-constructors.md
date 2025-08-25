@@ -1,8 +1,10 @@
 ---
-title: Enums
-parent: Java 21 OCP Flashcards
-nav_order: 2
-layout: default
+category: Enums
+learning_tip: Think "ENUM = SPECIAL CLASS" - enums are classes with predefined instances
+  (constants) that can have fields, methods, and constructors.
+order: 5
+tags: []
+title: Enum with Fields, Methods, and Constructors
 ---
 
 ## 🃏 Enum with Fields, Methods, and Constructors

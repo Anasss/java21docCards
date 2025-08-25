@@ -1,0 +1,81 @@
+---
+layout: default
+---
+
+<div class="flashcard-container">
+  <div class="flashcard-header">
+    {% if page.category %}
+      <span class="flashcard-category">{{ page.category | upcase }}</span>
+    {% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.difficulty %}
+      <span class="difficulty-badge difficulty-{{ page.difficulty }}">
+        {{ page.difficulty | capitalize }}
+      </span>
+    {% endif %}
+  </div>
+
+  <div class="flashcard-content">
+    {{ content }}
+  </div>
+
+  <div class="flashcard-navigation">
+    {% assign flashcards = site.flashcards | where: "category", page.category | sort: "order" %}
+    {% for flashcard in flashcards %}
+      {% if flashcard.url == page.url %}
+        {% assign current_index = forloop.index0 %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="nav-buttons">
+      {% assign prev_index = current_index | minus: 1 %}
+      {% assign next_index = current_index | plus: 1 %}
+      
+      {% if prev_index >= 0 %}
+        <a href="{{ flashcards[prev_index].url | relative_url }}" class="btn btn-nav btn-prev">
+          ← Previous
+        </a>
+      {% endif %}
+
+      <a href="{{ '/' | relative_url }}" class="btn btn-nav btn-home">
+        Home
+      </a>
+
+      {% if next_index < flashcards.size %}
+        <a href="{{ flashcards[next_index].url | relative_url }}" class="btn btn-nav btn-next">
+          Next →
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="flashcard-meta">
+      <span>Card {{ current_index | plus: 1 }} of {{ flashcards.size }}</span>
+      {% if page.category %}
+        | <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}">{{ page.category }}</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Flashcard-specific styles -->
+<style>
+.flashcard-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+.flashcard-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+.flashcard-category { background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; letter-spacing: 0.5px; }
+.difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; margin-left: 10px; }
+.difficulty-easy { background: #4CAF50; color: white; }
+.difficulty-medium { background: #FF9800; color: white; }
+.difficulty-hard { background: #F44336; color: white; }
+.flashcard-content { margin: 30px 0; font-size: 1.1em; line-height: 1.7; }
+.flashcard-navigation { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+.nav-buttons { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; }
+.btn-nav { padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px; font-weight: 500; transition: background-color 0.3s ease; }
+.btn-nav:hover { background: #5a67d8; text-decoration: none; color: white; }
+.btn-home { background: #6c757d; }
+.btn-home:hover { background: #545b62; }
+.flashcard-meta { text-align: center; font-size: 0.9em; color: #666; }
+.flashcard-meta a { color: #667eea; text-decoration: none; }
+.flashcard-meta a:hover { text-decoration: underline; }
+@media (max-width: 768px) { .nav-buttons { flex-direction: column; } .btn-nav { width: 100%; text-align: center; } }
+</style>

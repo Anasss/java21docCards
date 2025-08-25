@@ -1,0 +1,593 @@
+# Complete Quiz Questions for Java 21 OCP - Extracted from Original
+# All questions without difficulty field
+
+- question: "Which method calls will execute in this inheritance scenario?"
+  code: |
+    class Parent {
+        public void show() { System.out.print("Parent "); }
+    }
+    class Child extends Parent {
+        public void show() { System.out.print("Child "); }
+        public static void main(String[] args) {
+            Parent dad = new Child();
+            dad.show();
+            new Child().show();
+            new Parent().show();
+        }
+    }
+  options:
+    - "Parent Parent Parent"
+    - "Child Child Parent"
+    - "Child Parent Child"
+    - "Parent Child Parent"
+  correct: 1
+  explanation: "Overridden methods in subclasses are executed according to the runtime type of the object."
+  category: "OOP"
+
+- question: "What is the output of this family membership code?"
+  code: |
+    var isMother = false;
+    var isFather = false;
+    if (isFather = isMother != isFather) {
+        System.out.println("You are part of the family!");
+    } else {
+        System.out.println("You are not part of the family!");
+    }
+  options:
+    - "You are part of the family!"
+    - "You are not part of the family!"
+    - "Compilation error"
+    - "Runtime exception"
+    - "Unreachable code error"
+  correct: 1
+  explanation: "The expression 'isFather = isMother != isFather' is evaluated as 'isFather = (isMother != isFather)'. Since isMother is false and isFather is false, (false != false) evaluates to false. However, this false value is then assigned to isFather, and the assignment expression returns the assigned value (false). The if condition gets false, so it goes to else and prints 'You are not part of the family!'."
+  category: "Operators"
+
+- question: "Which statement about record classes is correct?"
+  options:
+    - "Records are mutable by default"
+    - "Records cannot define methods"
+    - "Record fields are final by default"
+    - "Records can extend other classes"
+  correct: 2
+  explanation: "Records are implicitly final and their fields are final. They can have methods but cannot extend other classes."
+  category: "Java 21 Features"
+
+- question: "How are static and instance initialization blocks executed in this inheritance scenario?"
+  code: |
+    class Parent {
+        static { System.out.print("Parent static "); }
+        { System.out.print("Parent instance "); }
+    }
+    class Child extends Parent {
+        static { System.out.print("Child static "); }
+        { System.out.print("Child instance "); }
+        public static void main(String[] args) { new Child(); }
+    }
+  options:
+    - "Parent static Child static Child instance Parent instance"
+    - "Parent static Child static Parent instance Child instance"
+    - "Child static Parent static Child instance Parent instance"
+    - "Parent instance Child instance Parent static Child static"
+  correct: 1
+  explanation: "Static blocks execute first (parent then child), followed by instance blocks (parent then child)."
+  category: "OOP"
+
+- question: "Which sealed class declaration is valid?"
+  options:
+    - "public sealed class Family permit Unknown { }"
+    - "public sealed class Family permits Child { }"
+    - "public sealed class Family extends Object { }"
+    - "public sealed class Family { } // subclasses are in a different package"
+  correct: 1
+  explanation: "A sealed class must list its permitted subclasses. Only the second option is valid."
+  category: "Java 21 Features"
+
+- question: "Which value does this switch expression evaluate to?"
+  code: |
+    String role = switch ("Grandma") {
+        case "Dad", "Father" -> "Parent";
+        case "Mom", "Mother" -> "Parent";
+        case "Son", "Daughter" -> "Child";
+        case "Grandpa", "Grandma" -> { yield "Grandparent".toUpperCase(); }
+        default -> "Unknown";
+    };
+    System.out.println(role);
+  options:
+    - "Parent"
+    - "Unknown"
+    - "Grandparent"
+    - "GRANDPARENT"
+  correct: 3
+  explanation: "Yield block returns \"Grandparent\" converted to uppercase."
+  category: "Java 21 Features"
+
+- question: "Which private method is invoked in this inheritance scenario?"
+  code: |
+    class Parent {
+        private void secret() { System.out.print("Parent secret "); }
+        public void reveal() { secret(); }
+    }
+    class Child extends Parent {
+        private void secret() { System.out.print("Child secret "); }
+        public static void main(String[] args) {
+            new Parent().reveal();
+        }
+    }
+  options:
+    - "Compilation error"
+    - "Parent secret Child secret"
+    - "Child secret"
+    - "Parent secret"
+  correct: 3
+  explanation: "Private methods are not overridden. Parent.reveal() calls Parent.secret()."
+  category: "OOP"
+
+- question: "Which strings are selected after mapping and sorting this stream?"
+  code: |
+    import java.util.*;
+    import java.util.stream.*;
+    class Family {
+      public static void main(String[] args) {
+        var members = List.of("Dad","Mom","Son","Daughter");
+        var result = members.stream()
+          .map(String::toUpperCase)
+          .sorted((a,b) -> b.compareTo(a))
+          .limit(2)
+          .collect(Collectors.joining(", "));
+        System.out.println(result);
+      }
+    }
+  options:
+    - "SON, MOM"
+    - "DAD, MOM"
+    - "SON, DAUGHTER"
+    - "DAD, DAUGHTER"
+  correct: 0
+  explanation: "After mapping to uppercase and sorting descending, the first two elements are SON and MOM."
+  category: "Streams"
+
+- question: "Is this override declaration valid considering checked exceptions?"
+  code: |
+    class Parent {
+      void cook() throws Exception { throw new Exception("Parent"); }
+    }
+    class Child extends Parent {
+      @Override void cook() throws java.io.IOException { throw new java.io.IOException("Child"); }
+      public static void main(String[] args) throws Exception {
+        new Child().cook();
+      }
+    }
+  options:
+    - "Compilation error: must catch IOException"
+    - "Compiles and prints Child"
+    - "Prints Parent"
+    - "Compilation error: IOException not allowed"
+  correct: 1
+  explanation: "Child's cook() throws IOException, which is allowed as it is a subclass of Exception."
+  category: "Exceptions"
+
+- question: "Which output results from these generic method calls?"
+  code: |
+    import java.util.*;
+    class Family<T> {
+        public static <U> List<U> create(U a, U b) {
+            return List.of(a, b);
+        }
+
+        public static void main(String[] args) {
+            var parents = create("Dad", "Mom");
+            var ages = create(45, 42);
+            System.out.println(parents.get(0) + " " + ages.get(1));
+        }
+    }
+  options:
+    - "Dad Mom"
+    - "Dad 42"
+    - "Compilation error"
+    - "Mom 45"
+  correct: 1
+  explanation: "Generic method infers types separately. Output: Dad 42."
+  category: "Generics"
+
+- question: "Which instanceof check evaluates to true?"
+  code: |
+    sealed class Parent permits Child {}
+    final class Child extends Parent {}
+    class Family {
+        public static void main(String[] args) {
+            Parent p = new Child();
+            System.out.println(p instanceof Parent); // line 1
+            System.out.println(p instanceof Child);  // line 2
+            System.out.println(p instanceof String); // line 3
+            System.out.println(p instanceof Object); // line 4
+        }
+    }
+  options:
+    - "line 1 and 2"
+    - "line 3 and 4"
+    - "line 1, 2 and 4"
+    - "line 2"
+    - "line 1"
+  correct: 2
+  explanation: "Since p references a Child object, both 'p instanceof Parent' and 'p instanceof Child' evaluate to true. 'Parent' is the superclass, and 'Child' is the actual object type. 'p instanceof Object' is always true."
+  category: "Java 21 Features"
+
+- question: "What does the following code return?"
+  code: |
+    import java.util.*;
+    class Family {
+      public static void main(String[] args){
+        Optional<String> dad = Optional.ofNullable(null);
+        System.out.println(dad.orElse("Unknown"));
+      }
+    }
+  options:
+    - "Compilation error"
+    - "Unknown"
+    - "Throws NullPointerException"
+    - "null"
+  correct: 1
+  explanation: "ofNullable(null) creates empty Optional. orElse supplies fallback."
+  category: "Optional"
+
+- question: "How many characters are in this text block?"
+  code: |
+    class Family {
+        public static void main(String[] args) {
+            String s = """
+    Dad
+    Mom
+    """;
+            System.out.println(s.length());
+        }
+    }
+  options:
+    - "7"
+    - "8"
+    - "9"
+    - "10"
+  correct: 1
+  explanation: "Text block includes a trailing newline. 'Dad\\nMom\\n' → length 8."
+  category: "Java 21 Features"
+
+- question: "Which branch executes in this pattern matching switch?"
+  code: |
+    class Family {
+        static void who(Object o) {
+            switch(o) {
+                case String s -> System.out.println("String: " + s);
+                case Integer i -> System.out.println("Int: " + i);
+                default -> System.out.println("Other");
+            }
+        }
+        public static void main(String[] args) {
+            who("Dad");
+        }
+    }
+  options:
+    - "Compilation error"
+    - "Other"
+    - "Int: Dad"
+    - "String: Dad"
+  correct: 3
+  explanation: "Pattern matching for switch matches the String branch."
+  category: "Java 21 Features"
+
+- question: "Europe/Paris moves clocks forward 1 hour for spring DST on 30 March 2025 (The clock jumps from 02:00 AM to 03:00 AM). What is the Duration in hours when adding 3 hours to 01:30 across this transition?"
+  code: |
+    import java.time.*;
+    class Family {
+        public static void main(String[] args) {
+            ZonedDateTime z1 = ZonedDateTime.of(2025, 3, 30, 1, 30, 0, 0, ZoneId.of("Europe/Paris"));
+            ZonedDateTime z2 = z1.plusHours(3);
+            Duration d = Duration.between(z1, z2);
+            System.out.println(d.toHours());
+        }
+    }
+  options:
+    - "2"
+    - "3"
+    - "-2"
+    - "-3"
+    - "Throws exception"
+  correct: 0
+  explanation: "On 30 March 2025, Europe/Paris starts Daylight Saving Time at 02:00 AM. The clock jumps forward to 03:00 AM, effectively skipping one hour. Starting at 01:30, adding 3 hours would normally reach 04:30 on the clock, but because 02:00–03:00 does not exist, only 2 actual hours pass. Duration.between measures actual elapsed time, so it returns 2 hours."
+  category: "Date/Time"
+
+- question: "Which key does firstKey() return for a TreeMap with these entries?"
+  code: |
+    import java.util.*;
+    class Family {
+        public static void main(String[] args) {
+            var map = new TreeMap<String,Integer>();
+            map.put("Mom", 1);
+            map.put("Dad", 2);
+            map.put("Son", 3);
+            System.out.println(map.firstKey());
+        }
+    }
+  options:
+    - "Son"
+    - "Dad"
+    - "null"
+    - "Mom"
+  correct: 1
+  explanation: "TreeMap orders keys naturally. firstKey() returns the smallest key: Dad."
+  category: "Collections"
+
+- question: "Which order of constructor execution occurs in this inheritance example?"
+  code: |
+    class Parent {
+        Parent() { System.out.print("P "); }
+    }
+    class Child extends Parent {
+        Child() { System.out.print("C "); }
+    }
+    class Family {
+        public static void main(String[] args) {
+            new Child();
+        }
+    }
+  options:
+    - "C P"
+    - "P C"
+    - "C only"
+    - "Compilation error"
+  correct: 1
+  explanation: "Superclass constructor runs before subclass constructor."
+  category: "OOP"
+
+- question: "Which elements are processed by dropWhile in this stream?"
+  code: |
+    import java.util.*;
+    class Family {
+        public static void main(String[] args) {
+            List<String> list = List.of("Dad","Mom","Son");
+            list.stream().dropWhile(s -> s.length() > 2).forEach(System.out::print);
+        }
+    }
+  options:
+    - "Son"
+    - ""
+    - "MomSon"
+    - "DadMomSon"
+  correct: 2
+  explanation: "dropWhile removes elements from the start while the predicate is true. Prints MomSon."
+  category: "Streams"
+
+- question: "Which value is returned by Arrays.binarySearch when the key is absent?"
+  code: |
+    class Family {
+        public static void main(String[] args) {
+            int[] arr = {10,20,30};
+            int pos = java.util.Arrays.binarySearch(arr,25);
+            System.out.println(pos);
+        }
+    }
+  options:
+    - "2"
+    - "-3"
+    - "-2"
+    - "Compilation error"
+  correct: 1
+  explanation: "Not found → returns -(insertion point) - 1. 25 would be at index 2 → -(2)-1 = -3."
+  category: "Arrays"
+
+- question: "What is the effect of reassignment inside a method on a StringBuilder?"
+  code: |
+    class Family {
+        static void test(StringBuilder sb) {
+            sb.append("Mom");
+            sb = new StringBuilder("Dad");
+        }
+        public static void main(String[] args) {
+            StringBuilder s = new StringBuilder("Son");
+            test(s);
+            System.out.println(s);
+        }
+    }
+  options:
+    - "Son"
+    - "SonMom"
+    - "Dad"
+    - "Compilation error"
+  correct: 1
+  explanation: "Append modifies the original. Reassignment inside the method has no effect on the caller."
+  category: "OOP"
+
+- question: "How does equals behave with StringBuilder references?"
+  code: |
+    class Family {
+        public static void main(String[] args) {
+            Object o = new StringBuilder("Dad");
+            System.out.println(o.equals(new StringBuilder("Dad")));
+        }
+    }
+  options:
+    - "true"
+    - "false"
+    - "Compilation error"
+    - "Throws exception"
+  correct: 1
+  explanation: "StringBuilder does not override equals. Uses reference equality."
+  category: "OOP"
+
+- question: "Consider a try-with-resources block that uses an AutoCloseable resource and also has a finally block. Which output is correct?"
+  code: |
+    class Resource implements AutoCloseable {
+        public void use() { System.out.print("Using"); }
+        public void close() { System.out.print("Closed"); }
+    }
+    class Family {
+        public static void main(String[] args) {
+            Resource r = new Resource();
+            try (r) {
+                r.use();
+            } finally {
+                System.out.print("Finally");
+            }
+        }
+    }
+  options:
+    - "UsingFinallyClosed"
+    - "FinallyUsingClosed"
+    - "UsingClosedFinally"
+    - "UsingClosed"
+    - "FinallyClosedUsing"
+  correct: 2
+  explanation: "Even when the resource is declared outside the try (Java 9+ feature), try-with-resources still calls close() after the try block completes. Then the finally block executes. So the output order is 'Using' (try body) → 'Closed' (resource auto-close) → 'Finally' (finally block)."
+  category: "Exceptions"
+
+- question: "Given the following family hierarchy and variable declarations, which statements compile without error?"
+  code: |
+    import java.util.*;
+    class Grandparent {}
+    class Parent extends Grandparent {}
+    class Child extends Parent {}
+    class Family {
+        List<? super Grandparent> ancestors = null;
+        List<? extends Child> descendants = null;
+    }
+  options:
+    - "ancestors.add(new Grandparent()); ancestors.add(new Parent()); ancestors.add(new Child());"
+    - "descendants.add(new Child()); descendants.add(new Parent());"
+    - "Grandparent g = ancestors.get(0);"
+    - "Parent p = ancestors.get(0);"
+    - "Child c = descendants.get(0);"
+  correct: 0
+  explanation: "For List<? super Grandparent> you can add Grandparent or any subclass. For List<? extends Child> you cannot add anything except null. The return type of get() cannot be assumed without casting, so assignments to specific types other than Object are compilation errors. Option 0 compiles fully; the others do not."
+  category: "Generics"
+
+- question: "Which sequence prints in a for-loop with initialization side-effect?"
+  code: |
+    class Family {
+        public static void main(String[] args) {
+            int i = 0;
+            for(System.out.print("Dad"); i < 2; i++) {
+                System.out.print("Son");
+            }
+        }
+    }
+  options:
+    - "DadSon"
+    - "DadSonSon"
+    - "SonDadSon"
+    - "Compilation error"
+  correct: 1
+  explanation: "Init prints Dad once. Loop runs twice printing Son Son."
+  category: "Control Flow"
+
+- question: "Which instanceof check returns false for a null reference?"
+  code: |
+    class Family {
+        public static void main(String[] args) {
+            String s = null;
+            System.out.println(s instanceof String);
+        }
+    }
+  options:
+    - "true"
+    - "false"
+    - "Compilation error"
+    - "Throws exception"
+  correct: 1
+  explanation: "instanceof returns false when the reference is null."
+  category: "Operators"
+
+- question: "Inside a static method in Java 21, which of the following can be used to access an instance field?"
+  code: |
+    class Family {
+        private String role = "Parent";
+        static void test() {
+            // ???
+        }
+    }
+  options:
+    - "Cannot access instance fields directly"
+    - "Access via creating an instance: new Family().role"
+    - "Access via 'this.role'"
+    - "Access via static import"
+  correct: 1
+  explanation: "Static methods cannot access instance fields directly. To access an instance field, you need a reference to an object, e.g., 'new Family().role'. 'this' cannot be used in a static context, and static import does not help."
+  category: "OOP"
+
+- question: "Which expression correctly handles a TreeMap key search?"
+  code: |
+    import java.util.*;
+    class Family {
+        public static void main(String[] args) {
+            var map = new TreeMap<String,Integer>();
+            map.put("Dad", 1);
+            map.put("Mom", 2);
+            map.put("Son", 3);
+            /* ??? */
+        }
+    }
+  options:
+    - "map.firstKey()"
+    - "map.getKey(0)"
+    - "map.firstEntryKey()"
+    - "map.head()"
+  correct: 0
+  explanation: "TreeMap.firstKey() returns the least key according to natural order."
+  category: "Collections"
+
+- question: "In a bottom-up migration to the Java module system, what is the recommended first step?"
+  options:
+    - "Move all existing JARs to the module path"
+    - "Convert all JARs to automatic modules at once"
+    - "Start by converting the module with the most dependencies"
+    - "Add a module-info.class to every JAR before running the application"
+    - "Start by converting the module with the fewest dependencies into a named module"
+  correct: 4
+  explanation: "In bottom-up migration, you begin by converting the module with the fewest dependencies into a named module. Other JARs stay on the classpath initially. This avoids breaking the build and allows gradual migration."
+  category: "Modules"
+
+- question: "Which substring is extracted from this short text block?"
+  code: |
+    public class Family {
+        public static void main(String[] args) {
+            String familyMessage = """
+    Hello! 
+    Son
+    """;
+            String part = familyMessage.substring(7, 9);
+            System.out.println(part);
+        }
+    }
+  options:
+    - "So"
+    - "on"
+    - "\n S"
+    - "Son"
+  correct: 0
+  explanation: "The text block contains 'Hello! \\nSon'. Substring(7, 9) extracts characters at indexes 7 and 8: 'S' + 'o' = 'So'."
+  category: "Java 21 Features"
+
+- question: "What is the output of this ExecutorService code?"
+  code: |
+    import java.util.concurrent.*;
+    public class Test {
+        public static void main(String[] args) throws Exception {
+            ExecutorService service = Executors.newFixedThreadPool(1);
+            Runnable r = () -> System.out.print("Runnable executed");
+            Callable<String> c = () -> "Callable executed";
+
+            Future<?> f1 = service.submit(r);
+            Future<String> f2 = service.submit(c);
+
+            System.out.print(f1.get());
+            System.out.print(f2.get());
+            service.shutdown();
+        }
+    }
+  options:
+    - "Runnable executedCallable executed"
+    - "Runnable executednullCallable executed"
+    - "nullCallable executed"
+    - "Compilation error"
+    - "Runtime exception"
+  correct: 1
+  explanation: "submit(Runnable) returns a Future<?> whose get() returns null upon successful completion. submit(Callable<T>) returns a Future<T> whose get() returns the callable result. The output is: 'Runnable executed' (from the Runnable), then 'null' (from f1.get()), then 'Callable executed' (from f2.get()) - all printed consecutively without newlines since print() is used."
+  category: "Concurrency"

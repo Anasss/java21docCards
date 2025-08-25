@@ -2,8 +2,37 @@ title: Java 21 OCP Flashcards
 description: A Structured collection of flashcards to help you prepare for the Oracle Certified Professional (OCP) Java 21 exam.
 remote_theme: just-the-docs/just-the-docs
 url: https://anasss.github.io
-baseurl: /java21docCards  # Add this line!
+baseurl: /java21docCards
 nav_enabled: true
 back_to_top: true
+
 plugins:
   - jekyll-remote-theme
+
+# Collections configuration
+collections:
+  flashcards:
+    output: true
+    permalink: /:collection/:name/
+    sort_by: order
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "flashcards"
+    values:
+      layout: "flashcard"
+      parent: "Java 21 OCP Flashcards"
+
+# Just the Docs configuration
+search_enabled: true
+aux_links:
+  "GitHub Repository":
+    - "https://github.com/Anasss/java21docCards"
+
+# Quiz configuration
+quiz:
+  title: "Java 21 OCP Quiz"
+  description: "Test your knowledge of Java 21 OCP exam topics"
+  total_questions: 32
