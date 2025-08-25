@@ -15,6 +15,12 @@ Review key concepts in a concise, practical way:
 
 * [Java 21 OCP Flashcards](https://anasss.github.io/java21docCards/)
 
+## Q&A Study Guide
+
+Comprehensive question and answer format covering different exam topics:
+
+* [Q&A Study Guide](https://anasss.github.io/java21docCards/complete-java21-qa.html)
+
 ## Free Practice Quiz
 
 Test your knowledge with a Java 21 OCP-style quiz:
