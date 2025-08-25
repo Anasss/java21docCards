@@ -156,6 +156,13 @@
             margin-top: 30px;
             padding: 20px 0;
             border-top: 1px solid #eee;
+            gap: 15px;
+        }
+        
+        .controls .left-controls,
+        .controls .right-controls {
+            display: flex;
+            gap: 10px;
         }
         
         .btn {
@@ -168,6 +175,7 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
         
         .btn-primary {
@@ -268,6 +276,30 @@
             color: #6c757d;
             margin-bottom: 30px;
         }
+
+        .results .btn {
+            margin: 0 10px;
+        }
+        
+        .quiz-footer {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-top: 1px solid #e1e8ed;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .quiz-footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .quiz-footer a:hover {
+            color: #764ba2;
+        }
         
         @media (max-width: 768px) {
             body {
@@ -281,6 +313,21 @@
             .controls {
                 flex-direction: column;
                 gap: 15px;
+            }
+            
+            .controls .left-controls,
+            .controls .right-controls {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .btn {
+                flex: 1;
+                min-width: 120px;
+            }
+            
+            .quiz-footer {
+                padding: 15px 20px;
             }
         }
     </style>
@@ -322,6 +369,14 @@
 					Study Flashcards </button>
             </div>
         </div>
+		
+		<div class="quiz-footer">
+            Found an issue or want to contribute? 
+            <a href="https://github.com/Anasss/java21docCards/tree/main" target="_blank">
+                Send feedback or contribute on GitHub
+            </a>
+        </div>
+		
     </div>
 
     <script>
