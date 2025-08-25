@@ -9,17 +9,14 @@ layout: default
 
 A structured collection of flashcards to help you prepare for the Java 21 OCP certification exam.
 
-## Quick Links
+## Quick Start
 
-<div class="quick-links">
+<div class="quick-actions">
   <a href="{{ '/quiz/' | relative_url }}" class="btn btn-primary">
-    🎯 Take the Quiz
+    🎯 Take Practice Quiz
   </a>
   <a href="{{ '/complete-java21-qa.html' | relative_url }}" class="btn btn-secondary">
     📚 Q&A Study Guide
-  </a>
-  <a href="#all-flashcards" class="btn btn-secondary">
-    🃏 Browse All Cards
   </a>
 </div>
 
@@ -47,54 +44,78 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
 
 ## Getting Started
 
-1. **📖 Start with fundamentals**: Begin with OOP and Encapsulation or Java 21 Features
-2. **🔄 Study systematically**: Work through each category, focusing on code examples
-3. **🎯 Test your knowledge**: Take the quiz to identify weak areas
-4. **📝 Review and practice**: Use the Q&A guide for deeper understanding
-5. **🔁 Repeat and refine**: Regular review is key to exam success
+Follow this proven study path for Java 21 OCP certification success:
 
-## <a id="all-flashcards"></a>All Flashcards
+### 📖 Study Strategy
+1. **Start with Core Concepts**: Begin with OOP and Encapsulation fundamentals
+2. **Explore Java 21 Features**: Master records, sealed classes, and pattern matching
+3. **Practice with Collections**: Understand generics, streams, and functional programming
+4. **Test Frequently**: Use the quiz to identify knowledge gaps
+5. **Review and Reinforce**: Revisit weak areas using the Q&A guide
 
-<div class="flashcard-index">
-  {% assign categories = site.flashcards | map: "category" | uniq | sort %}
-  {% for category in categories %}
-    {% assign flashcards_in_category = site.flashcards | where: "category", category | sort: "order" %}
-    
-    <div class="category-section">
-      <h3 class="category-heading">{{ category }}</h3>
-      <div class="flashcard-grid">
-        {% for flashcard in flashcards_in_category %}
-          <a href="{{ flashcard.url | relative_url }}" class="flashcard-item">
-            <div class="flashcard-title">{{ flashcard.title }}</div>
-            {% if flashcard.learning_tip %}
-              <div class="flashcard-tip">💡 {{ flashcard.learning_tip | truncate: 60 }}</div>
-            {% endif %}
-          </a>
-        {% endfor %}
-      </div>
+
+
+## All Study Materials
+
+<div class="materials-grid">
+  <div class="material-section">
+    <h3>🃏 Flashcards by Category</h3>
+    <div class="flashcard-index">
+      {% assign categories = site.flashcards | map: "category" | uniq | sort %}
+      {% for category in categories %}
+        {% assign flashcards_in_category = site.flashcards | where: "category", category | sort: "order" %}
+        
+        <details class="category-details">
+          <summary class="category-summary">
+            <span class="category-name">{{ category }}</span>
+            <span class="category-count">{{ flashcards_in_category.size }} card{% if flashcards_in_category.size != 1 %}s{% endif %}</span>
+          </summary>
+          <div class="flashcard-list">
+            {% for flashcard in flashcards_in_category %}
+              <a href="{{ flashcard.url | relative_url }}" class="flashcard-link">
+                <span class="flashcard-title">{{ flashcard.title }}</span>
+                {% if flashcard.learning_tip %}
+                  <span class="flashcard-tip">💡 {{ flashcard.learning_tip | truncate: 50 }}</span>
+                {% endif %}
+              </a>
+            {% endfor %}
+          </div>
+        </details>
+      {% endfor %}
     </div>
-  {% endfor %}
+  </div>
 </div>
 
-## Contributing
+## Resources & Support
 
-We welcome contributions! Check out our [contributing guide](https://github.com/Anasss/java21docCards/blob/main/CONTRIBUTING.md) for details on how to:
-
-- Add new flashcards and improve existing content
-- Add quiz questions and enhance the Q&A guide
-- Report issues and suggest improvements
-
-## License
-
-This project is open-source and available under the MIT License.
+<div class="resources-grid">
+  <div class="resource-card">
+    <h4>📚 Additional Materials</h4>
+    <ul>
+      <li><a href="{{ '/complete-java21-qa.html' | relative_url }}">Complete Q&A Study Guide</a></li>
+      <li><a href="{{ '/quiz/' | relative_url }}">Interactive Practice Quiz</a></li>
+    </ul>
+  </div>
+  
+  <div class="resource-card">
+    <h4>🤝 Contributing</h4>
+    <p>Help improve this study resource:</p>
+    <ul>
+      <li><a href="https://github.com/Anasss/java21docCards/blob/main/CONTRIBUTING.md" target="_blank">Contribution Guide</a></li>
+      <li><a href="https://github.com/Anasss/java21docCards/issues" target="_blank">Report Issues</a></li>
+      <li><a href="https://github.com/Anasss/java21docCards" target="_blank">View Source Code</a></li>
+    </ul>
+  </div>
+</div>
 
 <style>
-/* Quick Links */
-.quick-links {
+/* Quick Actions */
+.quick-actions {
   display: flex;
   gap: 15px;
   margin: 30px 0;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .btn {
@@ -170,78 +191,148 @@ This project is open-source and available under the MIT License.
   font-weight: 600;
 }
 
-/* Flashcard Index */
-.flashcard-index {
+/* Materials Grid */
+.materials-grid {
   margin: 40px 0;
 }
 
-.category-section {
-  margin-bottom: 40px;
-}
-
-.category-heading {
+.material-section h3 {
   color: #2c3e50;
   border-bottom: 3px solid #667eea;
   padding-bottom: 10px;
   margin-bottom: 20px;
-  font-size: 1.4em;
 }
 
-.flashcard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 15px;
-}
-
-.flashcard-item {
-  display: block;
-  padding: 18px;
-  background: white;
+/* Collapsible Categories */
+.category-details {
+  margin-bottom: 15px;
   border: 1px solid #e1e8ed;
   border-radius: 8px;
+  overflow: hidden;
+}
+
+.category-summary {
+  padding: 15px 20px;
+  background: #f8f9fa;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  list-style: none;
+}
+
+.category-summary::-webkit-details-marker {
+  display: none;
+}
+
+.category-summary::marker {
+  content: "";
+}
+
+.category-summary:hover {
+  background: #e9ecef;
+}
+
+.category-name {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.category-count {
+  background: #667eea;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.flashcard-list {
+  padding: 10px;
+  background: white;
+}
+
+.flashcard-link {
+  display: block;
+  padding: 12px 15px;
   text-decoration: none;
   color: #333;
+  border-bottom: 1px solid #f0f0f0;
   transition: all 0.3s ease;
 }
 
-.flashcard-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  border-color: #667eea;
-  text-decoration: none;
+.flashcard-link:last-child {
+  border-bottom: none;
+}
+
+.flashcard-link:hover {
+  background: #f8f9ff;
   color: #667eea;
+  text-decoration: none;
+  padding-left: 20px;
 }
 
 .flashcard-title {
-  font-weight: 600;
-  font-size: 1.05em;
-  margin-bottom: 8px;
-  color: inherit;
+  font-weight: 500;
+  display: block;
 }
 
 .flashcard-tip {
   font-size: 0.85em;
   color: #666;
-  line-height: 1.4;
-  margin-bottom: 8px;
   font-style: italic;
+  display: block;
+  margin-top: 4px;
 }
 
-.flashcard-meta {
-  font-size: 0.8em;
-  color: #999;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+/* Resources Grid */
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 40px 0;
+}
+
+.resource-card {
+  padding: 20px;
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.resource-card h4 {
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+}
+
+.resource-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.resource-card li {
+  margin-bottom: 8px;
+}
+
+.resource-card a {
+  color: #667eea;
+  text-decoration: none;
+}
+
+.resource-card a:hover {
+  text-decoration: underline;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .quick-links {
+  .quick-actions {
     flex-direction: column;
+    gap: 10px;
   }
   
   .btn {
-    text-align: center;
     font-size: 1em;
     padding: 12px 20px;
   }
@@ -259,24 +350,27 @@ This project is open-source and available under the MIT License.
     font-size: 2.2em;
   }
   
-  .flashcard-grid {
+  .resources-grid {
     grid-template-columns: 1fr;
   }
   
-  .category-heading {
-    font-size: 1.2em;
+  .category-summary {
+    padding: 12px 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
   }
+}
+
+/* Focus states for accessibility */
+.btn:focus,
+.flashcard-link:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
 }
 
 /* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
-}
-
-/* Focus states for accessibility */
-.btn:focus,
-.flashcard-item:focus {
-  outline: 2px solid #667eea;
-  outline-offset: 2px;
 }
 </style>
