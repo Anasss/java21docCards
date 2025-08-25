@@ -42,7 +42,7 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
 
 ## 🤝 Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to:
+We welcome contributions! Check out our [contributing guide](https://github.com/Anasss/java21docCards/blob/main/CONTRIBUTING.md) for details on how to:
 
 - Add new flashcards
 - Improve existing content  
