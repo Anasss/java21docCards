@@ -25,7 +25,6 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
 
 <div style="margin-bottom: 25px;"></div>
 
-
 1. **Start with Core Concepts**: Begin with [OOP and Encapsulation]({{ '/flashcards/05-instance-methods-vs-variables-and-static-methods/' | relative_url }}) fundamentals
 2. **Explore Java 21 Features**: Master [records]({{ '/flashcards/15-records-java-21-features/' | relative_url }}), [sealed classes]({{ '/flashcards/10-sealed-classes-java-21/' | relative_url }}), and [pattern matching]({{ '/flashcards/05-pattern-matching-with-switch-java-21/' | relative_url }})
 3. **Practice with Collections**: Understand [generics]({{ '/flashcards/05-generics-wildcards-reads/' | relative_url }}), [streams]({{ '/flashcards/05-stream-operations-and-exception-handling/' | relative_url }}), and [functional programming]({{ '/flashcards/20-lambda-target-types-runnable-vs-callable/' | relative_url }})
@@ -60,11 +59,12 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
   <div class="material-section">
     <h3>🃏 Flashcards by Category</h3>
     <div class="flashcard-index">
-      {% assign categories = site.flashcards | map: "category" | uniq | sort %}
-      {% for category in categories %}
-        {% assign flashcards_in_category = site.flashcards | where: "category", category | sort: "order" %}
+      {% assign categories = site.flashcards | group_by: "category" | sort: "size" | reverse %}
+      {% for category_group in categories %}
+        {% assign category = category_group.name %}
+        {% assign flashcards_in_category = category_group.items | sort: "order" %}
         
-        <details class="category-details">
+        <details class="category-details" id="{{ category | slugify }}">
           <summary class="category-summary">
             <span class="category-name">{{ category }}</span>
             <span class="category-count">{{ flashcards_in_category.size }} card{% if flashcards_in_category.size != 1 %}s{% endif %}</span>
@@ -253,7 +253,7 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
 
 .flashcard-link {
   display: block;
-  padding: 12px 15px;
+  padding: 15px;
   text-decoration: none;
   color: #333;
   border-bottom: 1px solid #f0f0f0;
@@ -271,6 +271,12 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
   padding-left: 20px;
 }
 
+.flashcard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .flashcard-title {
   font-weight: 500;
   display: block;
@@ -282,6 +288,23 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
   font-style: italic;
   display: block;
   margin-top: 4px;
+  line-height: 1.4;
+}
+
+.flashcard-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.tag {
+  background: #e8f0ff;
+  color: #4a5568;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7em;
+  font-weight: 500;
 }
 
 /* Resources Grid */

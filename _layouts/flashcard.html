@@ -3,6 +3,9 @@ layout: default
 ---
 
 <div class="flashcard-container">
+  <!-- Simple Breadcrumb -->
+  {% include simple_breadcrumb.html %}
+  
   <div class="flashcard-header">
     {% if page.category %}
       <span class="flashcard-category">{{ page.category | upcase }}</span>
@@ -52,13 +55,13 @@ layout: default
     <div class="flashcard-meta">
       <span>Card {{ current_index | plus: 1 }} of {{ flashcards.size }}</span>
       {% if page.category %}
-        | <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}">{{ page.category }}</a>
+        | <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}">Back to {{ page.category }}</a>
       {% endif %}
     </div>
   </div>
 </div>
 
-<!-- Flashcard-specific styles -->
+<!-- Keep your existing flashcard styles -->
 <style>
 .flashcard-container { max-width: 800px; margin: 0 auto; padding: 20px; }
 .flashcard-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }

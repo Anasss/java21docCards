@@ -1,0 +1,46 @@
+<div class="simple-breadcrumb">
+  <a href="{{ '/' | relative_url }}">🏠 Home</a>
+  {% if page.category %}
+    <span class="breadcrumb-sep">→</span>
+    <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}">{{ page.category }}</a>
+    <span class="breadcrumb-sep">→</span>
+  {% endif %}
+  <span class="current-page">{{ page.title }}</span>
+</div>
+
+<style>
+.simple-breadcrumb {
+  background: #f8f9fa;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+}
+
+.simple-breadcrumb a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.simple-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-sep {
+  margin: 0 8px;
+  color: #6c757d;
+}
+
+.current-page {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .simple-breadcrumb {
+    font-size: 0.8em;
+    padding: 10px 12px;
+  }
+}
+</style>
