@@ -2,6 +2,7 @@
 title: Java 21 OCP Flashcards
 nav_order: 1
 has_children: true
+has_toc: false
 layout: default
 ---
 
@@ -20,7 +21,18 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
   </a>
 </div>
 
-## Study Progress Overview
+## 📖 Study strategy
+
+<div style="margin-bottom: 25px;"></div>
+
+
+1. **Start with Core Concepts**: Begin with [OOP and Encapsulation]({{ '/flashcards/05-instance-methods-vs-variables-and-static-methods/' | relative_url }}) fundamentals
+2. **Explore Java 21 Features**: Master [records]({{ '/flashcards/15-records-java-21-features/' | relative_url }}), [sealed classes]({{ '/flashcards/10-sealed-classes-java-21/' | relative_url }}), and [pattern matching]({{ '/flashcards/05-pattern-matching-with-switch-java-21/' | relative_url }})
+3. **Practice with Collections**: Understand [generics]({{ '/flashcards/05-generics-wildcards-reads/' | relative_url }}), [streams]({{ '/flashcards/05-stream-operations-and-exception-handling/' | relative_url }}), and [functional programming]({{ '/flashcards/20-lambda-target-types-runnable-vs-callable/' | relative_url }})
+4. **Test Frequently**: Use the [quiz]({{ '/quiz/' | relative_url }}) to identify knowledge gaps
+5. **Review and Reinforce**: Revisit weak areas using the [Q&A guide]({{ '/complete-java21-qa.html' | relative_url }})
+
+## 📊 Learning Dashboard
 
 <div class="stats-grid">
   {% assign total_flashcards = site.flashcards | size %}
@@ -41,19 +53,6 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
     <div class="stat-label">Categor{% if total_categories == 1 %}y{% else %}ies{% endif %}</div>
   </div>
 </div>
-
-## Getting Started
-
-Follow this proven study path for Java 21 OCP certification success:
-
-### 📖 Study Strategy
-1. **Start with Core Concepts**: Begin with OOP and Encapsulation fundamentals
-2. **Explore Java 21 Features**: Master records, sealed classes, and pattern matching
-3. **Practice with Collections**: Understand generics, streams, and functional programming
-4. **Test Frequently**: Use the quiz to identify knowledge gaps
-5. **Review and Reinforce**: Revisit weak areas using the Q&A guide
-
-
 
 ## All Study Materials
 
@@ -109,13 +108,12 @@ Follow this proven study path for Java 21 OCP certification success:
 </div>
 
 <style>
-/* Quick Actions */
 .quick-actions {
   display: flex;
   gap: 15px;
   margin: 30px 0;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .btn {

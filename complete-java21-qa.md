@@ -1,6 +1,5 @@
 ---
 title: Q&A Study Guide
-parent: Java 21 OCP Flashcards
 nav_order: 3
 layout: default
 ---

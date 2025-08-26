@@ -5,6 +5,9 @@ url: https://anasss.github.io
 baseurl: /java21docCards
 nav_enabled: true
 back_to_top: true
+nav_footer_custom: true
+include:
+  - "_includes"
 
 plugins:
   - jekyll-remote-theme
