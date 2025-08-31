@@ -36,6 +36,7 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
 <div class="stats-grid">
   {% assign total_flashcards = site.flashcards | size %}
   {% assign total_categories = site.flashcards | map: "category" | uniq | size %}
+  {% assign total_questions = site.data.quiz.questions | size %}
   
   <div class="stat-card">
     <div class="stat-number">{{ total_flashcards }}</div>
@@ -43,8 +44,8 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
   </div>
   
   <div class="stat-card">
-    <div class="stat-number">32</div>
-    <div class="stat-label">Quiz Questions</div>
+    <div class="stat-number">{{ total_questions }}</div>
+    <div class="stat-label">Quiz Question{% if total_questions != 1 %}s{% endif %}</div>
   </div>
   
   <div class="stat-card">
