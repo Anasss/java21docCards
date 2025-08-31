@@ -662,3 +662,172 @@
   correct: 0
   explanation: "For loop runs twice: First iteration: ++parents makes parents=5, children=0+5=5, prints '5'. Second iteration: ++parents makes parents=6, children=5+6=11, prints '11'. While loop: children-- > 8 checks 11>8 (true), then decrements children to 10. Inside loop: uncles=10, children=10-10=0, uncles++ doesn't affect children, prints '0'. Next check: 0>8 is false, loop exits. Final: grandparents=2, parents=6, children=-1 (from the failed while condition). Total: 2+6+(-1)=7."
   category: "Operators and Control Flow"
+
+- question: "What is the output of this family enum hierarchy code?"
+  code: |
+   enum FamilyRole implements Comparable<FamilyRole> {
+       GRANDPARENT("Elder") {
+           @Override
+           public String getGreeting() { return "Hello dear"; }
+       },
+       PARENT("Adult") {
+           @Override
+           public String getGreeting() { return "Hi there"; }
+       },
+       CHILD("Young");
+       
+       private final String ageGroup;
+       
+       FamilyRole(String ageGroup) {
+           this.ageGroup = ageGroup;
+       }
+       
+       public String getGreeting() {
+           return "Hey";
+       }
+       
+       public static void main(String[] args) {
+           FamilyRole[] roles = FamilyRole.values();
+           FamilyRole found = FamilyRole.valueOf("CHILD");
+           
+           System.out.print(roles[1].getGreeting() + " ");
+           System.out.print(found.ordinal() + " ");
+           System.out.print(GRANDPARENT.compareTo(CHILD) + " ");
+           System.out.print(roles.length);
+       }
+   }
+  options:
+   - "Hey 2 -2 3"
+   - "Hi there 2 2 3"
+   - "Hey 1 -1 3"
+   - "Hi there 2 -2 3"
+   - "Compilation error"
+  correct: 3
+  explanation: "roles[1] is PARENT which overrides getGreeting() to return 'Hi there'. found is CHILD with ordinal 2. GRANDPARENT.compareTo(CHILD) compares ordinals: 0 - 2 = -2. values() returns array of length 3."
+  category: "Enums"
+
+- question: "What is the structure of the Map returned by this family grouping operation?"
+  code: |
+   import java.util.*;
+   import java.util.stream.*;
+   
+   class FamilyMember {
+       String name;
+       int age;
+       boolean isMarried;
+       
+       FamilyMember(String name, int age, boolean isMarried) {
+           this.name = name; this.age = age; this.isMarried = isMarried;
+       }
+       
+       public String toString() { return name; }
+   }
+   
+   class Family {
+       public static void main(String[] args) {
+           List<FamilyMember> members = List.of(
+               new FamilyMember("Dad", 45, true),
+               new FamilyMember("Mom", 42, true),
+               new FamilyMember("Uncle", 38, false),
+               new FamilyMember("Son", 16, false)
+           );
+           
+           Map<Boolean, Map<Boolean, List<FamilyMember>>> result = members.stream()
+               .collect(Collectors.partitioningBy(m -> m.age >= 40,
+                        Collectors.groupingBy(m -> m.isMarried)));
+           
+           System.out.println(result.get(true).get(true).size());
+       }
+   }
+  options:
+   - "1"
+   - "2" 
+   - "3"
+   - "4"
+   - "Throws NullPointerException"
+  correct: 1
+  explanation: "partitioningBy creates 2 groups: age>=40 (true/false). Each partition is then grouped by isMarried status. result.get(true) gets the age>=40 partition containing [Dad, Mom, Uncle]. Then .get(true) gets the married subgroup from that partition, which contains [Dad, Mom]. So size() returns 2."
+  category: "Streams"
+  
+- question: "A family photo management application needs to organize photos by family member directories. Which combination of Path operations will correctly resolve a relative path against an absolute base path?"
+  options:
+   - "Path.of('/home/family').resolve('../photos/dad.jpg') results in '/home/photos/dad.jpg'"
+   - "Path.of('/home/family').resolve('/photos/dad.jpg') results in '/home/family/photos/dad.jpg'"
+   - "Path.of('/home/family').normalize().resolve('mom/../dad.jpg') results in '/home/family/dad.jpg'"
+   - "Path.of('/home/family').resolveSibling('photos').resolve('dad.jpg') results in '/home/photos/dad.jpg'"
+   - "All of the above are correct"
+  correct: 3
+  explanation: "Option A: resolve('../photos/dad.jpg') appends the relative path, giving '/home/family/../photos/dad.jpg' which when normalized becomes '/home/photos/dad.jpg'. Option B: resolve() with absolute path returns the absolute path unchanged, so result is '/photos/dad.jpg', not the combined path. Option C: resolve() happens before normalize() has any effect on the argument. Option D: resolveSibling('photos') replaces 'family' with 'photos' giving '/home/photos', then resolve('dad.jpg') gives '/home/photos/dad.jpg'."
+  category: "I/O & NIO"  
+
+- question: "What is the output of this family filtering operation using predicate composition?"
+  code: |
+   import java.util.*;
+   import java.util.function.*;
+   import java.util.stream.*;
+   
+   class FamilyMember {
+       String name;
+       int age;
+       boolean isParent;
+       
+       FamilyMember(String name, int age, boolean isParent) {
+           this.name = name; this.age = age; this.isParent = isParent;
+       }
+       
+       public String toString() { return name; }
+   }
+   
+   class Family {
+       public static void main(String[] args) {
+           List<FamilyMember> members = List.of(
+               new FamilyMember("Grandpa", 70, true),
+               new FamilyMember("Dad", 45, true),
+               new FamilyMember("Mom", 42, true),
+               new FamilyMember("Uncle", 35, false),
+               new FamilyMember("Son", 16, false)
+           );
+           
+           Predicate<FamilyMember> isAdult = m -> m.age >= 18;
+           Function<FamilyMember, String> getRole = m -> m.isParent ? "Parent" : "NonParent";
+           
+           long count = members.stream()
+               .filter(isAdult.negate())
+               .map(getRole)
+               .filter(role -> role.equals("NonParent"))
+               .count();
+               
+           System.out.println(count);
+       }
+   }
+  options:
+   - "0"
+   - "1"
+   - "2"
+   - "3"
+   - "5"
+  correct: 1
+  explanation: "isAdult.negate() filters for members under 18, which gives us only [Son]. The map(getRole) transforms Son to 'NonParent' since Son.isParent is false. The final filter keeps only 'NonParent' strings, so count() returns 1."
+  category: "Functional Interfaces"
+
+- question: "A family genealogy application supports multiple languages and regions. Given the following ResourceBundle files in the classpath, which file will be selected when loading the bundle with Locale('fr', 'CA')?"
+  scenario: |
+    Available ResourceBundle files:
+    - FamilyMessages.properties
+    - FamilyMessages_en.properties  
+    - FamilyMessages_fr.properties
+    - FamilyMessages_en_US.properties
+    - FamilyMessages_fr_FR.properties
+    
+    Code:
+    Locale locale = new Locale("fr", "CA");
+    ResourceBundle bundle = ResourceBundle.getBundle("FamilyMessages", locale);
+  options:
+    - "FamilyMessages_fr_CA.properties (throws MissingResourceException since file doesn't exist)"
+    - "FamilyMessages_fr.properties"
+    - "FamilyMessages.properties (default fallback)"
+    - "FamilyMessages_en.properties (system default)"
+    - "FamilyMessages_fr_FR.properties (closest French match)"
+  correct: 2
+  explanation: "ResourceBundle follows a specific search hierarchy: most specific to least specific. For Locale('fr', 'CA'), it searches for: 1) FamilyMessages_fr_CA.properties (not found), 2) FamilyMessages_fr.properties (found and selected), 3) FamilyMessages.properties (not needed). The search stops at the first match found. FamilyMessages_fr.properties is selected because it matches the language code 'fr' even though the country code 'CA' doesn't have a specific file."
+  category: "Localization"  
