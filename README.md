@@ -27,7 +27,7 @@ Test your knowledge with a Java 21 OCP-style quiz:
 
 * [Take the Quiz](https://anasss.github.io/java21docCards/java21-quiz.html)
 
-> The quiz includes 30 OCP-style questions covering common exam topics.
+> The quiz includes OCP-style questions covering common exam topics.
 
 ## Contributions
 
