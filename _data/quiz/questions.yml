@@ -1,5 +1,4 @@
-# Complete Quiz Questions for Java 21 OCP - Extracted from Original
-# All questions without difficulty field
+# Quiz Questions for Java 21 OCP Mock Exam 
 
 - question: "Which method calls will execute in this inheritance scenario?"
   code: |
@@ -147,7 +146,7 @@
   explanation: "After mapping to uppercase and sorting descending, the first two elements are SON and MOM."
   category: "Streams"
 
-- question: "Is this override declaration valid considering checked exceptions?"
+- question: "What happens when this override declaration is executed?"
   code: |
     class Parent {
       void cook() throws Exception { throw new Exception("Parent"); }
@@ -160,11 +159,11 @@
     }
   options:
     - "Compilation error: must catch IOException"
-    - "Compiles and prints Child"
+    - "Compiles and throws IOException with message 'Child'"
     - "Prints Parent"
     - "Compilation error: IOException not allowed"
   correct: 1
-  explanation: "Child's cook() throws IOException, which is allowed as it is a subclass of Exception."
+  explanation: "Child's cook() is a valid override that narrows the exception type from Exception to IOException (its subclass). When executed, it throws an IOException with message 'Child'. The main method declares 'throws Exception' which covers IOException."
   category: "Exceptions"
 
 - question: "Which output results from these generic method calls?"
@@ -190,27 +189,26 @@
   explanation: "Generic method infers types separately. Output: Dad 42."
   category: "Generics"
 
-- question: "Which instanceof check evaluates to true?"
+- question: "Which instanceof checks compile and evaluate to true?"
   code: |
     sealed class Parent permits Child {}
     final class Child extends Parent {}
     class Family {
         public static void main(String[] args) {
             Parent p = new Child();
-            System.out.println(p instanceof Parent); // line 1
-            System.out.println(p instanceof Child);  // line 2
-            System.out.println(p instanceof String); // line 3
-            System.out.println(p instanceof Object); // line 4
+            System.out.println(p instanceof Parent);  // line 1
+            System.out.println(p instanceof Child);   // line 2
+            System.out.println(p instanceof Object);  // line 3
         }
     }
   options:
+    - "line 1 only"
+    - "line 2 only"
     - "line 1 and 2"
-    - "line 3 and 4"
-    - "line 1, 2 and 4"
-    - "line 2"
-    - "line 1"
-  correct: 2
-  explanation: "Since p references a Child object, both 'p instanceof Parent' and 'p instanceof Child' evaluate to true. 'Parent' is the superclass, and 'Child' is the actual object type. 'p instanceof Object' is always true."
+    - "line 1, 2 and 3"
+    - "Compilation error"
+  correct: 3
+  explanation: "Since p references a Child object: 'p instanceof Parent' is true (Child extends Parent), 'p instanceof Child' is true (actual type), and 'p instanceof Object' is true (everything extends Object). All three lines compile and evaluate to true. Note: instanceof with incompatible types like String would cause compilation error, but Object, Parent, and Child are all compatible with the reference type Parent."
   category: "Java 21 Features"
 
 - question: "What does the following code return?"
@@ -746,7 +744,7 @@
    - "4"
    - "Throws NullPointerException"
   correct: 1
-  explanation: "partitioningBy creates 2 groups: age>=40 (true/false). Each partition is then grouped by isMarried status. result.get(true) gets the age>=40 partition containing [Dad, Mom, Uncle]. Then .get(true) gets the married subgroup from that partition, which contains [Dad, Mom]. So size() returns 2."
+  explanation: "partitioningBy creates 2 groups: age>=40 (true/false). Each partition is then grouped by isMarried status. result.get(true) gets the age>=40 partition containing [Dad, Mom]. Then .get(true) gets the married subgroup from that partition, which contains [Dad, Mom]. So size() returns 2. Note: Uncle is 38, so he's in the false partition."
   category: "Streams"
   
 - question: "A family photo management application needs to organize photos by family member directories. Which combination of Path operations will correctly resolve a relative path against an absolute base path?"
@@ -823,12 +821,12 @@
     Locale locale = new Locale("fr", "CA");
     ResourceBundle bundle = ResourceBundle.getBundle("FamilyMessages", locale);
   options:
-    - "FamilyMessages_fr_CA.properties (throws MissingResourceException since file doesn't exist)"
+    - "FamilyMessages_fr_CA.properties"
+    - "FamilyMessages.properties"
+    - "FamilyMessages_en.properties"
+    - "FamilyMessages_fr_FR.properties"
     - "FamilyMessages_fr.properties"
-    - "FamilyMessages.properties (default fallback)"
-    - "FamilyMessages_en.properties (system default)"
-    - "FamilyMessages_fr_FR.properties (closest French match)"
-  correct: 2
+  correct: 4
   explanation: "ResourceBundle follows a specific search hierarchy: most specific to least specific. For Locale('fr', 'CA'), it searches for: 1) FamilyMessages_fr_CA.properties (not found), 2) FamilyMessages_fr.properties (found and selected), 3) FamilyMessages.properties (not needed). The search stops at the first match found. FamilyMessages_fr.properties is selected because it matches the language code 'fr' even though the country code 'CA' doesn't have a specific file."
   category: "Localization"
 
@@ -906,4 +904,4 @@
        - Method reference prints 'London' (current value of destination)
 
     Output: 'Day2:2 Day2:2 London-Winter-7000-5 London '"
-  category: "Lambda Expressions"  
+  category: "Lambda Expressions"
