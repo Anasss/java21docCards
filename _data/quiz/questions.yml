@@ -312,7 +312,7 @@
     - "Dad"
     - "null"
     - "Mom"
-    - None of the above
+    - "None of the above"
   correct: 1
   explanation: "TreeMap orders keys naturally. firstKey() returns the smallest key: Dad."
   category: "Collections"
@@ -436,7 +436,7 @@
     - "UsingClosedFinally"
     - "UsingClosed"
     - "FinallyClosedUsing"
-    - None of the above
+    - "None of the above"
   correct: 2
   explanation: "Even when the resource is declared outside the try (Java 9+ feature), try-with-resources still calls close() after the try block completes. Then the finally block executes. So the output order is 'Using' (try body) → 'Closed' (resource auto-close) → 'Finally' (finally block)."
   category: "Exceptions"
@@ -658,7 +658,7 @@
    - "5 11 5 Total: 12"
    - "5 10 0 Total: 8"
    - "4 11 0 Total: 7"
-   - None of the above
+   - "None of the above"
  correct: 0
  explanation: "For loop runs twice: First iteration: ++parents makes parents=5, children=0+5=5, prints '5'. Second iteration: ++parents makes parents=6, children=5+6=11, prints '11'. While loop: children-- > 8 checks 11>8 (true), then decrements children to 10. Inside loop: uncles=10, children=10-10=0, uncles++ doesn't affect children, prints '0'. Next check: 0>8 is false, loop exits. Final: grandparents=2, parents=6, children=-1 (from the failed while condition). Total: 2+6+(-1)=7."
  category: "Operators and Control Flow"
