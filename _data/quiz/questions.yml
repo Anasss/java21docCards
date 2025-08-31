@@ -591,3 +591,39 @@
   correct: 1
   explanation: "submit(Runnable) returns a Future<?> whose get() returns null upon successful completion. submit(Callable<T>) returns a Future<T> whose get() returns the callable result. The output is: 'Runnable executed' (from the Runnable), then 'null' (from f1.get()), then 'Callable executed' (from f2.get()) - all printed consecutively without newlines since print() is used."
   category: "Concurrency"
+  
+- question: "What is the output of this ReentrantLock code?"
+  code: |
+    import java.util.concurrent.*;
+    import java.util.concurrent.locks.*;
+    
+    public class FamilyGathering {
+        private Lock dinnerLock = new ReentrantLock();
+        
+        public void joinDinner() {
+            dinnerLock.lock();           // f1
+            if (dinnerLock.tryLock()) {  // f2
+                System.out.print("Eating dinner!");
+            }
+            dinnerLock.unlock();
+        }
+        
+        public static void main(String[] args) {
+            try (var service = Executors.newFixedThreadPool(2)) {
+                FamilyGathering family = new FamilyGathering();
+                for (int i = 0; i < 2; i++)
+                    service.submit(() -> family.joinDinner());
+            }
+            System.out.print("Family dinner complete");
+        }
+    }
+  options:
+    - "Eating dinner!Family dinner complete"
+    - "Eating dinner!Eating dinner!Family dinner complete"
+    - "Family dinner complete"
+    - "Program hangs and prints only: Eating dinner!"
+    - "Compilation error"
+    - "Runtime exception"
+  correct: 3
+  explanation: "This program demonstrates a ReentrantLock bug that causes a deadlock. When the first thread calls dinnerLock.lock() at f1, it acquires the lock. Then at f2, dinnerLock.tryLock() succeeds because ReentrantLock allows the same thread to acquire the lock multiple times (reentrant behavior). So 'Eating dinner!' prints once. However, the thread acquired the lock twice (once at f1, once at f2) but only calls unlock() once. This means the lock is never fully released - it still has a hold count of 1. When the first thread exits, the lock remains held, causing the second thread to wait indefinitely at its dinnerLock.lock() call. The program hangs and never prints 'Family dinner complete' because the ExecutorService cannot shut down with a blocked thread."
+  category: "Concurrency"  
