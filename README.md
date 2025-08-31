@@ -32,7 +32,7 @@ Test your knowledge with a Java 21 OCP-style quiz:
 ## Contributions
 Contributions and suggestions are welcome! You can submit new flashcards or questions via Pull Request.
 
-See our [Contributing Guidelines](https://github.com/Anasss/java21docCards?tab=contributing-ov-file) for more details on how to contribute.
+See our [Contributing Guidelines](https://github.com/Anasss/java21docCards/blob/main/CONTRIBUTING.md) for more details on how to contribute.
 
 ## License
 This project is open-source and available under the MIT License.
