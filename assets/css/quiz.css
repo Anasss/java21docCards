@@ -314,7 +314,15 @@ body {
     margin: 0 10px;
 }
 
-/* Quiz Footer - Fixed Styling */
+/* Results buttons container */
+.results-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Quiz Footer */
 .quiz-footer {
     background: #f8f9fa;
     padding: 20px 30px;
@@ -338,18 +346,7 @@ body {
     text-decoration: underline;
 }
 
-/* Debug styles (remove in production) */
-.debug-info {
-    background: #f8f9fa;
-    border: 1px solid #dee2e6;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    font-family: monospace;
-    font-size: 0.9em;
-}
-
-/* Responsive design */
+/* Responsive design - Enhanced for mobile */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -365,20 +362,61 @@ body {
         gap: 8px;
     }
     
+    /* Control buttons layout on tablets */
     .controls {
-        flex-direction: column;
-        gap: 15px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 10px;
+        padding: 15px 0;
     }
     
-    .controls .left-controls,
-    .controls .right-controls {
+    .controls #prevBtn {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .controls #nextBtn {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    
+    .controls .btn-home {
+        grid-column: 1 / span 2;
+        grid-row: 2;
+    }
+    
+    .controls .btn {
         width: 100%;
-        justify-content: center;
+        padding: 12px 20px;
+        font-size: 14px;
+        margin: 0 !important;
+        white-space: normal;
+        min-height: 44px;
     }
     
-    .btn {
-        flex: 1;
-        min-width: 120px;
+    /* Results buttons on mobile */
+    .results-buttons {
+        flex-direction: column;
+        gap: 10px;
+        padding: 0 15px;
+    }
+    
+    .results-buttons .btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+        margin: 0 !important;
+    }
+    
+    .results {
+        padding: 20px 15px;
+    }
+    
+    /* Improve touch targets */
+    button {
+        -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+        touch-action: manipulation;
     }
     
     .quiz-footer {
@@ -391,5 +429,64 @@ body {
     
     .results h2 {
         font-size: 2em;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    /* Stack all control buttons vertically */
+    .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .controls .btn {
+        grid-column: unset !important;
+        grid-row: unset !important;
+    }
+    
+    .controls #prevBtn {
+        order: 1;
+    }
+    
+    .controls #nextBtn {
+        order: 2;
+    }
+    
+    .controls .btn-home {
+        order: 3;
+    }
+    
+    /* Adjust typography for small screens */
+    .quiz-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .quiz-header p {
+        font-size: 0.95em;
+    }
+    
+    .score-display {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    
+    .question-text {
+        font-size: 1em;
+    }
+    
+    .code-block {
+        font-size: 12px;
+        padding: 15px;
+    }
+    
+    .option {
+        padding: 12px 15px;
+    }
+    
+    .btn {
+        font-size: 14px;
+        letter-spacing: 0;
     }
 }
