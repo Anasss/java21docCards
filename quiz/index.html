@@ -53,4 +53,23 @@ description: Test your knowledge of Java 21 OCP exam topics
     </div>
 </div>
 
+
+
+<script>
+// Load questions from Jekyll data - Fixed data loading
+const questions = [
+  {% for question in site.data.quiz.questions %}
+  {
+    question: {{ question.question | jsonify }},
+    {% if question.code %}code: {{ question.code | jsonify }},{% endif %}
+    options: {{ question.options | jsonify }},
+    correct: {{ question.correct }},
+    explanation: {{ question.explanation | jsonify }},
+    {% if question.category %}category: {{ question.category | jsonify }},{% endif %}
+    {% if question.difficulty %}difficulty: {{ question.difficulty | jsonify }}{% endif %}
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+];
+</script>
+
 <script src="{{ '/assets/js/quiz.js' | relative_url }}"></script>
