@@ -822,7 +822,7 @@
     Locale locale = new Locale("fr", "CA");
     ResourceBundle bundle = ResourceBundle.getBundle("FamilyMessages", locale);
   options:
-    - "FamilyMessages_fr_CA.properties"
+    - "FamilyMessages_CA.properties"
     - "FamilyMessages.properties"
     - "FamilyMessages_en.properties"
     - "FamilyMessages_fr_FR.properties"
