@@ -26,7 +26,7 @@ description: Test your knowledge of Java 21 OCP exam topics
         
         <div class="controls">
             <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>Previous</button>
-            <button class="btn btn-primary" onclick="window.location.href='{{ "/" | relative_url }}'">
+            <button class="btn btn-primary btn-home" onclick="window.location.href='{{ "/" | relative_url }}'">
                 Back to Flashcards
             </button>
             <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
@@ -36,10 +36,12 @@ description: Test your knowledge of Java 21 OCP exam topics
             <h2>Quiz Complete!</h2>
             <div class="final-score" id="finalScore">0/{{ site.quiz.total_questions }}</div>
             <div class="score-message" id="scoreMessage">Great job!</div>
-            <button class="btn btn-primary" onclick="restartQuiz()">Restart Quiz</button>
-            <button class="btn btn-primary" onclick="window.location.href='{{ "/" | relative_url }}'">
-                Study Flashcards
-            </button>
+            <div class="results-buttons">
+                <button class="btn btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                <button class="btn btn-primary" onclick="window.location.href='{{ "/" | relative_url }}'">
+                    Study Flashcards
+                </button>
+            </div>
         </div>
     </div>
     
@@ -50,6 +52,118 @@ description: Test your knowledge of Java 21 OCP exam topics
         </a>
     </div>
 </div>
+
+<style>
+/* Mobile-specific display */
+@media (max-width: 768px) {
+    /* Fix control buttons layout on mobile */
+    .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+    
+    .controls .btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+        margin: 0 !important;
+    }
+    
+    /* Reorder buttons on mobile - Previous and Next on sides, Home in middle */
+    .controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 10px;
+    }
+    
+    .controls #prevBtn {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .controls #nextBtn {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    
+    .controls .btn-home {
+        grid-column: 1 / span 2;
+        grid-row: 2;
+    }
+    
+
+    .results-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 0 15px;
+    }
+    
+    .results-buttons .btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+        margin: 0 !important;
+    }
+    
+    /* Ensure results div has proper padding */
+    .results {
+        padding: 20px 15px;
+    }
+    
+    /* Fix button text wrapping */
+    .btn {
+        white-space: normal;
+        min-height: 44px; /* Minimum touch target size */
+    }
+    
+    /* Improve touch targets */
+    button {
+        -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+        touch-action: manipulation;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .controls {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .controls .btn {
+        grid-column: unset !important;
+        grid-row: unset !important;
+    }
+    
+    /* Stack all buttons vertically on very small screens */
+    .controls #prevBtn {
+        order: 1;
+    }
+    
+    .controls #nextBtn {
+        order: 2;
+    }
+    
+    .controls .btn-home {
+        order: 3;
+    }
+    
+    /* Increase font size for better readability */
+    .quiz-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .score-display {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+</style>
 
 <script>
 // Load questions from Jekyll data - Fixed data loading
