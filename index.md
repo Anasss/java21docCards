@@ -113,45 +113,29 @@ layout: default
 </div>
 
 <style>
-/* Simple Hero Section with Logo */
-.hero-section {
+/* Clean Header Section */
+.header-section {
   text-align: center;
-  padding: 40px 20px 50px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  margin: -20px -20px 40px -20px;
-  border-radius: 0 0 15px 15px;
-  color: white;
-}
-
-.logo-container {
-  margin-bottom: 25px;
+  padding: 30px 20px 40px;
+  margin-bottom: 40px;
 }
 
 .site-logo {
-  max-width: 280px;
+  max-width: 400px;
   width: 100%;
   height: auto;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
   transition: transform 0.3s ease;
 }
 
 .site-logo:hover {
-  transform: translateY(-3px);
+  transform: scale(1.02);
 }
 
-.hero-title {
-  font-size: 2.5em;
-  font-weight: 700;
-  margin: 0 0 15px 0;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.hero-subtitle {
+.site-subtitle {
   font-size: 1.2em;
+  color: #6c757d;
   margin: 0;
-  opacity: 0.95;
-  font-weight: 300;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.5;
@@ -375,20 +359,15 @@ layout: default
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .hero-section {
-    padding: 30px 15px 40px;
-    margin: -20px -15px 30px -15px;
+  .header-section {
+    padding: 20px 15px 30px;
   }
   
   .site-logo {
-    max-width: 220px;
+    max-width: 300px;
   }
   
-  .hero-title {
-    font-size: 2em;
-  }
-  
-  .hero-subtitle {
+  .site-subtitle {
     font-size: 1.1em;
   }
   
@@ -429,16 +408,11 @@ layout: default
 
 @media (max-width: 480px) {
   .site-logo {
-    max-width: 180px;
+    max-width: 250px;
   }
   
-  .hero-title {
-    font-size: 1.7em;
+  .site-subtitle {
+    font-size: 1em;
   }
-}
-
-/* Smooth scrolling for anchor links */
-html {
-  scroll-behavior: smooth;
 }
 </style>
