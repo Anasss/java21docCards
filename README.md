@@ -1,4 +1,8 @@
 # Java 21 OCP Study Cards & Quiz
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/9dc8f6e8-9f68-4145-82ce-1bac084c45af" alt="Java 21 OCP Flashcards Logo" width="300"/>
+</p>
+
 
 Prepare for the Java 21 OCP (1Z0-830) exam with these interactive flashcards and a free practice quiz. The materials cover key Java 21 features in OCP exam style, including:
 
