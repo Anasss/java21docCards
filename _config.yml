@@ -6,6 +6,11 @@ baseurl: ""
 nav_enabled: true
 back_to_top: true
 nav_footer_custom: true
+
+# Logo configuration
+logo: "/assets/images/logo.png"
+site_logo: "/assets/images/logo.png"
+
 include:
   - "_includes"
 
@@ -30,12 +35,42 @@ defaults:
 
 # Just the Docs configuration
 search_enabled: true
+
+# Branding
 aux_links:
   "GitHub Repository":
     - "https://github.com/Anasss/java21docCards"
+
+# SEO and Meta
+author:
+  name: "Java 21 OCP Study Group"
+  url: "https://javaocpquiz.com"
+
+# Social Media and OpenGraph
+social:
+  name: "Java 21 OCP Flashcards"
+  links:
+    - "https://github.com/Anasss/java21docCards"
+
+# Site metadata for better SEO
+lang: en-US
+timezone: UTC
 
 # Quiz configuration
 quiz:
   title: "Java 21 OCP Quiz"
   description: "Test your knowledge of Java 21 OCP exam topics"
-  total_questions: 32
+  total_questions: 38
+
+
+# Additional SEO settings
+twitter:
+  card: summary_large_image
+
+# OpenGraph defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: "/assets/images/logo.png"
+      layout: "default"

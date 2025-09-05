@@ -6,9 +6,13 @@ has_toc: false
 layout: default
 ---
 
-# Java 21 OCP Flashcards
-
-A structured collection of flashcards to help you prepare for the Java 21 OCP certification exam.
+<div class="hero-section">
+  <div class="logo-container">
+    <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="Java 21 OCP Flashcards" class="site-logo">
+  </div>
+  <h1 class="hero-title">Java 21 OCP Flashcards</h1>
+  <p class="hero-subtitle">A structured collection of flashcards to help you prepare for the Java 21 OCP certification exam.</p>
+</div>
 
 ## Quick Start
 
@@ -109,6 +113,50 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
 </div>
 
 <style>
+/* Simple Hero Section with Logo */
+.hero-section {
+  text-align: center;
+  padding: 40px 20px 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: -20px -20px 40px -20px;
+  border-radius: 0 0 15px 15px;
+  color: white;
+}
+
+.logo-container {
+  margin-bottom: 25px;
+}
+
+.site-logo {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.site-logo:hover {
+  transform: translateY(-3px);
+}
+
+.hero-title {
+  font-size: 2.5em;
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+  font-size: 1.2em;
+  margin: 0;
+  opacity: 0.95;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
 .quick-actions {
   display: flex;
   gap: 15px;
@@ -272,12 +320,6 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
   padding-left: 20px;
 }
 
-.flashcard-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 .flashcard-title {
   font-weight: 500;
   display: block;
@@ -290,22 +332,6 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
   display: block;
   margin-top: 4px;
   line-height: 1.4;
-}
-
-.flashcard-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 6px;
-}
-
-.tag {
-  background: #e8f0ff;
-  color: #4a5568;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.7em;
-  font-weight: 500;
 }
 
 /* Resources Grid */
@@ -349,6 +375,23 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .hero-section {
+    padding: 30px 15px 40px;
+    margin: -20px -15px 30px -15px;
+  }
+  
+  .site-logo {
+    max-width: 220px;
+  }
+  
+  .hero-title {
+    font-size: 2em;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1em;
+  }
+  
   .quick-actions {
     flex-direction: column;
     gap: 10px;
@@ -384,11 +427,14 @@ A structured collection of flashcards to help you prepare for the Java 21 OCP ce
   }
 }
 
-/* Focus states for accessibility */
-.btn:focus,
-.flashcard-link:focus {
-  outline: 2px solid #667eea;
-  outline-offset: 2px;
+@media (max-width: 480px) {
+  .site-logo {
+    max-width: 180px;
+  }
+  
+  .hero-title {
+    font-size: 1.7em;
+  }
 }
 
 /* Smooth scrolling for anchor links */
