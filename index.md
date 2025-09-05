@@ -408,7 +408,7 @@ layout: default
 
 @media (max-width: 480px) {
   .site-logo {
-    max-width: 250px;
+    max-width: 150px;
   }
   
   .site-subtitle {
