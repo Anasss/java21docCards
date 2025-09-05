@@ -121,7 +121,7 @@ layout: default
 }
 
 .site-logo {
-  max-width: 400px;
+  max-width: 280px;
   width: 100%;
   height: auto;
   margin-bottom: 20px;
@@ -364,7 +364,7 @@ layout: default
   }
   
   .site-logo {
-    max-width: 300px;
+    max-width: 250px;
   }
   
   .site-subtitle {
