@@ -110,70 +110,21 @@ layout: default
 </div>
 
 <style>
-/* Clean Header Section */
-.header-section {
+/* Hero Section */
+.hero-section {
   text-align: center;
-  padding: 30px 20px 40px;
+  padding: 40px 20px;
   margin-bottom: 40px;
 }
 
-/* Logo display on flashcard pages */
-.site-logo,
-.site-header .site-logo,
-.site-nav .site-logo,
-.main-header .site-logo {
-  width: auto !important;
-  height: 60px !important;
-  max-width: 200px !important;
-  min-width: 150px !important;
-  display: block !important;
-  margin: 10px 0 !important;
+.hero-title {
+  font-size: 2.5em;
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+  font-weight: 700;
 }
 
-/* Ensure header is visible and properly sized */
-.site-header {
-  min-height: 80px !important;
-  display: flex !important;
-  align-items: center !important;
-  padding: 15px 20px !important;
-}
-
-/* Add header styling for flashcard pages if missing */
-.main-content-wrap {
-  padding-top: 20px !important;
-}
-
-/* Mobile responsive logo */
-@media (max-width: 768px) {
-  .site-logo,
-  .site-header .site-logo,
-  .site-nav .site-logo,
-  .main-header .site-logo {
-    height: 50px !important;
-    min-width: 120px !important;
-  }
-  
-  .site-header {
-    min-height: 70px !important;
-    padding: 10px 15px !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .site-logo,
-  .site-header .site-logo,
-  .site-nav .site-logo,
-  .main-header .site-logo {
-    height: 40px !important;
-    min-width: 100px !important;
-  }
-}
-
-.site-logo:hover {
-  transform: scale(1.02);
-}
-
-.site-subtitle {
+.hero-subtitle {
   font-size: 1.2em;
   color: #6c757d;
   margin: 0;
@@ -250,28 +201,6 @@ layout: default
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
   border-color: #667eea;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .quick-actions {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .btn {
-    font-size: 1em;
-    padding: 14px 24px;
-    min-width: unset;
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .btn {
-    padding: 12px 20px;
-    font-size: 0.95em;
-  }
 }
 
 /* Stats Grid */
@@ -447,15 +376,15 @@ layout: default
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .header-section {
-    padding: 20px 15px 30px;
+  .hero-section {
+    padding: 30px 15px;
   }
   
-  .site-logo {
-    max-width: 250px;
+  .hero-title {
+    font-size: 2em;
   }
   
-  .site-subtitle {
+  .hero-subtitle {
     font-size: 1.1em;
   }
   
@@ -467,6 +396,8 @@ layout: default
   .btn {
     font-size: 1em;
     padding: 12px 20px;
+    min-width: unset;
+    width: 100%;
   }
   
   .stats-grid {
@@ -495,12 +426,17 @@ layout: default
 }
 
 @media (max-width: 480px) {
-  .site-logo {
-    max-width: 150px;
+  .hero-title {
+    font-size: 1.8em;
   }
   
-  .site-subtitle {
+  .hero-subtitle {
     font-size: 1em;
+  }
+  
+  .btn {
+    padding: 12px 20px;
+    font-size: 0.95em;
   }
 }
 </style>

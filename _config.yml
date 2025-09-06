@@ -7,10 +7,6 @@ nav_enabled: true
 back_to_top: true
 nav_footer_custom: true
 
-# Logo configuration
-logo: "/assets/images/logo.png"
-site_logo: "/assets/images/logo.png"
-
 include:
   - "_includes"
 
@@ -62,8 +58,7 @@ quiz:
   description: "Test your knowledge of Java 21 OCP exam topics"
   total_questions: 38
 
-
-# Additional SEO settings
+# Twitter card
 twitter:
   card: summary_large_image
 
@@ -72,5 +67,4 @@ defaults:
   - scope:
       path: ""
     values:
-      image: "/assets/images/logo.png"
       layout: "default"
