@@ -117,12 +117,56 @@ layout: default
   margin-bottom: 40px;
 }
 
-.site-logo {
-  max-width: 280px;
-  width: 100%;
-  height: auto;
-  margin-bottom: 20px;
-  transition: transform 0.3s ease;
+/* Logo display on flashcard pages */
+.site-logo,
+.site-header .site-logo,
+.site-nav .site-logo,
+.main-header .site-logo {
+  width: auto !important;
+  height: 60px !important;
+  max-width: 200px !important;
+  min-width: 150px !important;
+  display: block !important;
+  margin: 10px 0 !important;
+}
+
+/* Ensure header is visible and properly sized */
+.site-header {
+  min-height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 15px 20px !important;
+}
+
+/* Add header styling for flashcard pages if missing */
+.main-content-wrap {
+  padding-top: 20px !important;
+}
+
+/* Mobile responsive logo */
+@media (max-width: 768px) {
+  .site-logo,
+  .site-header .site-logo,
+  .site-nav .site-logo,
+  .main-header .site-logo {
+    height: 50px !important;
+    min-width: 120px !important;
+  }
+  
+  .site-header {
+    min-height: 70px !important;
+    padding: 10px 15px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-logo,
+  .site-header .site-logo,
+  .site-nav .site-logo,
+  .main-header .site-logo {
+    height: 40px !important;
+    min-width: 100px !important;
+  }
 }
 
 .site-logo:hover {

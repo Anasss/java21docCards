@@ -1,71 +1,89 @@
-<!-- Improved breadcrumb with better category links and styling -->
-<div class="simple-breadcrumb">
-  <a href="{{ '/' | relative_url }}">🏠 Home</a>
+<!-- Fixed breadcrumb component that will definitely display -->
+<div class="flashcard-breadcrumb" style="display: block !important; visibility: visible !important;">
+  <a href="{{ '/' | relative_url }}" class="breadcrumb-home">🏠 Home</a>
   {% if page.category %}
-    <span class="breadcrumb-sep">→</span>
-    <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}" class="category-link" 
-       onclick="setTimeout(function(){ document.getElementById('{{ page.category | slugify }}').open = true; }, 100);">
+    <span class="breadcrumb-separator">→</span>
+    <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}" class="breadcrumb-category" 
+       onclick="setTimeout(function(){ 
+         const element = document.getElementById('{{ page.category | slugify }}'); 
+         if(element) element.open = true; 
+       }, 100);">
       {{ page.category }}
     </a>
-    <span class="breadcrumb-sep">→</span>
+    <span class="breadcrumb-separator">→</span>
   {% endif %}
-  <span class="current-page">{{ page.title }}</span>
+  <span class="breadcrumb-current">{{ page.title }}</span>
 </div>
 
 <style>
-.simple-breadcrumb {
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-  padding: 14px 18px;
-  border-radius: 8px;
-  margin-bottom: 25px;
-  font-size: 0.9em;
-  border: 1px solid #e1e8ed;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+/* Ensure breadcrumb is always visible */
+.flashcard-breadcrumb {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+  padding: 16px 20px !important;
+  border-radius: 10px !important;
+  margin-bottom: 30px !important;
+  font-size: 0.95em !important;
+  border: 1px solid #e1e8ed !important;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08) !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
-.simple-breadcrumb a {
-  color: #667eea;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
+.breadcrumb-home,
+.breadcrumb-category {
+  color: #667eea !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  padding: 6px 12px !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease !important;
 }
 
-.simple-breadcrumb a:hover {
-  color: #764ba2;
-  text-decoration: underline;
+.breadcrumb-home:hover,
+.breadcrumb-category:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #764ba2 !important;
+  text-decoration: none !important;
+  transform: translateY(-1px) !important;
 }
 
-.simple-breadcrumb .category-link {
-  background: rgba(102, 126, 234, 0.1);
-  padding: 2px 8px;
-  border-radius: 4px;
-  border: 1px solid rgba(102, 126, 234, 0.2);
+.breadcrumb-category {
+  background: rgba(102, 126, 234, 0.08) !important;
+  border: 1px solid rgba(102, 126, 234, 0.2) !important;
 }
 
-.simple-breadcrumb .category-link:hover {
-  background: rgba(102, 126, 234, 0.15);
-  transform: translateY(-1px);
+.breadcrumb-separator {
+  color: #667eea !important;
+  font-weight: bold !important;
+  margin: 0 4px !important;
 }
 
-.breadcrumb-sep {
-  margin: 0 10px;
-  color: #667eea;
-  font-weight: bold;
+.breadcrumb-current {
+  color: #2c3e50 !important;
+  font-weight: 700 !important;
+  padding: 6px 0 !important;
 }
 
-.current-page {
-  color: #2c3e50;
-  font-weight: 600;
-}
-
+/* Mobile responsiveness */
 @media (max-width: 768px) {
-  .simple-breadcrumb {
-    font-size: 0.8em;
-    padding: 12px 15px;
+  .flashcard-breadcrumb {
+    padding: 12px 15px !important;
+    font-size: 0.85em !important;
   }
-  
-  .breadcrumb-sep {
-    margin: 0 6px;
+}
+
+@media (max-width: 480px) {
+  .flashcard-breadcrumb {
+    font-size: 0.8em !important;
   }
+}
+
+/* Override any conflicting styles */
+.simple-breadcrumb {
+  display: none !important;
 }
 </style>
