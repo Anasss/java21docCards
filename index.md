@@ -7,9 +7,6 @@ layout: default
 ---
 
 <div class="hero-section">
-  <div class="logo-container">
-    <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="Java 21 OCP Flashcards" class="site-logo">
-  </div>
   <h1 class="hero-title">Java 21 OCP Flashcards</h1>
   <p class="hero-subtitle">A structured collection of flashcards to help you prepare for the Java 21 OCP certification exam.</p>
 </div>
