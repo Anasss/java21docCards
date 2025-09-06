@@ -39,46 +39,299 @@ layout: default
         <a href="{{ flashcards[prev_index].url | relative_url }}" class="btn btn-nav btn-prev">
           ← Previous
         </a>
+      {% else %}
+        <span class="btn btn-nav btn-disabled">← Previous</span>
       {% endif %}
 
       <a href="{{ '/' | relative_url }}" class="btn btn-nav btn-home">
-        Home
+        🏠 Home
       </a>
 
       {% if next_index < flashcards.size %}
         <a href="{{ flashcards[next_index].url | relative_url }}" class="btn btn-nav btn-next">
           Next →
         </a>
+      {% else %}
+        <span class="btn btn-nav btn-disabled">Next →</span>
       {% endif %}
     </div>
 
     <div class="flashcard-meta">
-      <span>Card {{ current_index | plus: 1 }} of {{ flashcards.size }}</span>
+      <span class="card-position">Card {{ current_index | plus: 1 }} of {{ flashcards.size }}</span>
       {% if page.category %}
-        | <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}">Back to {{ page.category }}</a>
+        <span class="meta-separator">|</span>
+        <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}" class="category-link"
+           onclick="setTimeout(function(){ 
+             const element = document.getElementById('{{ page.category | slugify }}'); 
+             if(element) element.open = true; 
+           }, 100);">
+          Back to {{ page.category }}
+        </a>
       {% endif %}
     </div>
   </div>
 </div>
 
-<!-- Keep your existing flashcard styles -->
 <style>
-.flashcard-container { max-width: 800px; margin: 0 auto; padding: 20px; }
-.flashcard-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
-.flashcard-category { background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; letter-spacing: 0.5px; }
-.difficulty-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 0.8em; font-weight: bold; margin-left: 10px; }
-.difficulty-easy { background: #4CAF50; color: white; }
-.difficulty-medium { background: #FF9800; color: white; }
-.difficulty-hard { background: #F44336; color: white; }
-.flashcard-content { margin: 30px 0; font-size: 1.1em; line-height: 1.7; }
-.flashcard-navigation { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
-.nav-buttons { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; }
-.btn-nav { padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px; font-weight: 500; transition: background-color 0.3s ease; }
-.btn-nav:hover { background: #5a67d8; text-decoration: none; color: white; }
-.btn-home { background: #6c757d; }
-.btn-home:hover { background: #545b62; }
-.flashcard-meta { text-align: center; font-size: 0.9em; color: #666; }
-.flashcard-meta a { color: #667eea; text-decoration: none; }
-.flashcard-meta a:hover { text-decoration: underline; }
-@media (max-width: 768px) { .nav-buttons { flex-direction: column; } .btn-nav { width: 100%; text-align: center; } }
+/* Flashcard Container */
+.flashcard-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Breadcrumb Styles */
+.flashcard-breadcrumb {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  font-size: 0.95em;
+  border: 1px solid #e1e8ed;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.breadcrumb-home,
+.breadcrumb-category {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.breadcrumb-home:hover,
+.breadcrumb-category:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #764ba2;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.breadcrumb-category {
+  background: rgba(102, 126, 234, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.breadcrumb-separator {
+  color: #667eea;
+  font-weight: bold;
+  margin: 0 4px;
+}
+
+.breadcrumb-current {
+  color: #2c3e50;
+  font-weight: 700;
+  padding: 6px 0;
+}
+
+/* Flashcard Header */
+.flashcard-header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 20px;
+}
+
+.flashcard-header h1 {
+  color: #2c3e50;
+  margin: 15px 0 10px 0;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+.flashcard-category {
+  background: #667eea;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.difficulty-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-left: 10px;
+  color: white;
+}
+
+.difficulty-easy { background: #4CAF50; }
+.difficulty-medium { background: #FF9800; }
+.difficulty-hard { background: #F44336; }
+
+/* Flashcard Content */
+.flashcard-content {
+  margin: 30px 0;
+  font-size: 1.1em;
+  line-height: 1.7;
+  color: #333;
+}
+
+/* Navigation Section */
+.flashcard-navigation {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 2px solid #eee;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.btn-nav {
+  display: inline-block;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  font-size: 0.95em;
+  min-width: 120px;
+  border: 2px solid transparent;
+}
+
+.btn-prev, .btn-next {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-prev:hover, .btn-next:hover {
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+  text-decoration: none;
+  color: white;
+}
+
+.btn-home {
+  background: #f8f9fa;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.btn-home:hover {
+  background: #667eea;
+  color: white;
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.btn-disabled {
+  background: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Flashcard Meta */
+.flashcard-meta {
+  text-align: center;
+  font-size: 0.9em;
+  color: #666;
+  padding: 15px 0;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.card-position {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.meta-separator {
+  margin: 0 10px;
+  color: #ccc;
+}
+
+.category-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.category-link:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .flashcard-container {
+    padding: 15px;
+  }
+  
+  .flashcard-breadcrumb {
+    padding: 12px 15px;
+    font-size: 0.85em;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .breadcrumb-separator {
+    display: none;
+  }
+  
+  .flashcard-header h1 {
+    font-size: 1.5em;
+  }
+  
+  .nav-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn-nav {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .flashcard-meta {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .flashcard-breadcrumb {
+    padding: 10px 12px;
+    font-size: 0.8em;
+  }
+  
+  .flashcard-header h1 {
+    font-size: 1.3em;
+  }
+  
+  .flashcard-content {
+    font-size: 1em;
+  }
+  
+  .btn-nav {
+    padding: 10px 16px;
+    font-size: 0.9em;
+  }
+}
 </style>
