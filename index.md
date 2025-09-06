@@ -138,6 +138,7 @@ layout: default
   line-height: 1.5;
 }
 
+/* Button Styles */
 .quick-actions {
   display: flex;
   gap: 15px;
@@ -148,39 +149,85 @@ layout: default
 
 .btn {
   display: inline-block;
-  padding: 14px 28px;
+  padding: 16px 32px;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
   text-align: center;
   transition: all 0.3s ease;
   font-size: 1.1em;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  min-width: 180px;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
-  border: 2px solid transparent;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
   text-decoration: none;
   color: white;
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
 }
 
 .btn-secondary {
-  background: white;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
   color: #667eea;
   border: 2px solid #667eea;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
 }
 
 .btn-secondary:hover {
-  background: #667eea;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   text-decoration: none;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  border-color: #667eea;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .quick-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .btn {
+    font-size: 1em;
+    padding: 14px 24px;
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    padding: 12px 20px;
+    font-size: 0.95em;
+  }
 }
 
 /* Stats Grid */
