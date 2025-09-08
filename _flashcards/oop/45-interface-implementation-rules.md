@@ -9,7 +9,6 @@ tags:
 title: Interface Implementation Rules
 ---
 
-## 🃏 Interface Implementation Rules
 
 **Rule:** Interfaces define **contracts** that implementing classes must fulfill with specific rules for method implementation.
 

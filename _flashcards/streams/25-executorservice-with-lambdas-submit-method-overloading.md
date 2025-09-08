@@ -9,7 +9,6 @@ tags:
 title: ExecutorService with Lambdas - submit() Method Overloading
 ---
 
-## 🃏 ExecutorService with Lambdas - submit() Method Overloading
 
 **Rule:** ExecutorService.submit() is overloaded to handle both Runnable and Callable, with different return types.
 

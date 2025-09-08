@@ -9,7 +9,6 @@ tags:
 title: Stream Operations and Exception Handling
 ---
 
-## 🃏 Stream Operations and Exception Handling
 
 **Intermediate vs Terminal Operations:**
 

@@ -6,7 +6,6 @@ tags: []
 title: Multi-Catch and Try-With-Resources Exception Flow
 ---
 
-## 🃏 Multi-Catch and Try-With-Resources Exception Flow
 
 **⚠️ This code has a COMPILE ERROR!** Let's analyze why and fix it:
 

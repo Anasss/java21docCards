@@ -6,7 +6,6 @@ tags: []
 title: 'Deque: Stack vs Queue Operations'
 ---
 
-## 🃏 Deque: Stack vs Queue Operations
 
 **Rule:** Deque can act as both **Stack (LIFO)** and **Queue (FIFO)** - you can mix operations but understand which end each method operates on.
 

@@ -8,7 +8,6 @@ tags: []
 title: LocalDate and LocalTime Operations (Date-Time API)
 ---
 
-## 🃏 LocalDate and LocalTime Operations (Date-Time API)
 
 **Rule:** LocalDate/LocalTime/LocalDateTime are **immutable** - all methods return **new instances**.
 

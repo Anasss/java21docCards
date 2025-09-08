@@ -10,7 +10,6 @@ tags:
 title: Stream Collectors and Function.identity()
 ---
 
-## 🃏 Stream Collectors and Function.identity()
 
 **Collectors.partitioningBy()** - Always creates exactly **2 groups** based on a boolean predicate:
 

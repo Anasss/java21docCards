@@ -8,7 +8,6 @@ tags: []
 title: Path Operations and Resolution
 ---
 
-## 🃏 Path Operations and Resolution
 
 **Rule:** Path provides methods for **manipulating file system paths** without accessing the actual file system.
 

@@ -9,7 +9,6 @@ tags: []
 title: Method Overriding Rules
 ---
 
-## 🃏 Method Overriding Rules
 
 **Rule:** Method overriding follows the **"IS-A substitution"** principle with specific visibility and exception rules.
 

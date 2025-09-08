@@ -8,7 +8,6 @@ tags: []
 title: Set Operations and Characteristics
 ---
 
-## 🃏 Set Operations and Characteristics
 
 **Rule:** Set implementations have **different ordering and performance characteristics**.
 

@@ -7,7 +7,6 @@ tags: ["generics", "wildcards", "collections"]
 learning_tip: "READ-WRITE Rule: **R**ead **E**xtends, **W**rite **S**uper"
 ---
 
-## 🃏 Generics: Bounded Wildcards (READ-WRITE Rule)
 
 **READ-WRITE Rule:** **R**ead **E**xtends, **W**rite **S**uper
 

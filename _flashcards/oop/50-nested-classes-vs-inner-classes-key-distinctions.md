@@ -12,7 +12,6 @@ tags:
 title: Nested Classes vs Inner Classes - Key Distinctions
 ---
 
-## 🃏 Nested Classes vs Inner Classes - Key Distinctions
 
 **Rule:** Inner class = NON-STATIC nested class. All inner classes are nested, but not all nested classes are inner.
 

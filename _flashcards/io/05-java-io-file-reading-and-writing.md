@@ -10,7 +10,6 @@ tags:
 title: Java I/O - File Reading and Writing
 ---
 
-## 🃏 Java I/O - File Reading and Writing
 
 **Rule:** Java I/O provides **multiple ways** to read/write files with different performance characteristics.
 

@@ -8,7 +8,6 @@ tags: []
 title: Constructor Chaining and super()
 ---
 
-## 🃏 Constructor Chaining and super()
 
 **Rule:** If a constructor does not explicitly call `super()` or `this()`, the compiler inserts `super()` **only if the superclass has a no-arg constructor**.
 

@@ -8,7 +8,6 @@ tags: []
 title: Static Field Access and Class Initialization
 ---
 
-## 🃏 Static Field Access and Class Initialization
 
 **Rule:** Accessing a static field only initializes the class that **declares** the field, not the class through which it's accessed.
 - Class initialization is triggered by accessing a field **declared by that class**.

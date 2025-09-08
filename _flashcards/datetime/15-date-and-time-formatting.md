@@ -10,7 +10,6 @@ tags:
 title: Date and Time Formatting
 ---
 
-## 🃏 Date and Time Formatting
 
 **Rule:** DateTimeFormatter provides **flexible formatting and parsing** for date/time objects.
 

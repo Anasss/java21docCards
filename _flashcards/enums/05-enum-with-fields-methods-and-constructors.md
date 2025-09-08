@@ -8,7 +8,6 @@ tags: []
 title: Enum with Fields, Methods, and Constructors
 ---
 
-## 🃏 Enum with Fields, Methods, and Constructors
 
 **Rule:** Enums can have **fields, methods, and constructors** like regular classes, but with restrictions.
 

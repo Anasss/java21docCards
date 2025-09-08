@@ -9,7 +9,6 @@ tags:
 title: Module Compilation and Packaging
 ---
 
-## 🃏 Module Compilation and Packaging
 
 **Rule:** Modular applications require **specific compilation and packaging** commands different from traditional Java applications.
 

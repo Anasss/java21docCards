@@ -6,7 +6,6 @@ tags: []
 title: Arrays.binarySearch() and Arrays.compare()
 ---
 
-## 🃏 Arrays.binarySearch() and Arrays.compare()
 
 **Arrays.binarySearch()** - Requires **sorted array**:
 - **Positive index** if element found

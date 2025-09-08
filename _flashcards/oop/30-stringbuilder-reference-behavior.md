@@ -8,7 +8,6 @@ tags: []
 title: StringBuilder Reference Behavior
 ---
 
-## 🃏 StringBuilder Reference Behavior
 
 Java is **pass-by-value** for references. You get a copy of the reference, not the reference itself.
 

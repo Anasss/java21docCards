@@ -8,7 +8,6 @@ tags: []
 title: Try-With-Resources and Suppressed Exceptions
 ---
 
-## 🃏 Try-With-Resources and Suppressed Exceptions
 
 The **exception in the try block is primary**. Exceptions thrown by `close()` are **suppressed** and attached to the primary exception.
 

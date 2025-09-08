@@ -10,7 +10,6 @@ tags:
 title: Module Access Control and Visibility
 ---
 
-## 🃏 Module Access Control and Visibility
 
 **Rule:** Modules create **strong encapsulation** - internal packages are completely hidden unless explicitly exported.
 

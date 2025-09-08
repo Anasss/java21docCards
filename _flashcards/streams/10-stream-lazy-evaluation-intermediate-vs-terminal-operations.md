@@ -8,7 +8,6 @@ tags:
 title: Stream Lazy Evaluation - Intermediate vs Terminal Operations
 ---
 
-## 🃏 Stream Lazy Evaluation - Intermediate vs Terminal Operations
 
 **Rule:** Intermediate operations are **lazy** — they define **what** should be done, but not **when** it's done. They are only evaluated when a terminal operation is invoked.
 

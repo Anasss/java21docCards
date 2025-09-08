@@ -8,7 +8,6 @@ tags: []
 title: Math API and Wrapper Classes
 ---
 
-## 🃏 Math API and Wrapper Classes
 
 **Rule:** Math class provides **static methods** for mathematical operations, while wrapper classes handle **autoboxing/unboxing**.
 

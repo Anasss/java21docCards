@@ -9,7 +9,6 @@ tags: []
 title: Abstract Classes and Methods
 ---
 
-## 🃏 Abstract Classes and Methods
 
 **Rule:** Abstract classes **cannot be instantiated** and may contain both abstract and concrete methods.
 

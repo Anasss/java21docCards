@@ -9,7 +9,6 @@ tags:
 title: Module System - Basic Declaration and Dependencies
 ---
 
-## 🃏 Module System - Basic Declaration and Dependencies
 
 **Rule:** Modules control **access and dependencies** through module-info.java declarations.
 

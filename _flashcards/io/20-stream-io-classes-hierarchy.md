@@ -11,7 +11,6 @@ tags:
 title: Stream I/O Classes Hierarchy
 ---
 
-## 🃏 Stream I/O Classes Hierarchy
 
 **Rule:** Java I/O uses **decorator pattern** with byte streams (InputStream/OutputStream) and character streams (Reader/Writer).
 

@@ -8,7 +8,6 @@ tags: []
 title: Exception Output Methods
 ---
 
-## 🃏 Exception Output Methods
 
 **Rule:** Exception output methods provide **different levels of detail** for debugging.
 - **System.out.println(exception)**: Prints only **exception class name and message**.

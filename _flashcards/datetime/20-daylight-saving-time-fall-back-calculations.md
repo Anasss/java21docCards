@@ -8,7 +8,6 @@ tags: []
 title: Daylight Saving Time "Fall Back" Calculations
 ---
 
-## 🃏 Daylight Saving Time "Fall Back" Calculations
 
 **Rule:** When DST ends ("fall back"), the **same local time occurs twice**, creating a 25-hour day where time calculations must account for the repeated hour.
 

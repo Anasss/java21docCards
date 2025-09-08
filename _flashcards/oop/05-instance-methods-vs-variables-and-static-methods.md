@@ -8,7 +8,6 @@ tags: []
 title: Instance Methods vs Variables and Static Methods
 ---
 
-## 🃏 Instance Methods vs Variables and Static Methods
 
 **Rule:** Instance methods are **overridden**, while **variables and static methods are hidden**.
 

@@ -6,7 +6,6 @@ tags: []
 title: Exception Chaining and Return Statement Flow
 ---
 
-## 🃏 Exception Chaining and Return Statement Flow
 
 **Key Rule:** Exceptions thrown in **catch blocks are NOT caught** by subsequent catch blocks in the same try-catch structure. Only exceptions from the **try block** can be caught.
 

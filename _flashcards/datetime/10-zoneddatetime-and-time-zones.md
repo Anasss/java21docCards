@@ -9,7 +9,6 @@ tags:
 title: ZonedDateTime and Time Zones
 ---
 
-## 🃏 ZonedDateTime and Time Zones
 
 **Rule:** ZonedDateTime handles **time zones and daylight saving time** transitions automatically.
 

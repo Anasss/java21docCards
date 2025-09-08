@@ -11,7 +11,6 @@ tags:
 title: Pattern Matching with switch (Java 21)
 ---
 
-## 🃏 Pattern Matching with switch (Java 21)
 
 **Guarded Patterns:** Use `when` to add conditions to case labels.
 

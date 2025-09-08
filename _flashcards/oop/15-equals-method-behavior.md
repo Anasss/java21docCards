@@ -8,7 +8,6 @@ tags: []
 title: equals() Method Behavior
 ---
 
-## 🃏 equals() Method Behavior
 
 When a class **does not override** `equals()` from `Object`, `.equals()` compares **references**, just like `==`.
 

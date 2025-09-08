@@ -8,7 +8,6 @@ tags: []
 title: Map Operations and Merge Method
 ---
 
-## 🃏 Map Operations and Merge Method
 
 **Rule:** Map provides various methods for **conditional updates** and **bulk operations**.
 

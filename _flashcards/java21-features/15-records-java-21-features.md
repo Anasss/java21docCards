@@ -11,7 +11,6 @@ tags:
 title: Records (Java 21 Features)
 ---
 
-## 🃏 Records (Java 21 Features)
 
 **Basic record syntax:**
 ```java

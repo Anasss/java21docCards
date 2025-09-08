@@ -8,7 +8,6 @@ tags:
 title: Files.mismatch() and Path Operations
 ---
 
-## 🃏 Files.mismatch() and Path Operations
 
 **Files.mismatch()** - Compares two files **byte by byte**:
 - Returns **index of first mismatching byte** (0-based)

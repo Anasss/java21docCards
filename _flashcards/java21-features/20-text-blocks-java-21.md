@@ -8,7 +8,6 @@ tags: []
 title: Text Blocks (Java 21)
 ---
 
-## 🃏 Text Blocks (Java 21)
 
 **Multi-line strings with preserved formatting:**
 

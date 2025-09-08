@@ -8,7 +8,6 @@ tags: []
 title: protected Access Across Packages
 ---
 
-## 🃏 protected Access Across Packages
 
 - **Same package:** accessible anywhere
 - **Different package:** only accessible from **subclass**, and only via **subclass reference** (not parent reference)

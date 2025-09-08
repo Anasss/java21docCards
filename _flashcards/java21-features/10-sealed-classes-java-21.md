@@ -12,7 +12,6 @@ tags:
 title: Sealed Classes (Java 21)
 ---
 
-## 🃏 Sealed Classes (Java 21)
 
 **Purpose:** Restrict which classes can extend/implement a type.
 

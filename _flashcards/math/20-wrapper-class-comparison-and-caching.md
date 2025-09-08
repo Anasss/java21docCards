@@ -8,7 +8,6 @@ tags: []
 title: Wrapper Class Comparison and Caching
 ---
 
-## 🃏 Wrapper Class Comparison and Caching
 
 **Rule:** Wrapper classes have **reference equality quirks** due to object caching for small values.
 

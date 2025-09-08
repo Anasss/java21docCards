@@ -9,7 +9,6 @@ tags:
 title: Lambda Target Types - Runnable vs Callable
 ---
 
-## 🃏 Lambda Target Types - Runnable vs Callable
 
 **Rule:** Java determines which functional interface a lambda implements based on **target type** - the expected type from the context where the lambda is used.
 

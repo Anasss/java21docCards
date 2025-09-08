@@ -9,7 +9,6 @@ tags: []
 title: Array Operations and Utilities
 ---
 
-## 🃏 Array Operations and Utilities
 
 **Rule:** Arrays class provides **utility methods** for common array operations like sorting, searching, and comparison.
 

@@ -10,7 +10,6 @@ tags:
 title: 'Module Migration Strategies: Bottom-Up vs Top-Down'
 ---
 
-## 🃏 Module Migration Strategies: Bottom-Up vs Top-Down
 
 **Bottom-Up:** Start with **leaf dependencies** (no dependencies), work up to main app.  
 **Top-Down:** Start with **main application**, dependencies become automatic modules.

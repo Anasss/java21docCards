@@ -8,7 +8,6 @@ tags: []
 title: Executor Framework - Key Classes & Methods
 ---
 
-## 🃏 Executor Framework - Key Classes & Methods
 
 **Rule:** Understand the relationship between Executor, ExecutorService, and Executors utility class.
 

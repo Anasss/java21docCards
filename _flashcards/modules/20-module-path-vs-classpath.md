@@ -11,7 +11,6 @@ tags:
 title: Module Path vs Classpath
 ---
 
-## 🃏 Module Path vs Classpath
 
 **Rule:** Modules use **module path** while legacy code uses **classpath**, with different visibility and loading rules.
 

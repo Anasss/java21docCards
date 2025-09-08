@@ -8,7 +8,6 @@ tags: []
 title: Localization - Locale and Resource Bundles
 ---
 
-## 🃏 Localization - Locale and Resource Bundles
 
 **Rule:** Localization uses **Locale** for region/language and **ResourceBundle** for externalized text.
 
