@@ -73,7 +73,7 @@ layout: default
 </div>
 
 <style>
-/* Flashcard Container */
+/* Main Container */
 .flashcard-container {
   max-width: 800px;
   margin: 0 auto;
@@ -81,57 +81,7 @@ layout: default
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Breadcrumb Styles */
-.flashcard-breadcrumb {
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-  padding: 16px 20px;
-  border-radius: 10px;
-  margin-bottom: 30px;
-  font-size: 0.95em;
-  border: 1px solid #e1e8ed;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.breadcrumb-home,
-.breadcrumb-category {
-  color: #667eea;
-  text-decoration: none;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
-
-.breadcrumb-home:hover,
-.breadcrumb-category:hover {
-  background: rgba(102, 126, 234, 0.1);
-  color: #764ba2;
-  text-decoration: none;
-  transform: translateY(-1px);
-}
-
-.breadcrumb-category {
-  background: rgba(102, 126, 234, 0.08);
-  border: 1px solid rgba(102, 126, 234, 0.2);
-}
-
-.breadcrumb-separator {
-  color: #667eea;
-  font-weight: bold;
-  margin: 0 4px;
-}
-
-.breadcrumb-current {
-  color: #2c3e50;
-  font-weight: 700;
-  padding: 6px 0;
-}
-
-/* Flashcard Header */
+/* Header Section */
 .flashcard-header {
   text-align: center;
   margin-bottom: 30px;
@@ -171,7 +121,7 @@ layout: default
 .difficulty-medium { background: #FF9800; }
 .difficulty-hard { background: #F44336; }
 
-/* Flashcard Content */
+/* Content */
 .flashcard-content {
   margin: 30px 0;
   font-size: 1.1em;
@@ -179,7 +129,7 @@ layout: default
   color: #333;
 }
 
-/* Navigation Section */
+/* Navigation */
 .flashcard-navigation {
   margin-top: 40px;
   padding-top: 20px;
@@ -246,7 +196,7 @@ layout: default
   box-shadow: none;
 }
 
-/* Flashcard Meta */
+/* Meta Information */
 .flashcard-meta {
   text-align: center;
   font-size: 0.9em;
@@ -278,64 +228,7 @@ layout: default
   text-decoration: underline;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .flashcard-container {
-    padding: 15px;
-  }
-  
-  .flashcard-breadcrumb {
-    padding: 12px 15px;
-    font-size: 0.85em;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-  
-  .breadcrumb-separator {
-    display: none;
-  }
-  
-  .flashcard-header h1 {
-    font-size: 1.5em;
-  }
-  
-  .nav-buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .btn-nav {
-    width: 100%;
-    min-width: unset;
-  }
-  
-  .flashcard-meta {
-    font-size: 0.8em;
-  }
-}
-
-@media (max-width: 480px) {
-  .flashcard-breadcrumb {
-    padding: 10px 12px;
-    font-size: 0.8em;
-  }
-  
-  .flashcard-header h1 {
-    font-size: 1.3em;
-  }
-  
-  .flashcard-content {
-    font-size: 1em;
-  }
-  
-  .btn-nav {
-    padding: 10px 16px;
-    font-size: 0.9em;
-  }
-}
-
-/* Enhanced Navigation Styles */
+/* Top Navigation */
 .flashcard-top-navigation {
   position: sticky;
   top: 0;
@@ -346,7 +239,6 @@ layout: default
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-/* Improved Breadcrumb */
 .flashcard-breadcrumb {
   background: linear-gradient(135deg, #f8f9fa, #e9ecef);
   padding: 12px 20px;
@@ -358,7 +250,7 @@ layout: default
   border-bottom: 1px solid #e1e8ed;
 }
 
-.breadcrumb-home {
+.breadcrumb-home, .breadcrumb-category {
   color: #667eea;
   text-decoration: none;
   font-weight: 600;
@@ -370,33 +262,14 @@ layout: default
   gap: 4px;
 }
 
-.breadcrumb-icon {
-  font-size: 1.1em;
-}
-
-.breadcrumb-text {
-  display: inline-block;
-}
-
-.breadcrumb-home:hover {
+.breadcrumb-home:hover, .breadcrumb-category:hover {
   background: rgba(102, 126, 234, 0.1);
   transform: translateY(-1px);
 }
 
 .breadcrumb-category {
-  color: #667eea;
-  text-decoration: none;
-  font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 6px;
   background: rgba(102, 126, 234, 0.08);
   border: 1px solid rgba(102, 126, 234, 0.2);
-  transition: all 0.2s ease;
-}
-
-.breadcrumb-category:hover {
-  background: rgba(102, 126, 234, 0.15);
-  transform: translateY(-1px);
 }
 
 .breadcrumb-separator {
@@ -411,6 +284,10 @@ layout: default
   padding: 5px 0;
 }
 
+.breadcrumb-icon {
+  font-size: 1.1em;
+}
+
 /* Quick Navigation Bar */
 .quick-nav-bar {
   display: flex;
@@ -421,19 +298,13 @@ layout: default
   min-height: 50px;
 }
 
-.quick-nav-left,
-.quick-nav-right {
+.quick-nav-left, .quick-nav-right {
   flex: 1;
   display: flex;
 }
 
-.quick-nav-left {
-  justify-content: flex-start;
-}
-
-.quick-nav-right {
-  justify-content: flex-end;
-}
+.quick-nav-left { justify-content: flex-start; }
+.quick-nav-right { justify-content: flex-end; }
 
 .quick-nav-center {
   flex: 0 0 auto;
@@ -480,10 +351,6 @@ layout: default
   font-weight: bold;
 }
 
-.nav-label {
-  display: inline-block;
-}
-
 .card-counter {
   color: #666;
   font-size: 0.9em;
@@ -495,8 +362,12 @@ layout: default
   font-weight: 700;
 }
 
-/* Responsive adjustments */
+/* Responsive Design */
 @media (max-width: 768px) {
+  .flashcard-container {
+    padding: 15px;
+  }
+  
   .flashcard-top-navigation {
     margin: -15px -15px 20px -15px;
   }
@@ -524,6 +395,24 @@ layout: default
   .card-counter {
     font-size: 0.85em;
   }
+  
+  .flashcard-header h1 {
+    font-size: 1.5em;
+  }
+  
+  .nav-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn-nav {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .flashcard-meta {
+    font-size: 0.8em;
+  }
 }
 
 @media (max-width: 480px) {
@@ -540,6 +429,19 @@ layout: default
   
   .card-counter strong {
     font-size: 1.1em;
+  }
+  
+  .flashcard-header h1 {
+    font-size: 1.3em;
+  }
+  
+  .flashcard-content {
+    font-size: 1em;
+  }
+  
+  .btn-nav {
+    padding: 10px 16px;
+    font-size: 0.9em;
   }
 }
 </style>
