@@ -928,3 +928,27 @@
   correct: 1
   explanation: |
     Virtual threads are lightweight threads managed by the JVM, enabling high concurrency with minimal resource usage. They are not backed by native OS threads and can use traditional synchronization mechanisms. Virtual threads were introduced in Java 21 as part of Project Loom.
+
+question: "What is the purpose of the compact canonical constructor in the following family record declaration?"
+  code: |
+    public record FamilyMember(
+        String name,
+        String role,
+        Map<String, Object> details
+    ) {
+        public FamilyMember {
+            if (name == null) {
+                throw new IllegalArgumentException("name must not be null");
+            }
+            details = details != null ? Map.copyOf(details) : Map.of();
+        }
+    }
+  options:
+    - "It allows validation or transformation of record fields before assignment."
+    - "It prevents the record from being instantiated."
+    - "It is required for every record in Java."
+    - "It makes all fields mutable."
+    - "It allows checked exceptions to be thrown during field assignment."
+  correct: 0
+  explanation: "A compact canonical constructor lets you validate or modify fields before they are assigned in a record."
+  category: "Java 21 Features"
