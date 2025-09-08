@@ -8,10 +8,10 @@ layout: default
 
 <div class="hero-section">
   <h1 class="hero-title">Java 21 OCP Flashcards</h1>
-  <p class="hero-subtitle">A structured collection of flashcards to help you prepare for the Java 21 OCP certification exam.</p>
+  <p class="hero-subtitle">A structured collection of flashcards to help you prepare for the Java 21 OCP certification exam (1Z0-830)</p>
 </div>
 
-## Quick Start
+## 🎬 Quick Start
 
 <div class="quick-actions">
   <a href="{{ '/quiz/' | relative_url }}" class="btn btn-primary">
@@ -112,24 +112,33 @@ layout: default
 <style>
 /* Hero Section */
 .hero-section {
-  text-align: center;
+  text-align: left;
   padding: 40px 20px;
   margin-bottom: 40px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.07);
 }
 
 .hero-title {
   font-size: 2.5em;
-  color: #2c3e50;
+  color: #667eea;
   margin: 0 0 15px 0;
   font-weight: 700;
+  text-align: left;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
 }
 
 .hero-subtitle {
   font-size: 1.2em;
-  color: #6c757d;
-  margin: 0 auto;
+  color: #764ba2;
+  margin: 0 0 0 0;
   max-width: 600px;
-  line-height: 1.5;
+  line-height: 1.6;
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: 0.2px;
 }
 
 /* Quick Actions */
