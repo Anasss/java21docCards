@@ -929,7 +929,7 @@
   explanation: |
     Virtual threads are lightweight threads managed by the JVM, enabling high concurrency with minimal resource usage. They are not backed by native OS threads and can use traditional synchronization mechanisms. Virtual threads were introduced in Java 21 as part of Project Loom.
 
-question: "What is the purpose of the compact canonical constructor in the following family record declaration?"
+- question: "What is the purpose of the compact canonical constructor in the following family record declaration?"
   code: |
     public record FamilyMember(
         String name,
