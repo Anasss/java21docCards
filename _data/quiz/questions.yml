@@ -349,7 +349,7 @@
     }
   options:
     - "Son"
-    - ""
+    - "Empty string"
     - "MomSon"
     - "DadMomSon"
   correct: 2
@@ -887,24 +887,25 @@
     - "Compilation error at Line B: variable budget is already defined"
     - "Day2:2 Day2:2 Rome-Winter-7000-5 Rome "
   correct: 1
-  explanation: "This question tests multiple aspects of lambda variable capture:
-
-    1. **Loop variable capture problem (Line A)**: The variable 'activity' is reassigned in each iteration ('Day1', then 'Day2'), making it NOT effectively final. However, 'localDay' maintains its value for each iteration. This is a classic lambda-in-loop bug - all lambdas capture the SAME 'activity' variable, which ends up with value 'Day2' when the lambdas execute.
-
-    2. **Instance and static variables**: 'destination' and 'season' are instance/static fields, not local variables, so they don't need to be effectively final. Lambdas access their current values at execution time, not capture time.
-
-    3. **Local variable shadowing (Line B)**: Inside the lambda, a new local variable 'budget' shadows the outer 'budget'. This is legal - the lambda creates its own scope.
-
-    4. **Effectively final rule**: The outer 'budget' is reassigned ('5000' → '6000'), but this doesn't affect the lambda at Line B since it declares its own 'budget'. The 'familySize' is incremented (4 → 5), making it not effectively final, but since we're reading it from the lambda (not declaring a new variable with the same name), we get a compilation error... EXCEPT we don't because 'familySize' is actually out of scope for the tripInfo lambda and would need to be referenced differently.
-
-    5. **Method reference (Line C)**: 'this::getDestination' captures 'this' reference and will call getDestination() at execution time, returning the current value of 'destination' field.
-
-    6. **Execution timing**: When forEach executes:
-       - First two lambdas both print 'Day2:2' (activity has final value 'Day2', localDay preserved)  
-       - tripInfo prints 'London-Winter-7000-5' (destination changed to London, season is Winter, local budget is 7000, familySize is 5)
-       - Method reference prints 'London' (current value of destination)
-
-    Output: 'Day2:2 Day2:2 London-Winter-7000-5 London '"
+  explanation: |
+    This question tests multiple aspects of lambda variable capture:
+    
+    Loop variable capture problem (Line A): The variable 'activity' is reassigned in each iteration ('Day1', then 'Day2'), making it NOT effectively final. However, 'localDay' maintains its value for each iteration. This is a classic lambda-in-loop bug - all lambdas capture the SAME 'activity' variable, which ends up with value 'Day2' when the lambdas execute.
+    
+    Instance and static variables: 'destination' and 'season' are instance/static fields, not local variables, so they don't need to be effectively final. Lambdas access their current values at execution time, not capture time.
+    
+    Local variable shadowing (Line B): Inside the lambda, a new local variable 'budget' shadows the outer 'budget'. This is legal - the lambda creates its own scope.
+    
+    Effectively final rule: The outer 'budget' is reassigned ('5000' → '6000'), but this doesn't affect the lambda at Line B since it declares its own 'budget'. The 'familySize' is incremented (4 → 5), making it not effectively final, but since we're reading it from the lambda (not declaring a new variable with the same name), we get a compilation error... EXCEPT we don't because 'familySize' is actually out of scope for the tripInfo lambda and would need to be referenced differently.
+    
+    Method reference (Line C): 'this::getDestination' captures 'this' reference and will call getDestination() at execution time, returning the current value of 'destination' field.
+    
+    Execution timing: When forEach executes:
+    - First two lambdas both print 'Day2:2' (activity has final value 'Day2', localDay preserved)
+    - tripInfo prints 'London-Winter-7000-5' (destination changed to London, season is Winter, local budget is 7000, familySize is 5)
+    - Method reference prints 'London' (current value of destination)
+    
+    Output: 'Day2:2 Day2:2 London-Winter-7000-5 London '
   category: "Lambda Expressions"
 
 - question: "Which of the following statements is invalid Java syntax for creating an array of Integers?"
@@ -952,3 +953,28 @@
   correct: 0
   explanation: "A compact canonical constructor lets you validate or modify fields before they are assigned in a record."
   category: "Java 21 Features"
+
+- question: "What is the output of this family age comparison system?"
+ code: |
+   class FamilyAges {
+       public static void main(String[] args) {
+           Integer dadAge = 127;
+           Integer momAge = 127;
+           Integer sonAge = 128;
+           Integer daughterAge = 128;
+           
+           System.out.print((dadAge == momAge) + " ");
+           System.out.print((sonAge == daughterAge) + " ");
+           System.out.print(dadAge.equals(momAge) + " ");
+           System.out.print(sonAge.equals(daughterAge) + " ");
+       }
+   }
+ options:
+   - "true false true true "
+   - "false false true true "
+   - "true true true true "
+   - "false true false true "
+   - "true false false false "
+ correct: 0
+ explanation: "Integer caching applies to values -128 to 127. dadAge and momAge both reference the same cached Integer object for 127, so == returns true. sonAge and daughterAge are different objects for 128 (outside cache range), so == returns false. However, equals() compares values, not references, so both equals() calls return true regardless of caching."
+ category: "Wrapper Classes"
