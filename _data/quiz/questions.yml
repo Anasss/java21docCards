@@ -906,3 +906,25 @@
 
     Output: 'Day2:2 Day2:2 London-Winter-7000-5 London '"
   category: "Lambda Expressions"
+
+- question: "Which of the following statements is invalid Java syntax for creating an array of Integers?"
+  options:
+    - "Integer[] arr = {1, 2, 3};"
+    - "Integer[] arr = new Integer[3];"
+    - "var[] arr = {1, 2, 3};"
+    - "Integer[] arr = new Integer[]{1, 2, 3};"
+    - "Integer arr[] = {1, 2, 3};"
+  correct: 2
+  explanation: |
+    Only option 3 ('var[] arr = {1, 2, 3};') is invalid Java syntax. Java does not allow 'var[]' for array declarations with initializers.
+    All other options are valid ways to declare and initialize an Integer array.
+
+- question: "Which statement about virtual threads in Java is correct?"
+  options:
+    - "Virtual threads are managed by the operating system and use native OS threads."
+    - "Virtual threads allow high concurrency with minimal resource usage by being managed by the JVM."
+    - "Virtual threads cannot be used with traditional synchronization mechanisms like 'synchronized'."
+    - "Virtual threads were introduced in Java 17 as part of Project Loom."
+  correct: 1
+  explanation: |
+    Virtual threads are lightweight threads managed by the JVM, enabling high concurrency with minimal resource usage. They are not backed by native OS threads and can use traditional synchronization mechanisms. Virtual threads were introduced in Java 21 as part of Project Loom.
