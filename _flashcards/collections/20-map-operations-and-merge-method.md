@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Collections & Generics
 learning_tip: Think "MERGE = SMART PUT" - merge() handles both insertion and updating
   with custom logic.

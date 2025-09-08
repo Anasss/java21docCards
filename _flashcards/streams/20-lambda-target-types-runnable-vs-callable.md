@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Streams & Functional
 learning_tip: '"Runnable runs and forgets, Callable calls and tells" - Runnable for
   actions, Callable for computations with results.'

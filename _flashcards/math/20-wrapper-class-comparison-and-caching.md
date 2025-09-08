@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Math, Arrays, Wrappers
 learning_tip: Remember "CACHE = CONFUSION" - small wrapper values may share references,
   so always use equals() for value comparison, not ==.

@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: OOP and Encapsulation
 learning_tip: '"No free lunch" - if parent needs arguments, children must provide
   them explicitly.'

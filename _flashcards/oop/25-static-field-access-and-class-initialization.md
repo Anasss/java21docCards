@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: OOP and Encapsulation
 learning_tip: Remember "DECLARES WINS" - only the class that declares the static field
   gets initialized, even when accessed through a subclass reference.

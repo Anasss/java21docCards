@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Java 21 Features
 learning_tip: Text blocks = "What you see is what you get" - preserves formatting,
   perfect for HTML, JSON, SQL. Triple quotes mark the boundaries.

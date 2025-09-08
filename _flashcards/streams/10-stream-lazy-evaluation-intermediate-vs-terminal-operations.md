@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Streams & Functional
 order: 10
 tags:

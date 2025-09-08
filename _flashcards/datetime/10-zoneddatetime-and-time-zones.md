@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Date, Time, and Localization
 learning_tip: Remember "ZONED = SMART, OFFSET = SIMPLE" - ZonedDateTime handles DST
   automatically, OffsetDateTime uses fixed offsets.

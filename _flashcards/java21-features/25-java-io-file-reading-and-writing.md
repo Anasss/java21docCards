@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Java 21 Features
 learning_tip: Remember "FILES = SIMPLE, STREAMS = CONTROL" - Files class for simple
   operations, streams for fine-grained control and large files.

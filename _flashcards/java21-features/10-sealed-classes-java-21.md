@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Java 21 Features
 learning_tip: Sealed = "Exclusive club" - only VIP classes (permits list) can join.
   Compiler knows all possibilities, enabling exhaustive pattern matching.

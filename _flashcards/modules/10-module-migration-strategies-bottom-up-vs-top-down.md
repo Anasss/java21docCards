@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Modules & Migration
 learning_tip: Bottom-up = "Foundation first" (solid but slow), Top-down = "Roof first"
   (fast but requires careful reinforcement later). Most projects should use top-down

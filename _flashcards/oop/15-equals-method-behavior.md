@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: OOP and Encapsulation
 learning_tip: Classes that don't override equals() are doing reference comparison.
   StringBuilder is a famous example!

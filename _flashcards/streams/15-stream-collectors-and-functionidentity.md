@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Streams & Functional
 learning_tip: partitioningBy = "split in half", groupingBy = "organize by category",
   identity = "keep as-is".

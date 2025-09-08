@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: OOP and Encapsulation
 learning_tip: Remember "OVERRIDE = UPGRADE" - you can make methods more accessible,
   return more specific types, and throw fewer/more specific exceptions, but never

@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 title: "Generics: Bounded Wildcards (READ-WRITE Rule)"
 category: "Collections & Generics"
 order: 5

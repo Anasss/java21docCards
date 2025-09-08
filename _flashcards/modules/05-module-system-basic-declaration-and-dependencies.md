@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Modules & Migration
 learning_tip: Think "MODULE = CONTROLLED VISIBILITY" - modules explicitly declare
   what they need (requires) and what they share (exports).

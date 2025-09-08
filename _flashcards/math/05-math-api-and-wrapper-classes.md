@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Math, Arrays, Wrappers
 learning_tip: Remember "MATH = STATIC UTILITY" - Math methods are all static and work
   with primitives. Wrapper classes bridge primitives and objects.

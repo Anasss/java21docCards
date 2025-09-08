@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Modules & Migration
 learning_tip: Think "HIGHWAY vs CITY STREETS" - module path is like controlled highway
   with explicit on/off ramps (requires/exports), classpath is like city streets where

@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: I/O and NIO
 learning_tip: Mismatch = "Find the first difference" (-1 means no differences found).
 order: 10

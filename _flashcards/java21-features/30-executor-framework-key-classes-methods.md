@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Java 21 Features
 learning_tip: '"NEW executors create, SUBMIT callables" - Executors factory methods
   start with ''new'', ExecutorService can ''submit'' Callables (not basic Executor).'

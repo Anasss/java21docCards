@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Java 21 Features
 learning_tip: Guarded patterns are checked in order. Always have a fallback case or
   default to avoid MatchException.

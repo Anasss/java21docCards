@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: I/O and NIO
 learning_tip: Think "PATH = GPS DIRECTIONS" - Path operations calculate routes and
   relationships between locations without checking if the locations actually exist.

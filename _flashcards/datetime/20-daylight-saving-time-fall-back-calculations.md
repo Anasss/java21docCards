@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Date, Time, and Localization
 learning_tip: Remember "FALL BACK = EXTRA HOUR" - When DST ends, one hour is repeated
   (1:00-2:00 AM happens twice), making time calculations longer than expected.

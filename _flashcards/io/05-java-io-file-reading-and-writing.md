@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: I/O and NIO
 learning_tip: Remember "FILES = SIMPLE, STREAMS = CONTROL" - Files class for simple
   operations, streams for fine-grained control and large files.

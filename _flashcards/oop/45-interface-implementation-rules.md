@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: OOP and Encapsulation
 learning_tip: Think "INTERFACE = CONTRACT" - defines what must be done (public methods)
   but allows flexibility in how (default methods provide optional behavior).

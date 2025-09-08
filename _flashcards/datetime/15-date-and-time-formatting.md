@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Date, Time, and Localization
 learning_tip: Remember "PATTERN = PICTURE" - yyyy-MM-dd shows exactly how the output
   looks. DateTimeFormatter is thread-safe and should be reused.

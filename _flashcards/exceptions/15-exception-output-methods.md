@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Exception Handling
 learning_tip: Remember "PRINT vs TRACE" - println() gives you the message, printStackTrace()
   gives you the journey.

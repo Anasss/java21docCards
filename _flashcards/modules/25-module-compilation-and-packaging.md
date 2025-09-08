@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Modules & Migration
 learning_tip: Think "ASSEMBLY LINE" - compile modules, package into JARs, link into
   custom runtime. Each step builds on the previous one.

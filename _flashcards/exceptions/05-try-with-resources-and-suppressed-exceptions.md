@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Exception Handling
 learning_tip: Primary exception is the "star of the show" - suppressed exceptions
   are the "supporting cast."

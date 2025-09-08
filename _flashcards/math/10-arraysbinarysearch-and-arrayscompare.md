@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Math, Arrays, Wrappers
 order: 10
 tags: []

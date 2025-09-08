@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Collections & Generics
 learning_tip: 'Remember "HASH-LINKED-TREE" order: HashSet (no order), LinkedHashSet
   (insertion order), TreeSet (sorted order).'

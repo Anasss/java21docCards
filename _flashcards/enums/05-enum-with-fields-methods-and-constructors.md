@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Enums
 learning_tip: Think "ENUM = SPECIAL CLASS" - enums are classes with predefined instances
   (constants) that can have fields, methods, and constructors.

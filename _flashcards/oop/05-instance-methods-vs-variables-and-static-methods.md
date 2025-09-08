@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: OOP and Encapsulation
 learning_tip: Remember "HIDE vs OVERRIDE" - static methods and fields are HIDDEN (reference
   type matters), instance methods are OVERRIDDEN (object type matters).

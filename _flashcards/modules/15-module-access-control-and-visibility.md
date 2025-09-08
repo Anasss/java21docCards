@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Modules & Migration
 learning_tip: Think "FORT WITH GATES" - modules are like fortified walls with specific
   gates (exports) and visitor passes (opens) for controlled access.

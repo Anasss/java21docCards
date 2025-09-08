@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: I/O and NIO
 learning_tip: Remember "BYTE vs CHAR, BUFFER for SPEED" - use byte streams for binary
   data, character streams for text, and always add buffering for performance.

@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: OOP and Encapsulation
 learning_tip: Think "ABSTRACT = BLUEPRINT" - defines the structure but leaves implementation
   details to subclasses. Like architectural blueprints, you can't build from them

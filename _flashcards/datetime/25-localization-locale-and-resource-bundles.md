@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Date, Time, and Localization
 learning_tip: Think "LOCALE = WHERE, BUNDLE = WHAT" - Locale specifies location/language,
   ResourceBundle provides localized content with automatic fallback.

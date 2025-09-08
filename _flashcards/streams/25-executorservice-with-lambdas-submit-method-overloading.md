@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Streams & Functional
 learning_tip: '"Future tells the future" - Future<?> means no meaningful result, Future<T>
   means result of type T is coming.'

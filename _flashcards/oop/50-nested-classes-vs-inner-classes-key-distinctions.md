@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: OOP and Encapsulation
 learning_tip: '"Static nested = NO instance access, Inner = FULL access" - Static
   nested classes (including implicitly static enums/records/interface classes) can''t

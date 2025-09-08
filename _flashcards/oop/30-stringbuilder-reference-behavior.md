@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: OOP and Encapsulation
 learning_tip: You can change the object's content through the reference, but you can't
   change where the original reference points.

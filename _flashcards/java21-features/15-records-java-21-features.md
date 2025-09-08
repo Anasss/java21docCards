@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Java 21 Features
 learning_tip: Records = "Data class on autopilot" - automatic constructor, accessors,
   equals/hashCode/toString. Perfect for immutable data carriers.

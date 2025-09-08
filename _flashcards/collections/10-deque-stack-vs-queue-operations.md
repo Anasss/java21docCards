@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Collections & Generics
 order: 10
 tags: []

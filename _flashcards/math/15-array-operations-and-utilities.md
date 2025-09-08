@@ -1,4 +1,5 @@
 ---
+layout: flashcard
 category: Math, Arrays, Wrappers
 learning_tip: Remember "ARRAYS = UTILITY BELT" - Arrays class has tools for every
   common array operation. Use deepEquals() and deepToString() for multi-dimensional
