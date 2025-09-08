@@ -955,7 +955,7 @@
   category: "Java 21 Features"
 
 - question: "What is the output of this family age comparison system?"
- code: |
+  code: |
    class FamilyAges {
        public static void main(String[] args) {
            Integer dadAge = 127;
@@ -969,12 +969,12 @@
            System.out.print(sonAge.equals(daughterAge) + " ");
        }
    }
- options:
+  options:
    - "true false true true "
    - "false false true true "
    - "true true true true "
    - "false true false true "
    - "true false false false "
- correct: 0
- explanation: "Integer caching applies to values -128 to 127. dadAge and momAge both reference the same cached Integer object for 127, so == returns true. sonAge and daughterAge are different objects for 128 (outside cache range), so == returns false. However, equals() compares values, not references, so both equals() calls return true regardless of caching."
- category: "Wrapper Classes"
+  correct: 0
+  explanation: "Integer caching applies to values -128 to 127. dadAge and momAge both reference the same cached Integer object for 127, so == returns true. sonAge and daughterAge are different objects for 128 (outside cache range), so == returns false. However, equals() compares values, not references, so both equals() calls return true regardless of caching."
+  category: "Wrapper Classes"
