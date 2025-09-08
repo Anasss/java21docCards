@@ -439,4 +439,226 @@ layout: default
     font-size: 0.95em;
   }
 }
+
+/* Make category sections more visually distinct */
+.category-details {
+  margin-bottom: 12px;
+  border: 2px solid #e1e8ed;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.category-details[open] {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.category-summary {
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-size: 1.05em;
+}
+
+.category-details[open] .category-summary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.category-details[open] .category-name {
+  color: white;
+}
+
+.category-details[open] .category-count {
+  background: white;
+  color: #667eea;
+}
+
+/* Add expand/collapse indicator */
+.category-summary::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+  font-size: 0.8em;
+}
+
+.category-details[open] .category-summary::before {
+  transform: rotate(90deg);
+}
+
+/* Improve flashcard list display */
+.flashcard-list {
+  padding: 0;
+  background: white;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.flashcard-link {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px;
+  text-decoration: none;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.flashcard-link::after {
+  content: '→';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.2s ease;
+  color: #667eea;
+  font-size: 1.2em;
+}
+
+.flashcard-link:hover::after {
+  opacity: 1;
+  right: 15px;
+}
+
+.flashcard-link:hover {
+  background: linear-gradient(to right, #f8f9ff, #ffffff);
+  padding-left: 30px;
+}
+
+/* Better visual hierarchy for titles and tips */
+.flashcard-title {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 4px;
+  font-size: 1em;
+}
+
+.flashcard-link:hover .flashcard-title {
+  color: #667eea;
+}
+
+.flashcard-tip {
+  font-size: 0.85em;
+  color: #888;
+  font-style: normal;
+  opacity: 0.9;
+}
+
+/* Smooth scrollbar for flashcard lists */
+.flashcard-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.flashcard-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.flashcard-list::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 3px;
+}
+
+.flashcard-list::-webkit-scrollbar-thumb:hover {
+  background: #5a67d8;
+}
+
+/* Make the quick actions more prominent */
+.quick-actions {
+  display: flex;
+  gap: 20px;
+  margin: 40px 0;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 15px;
+  border: 1px solid #e1e8ed;
+}
+
+.quick-actions .btn {
+  flex: 1;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15em;
+}
+
+/* Category open/close all buttons */
+.category-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.category-control-btn {
+  padding: 8px 16px;
+  background: #f8f9fa;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+}
+
+.category-control-btn:hover {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .quick-actions {
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .category-summary {
+    padding: 15px 20px;
+    font-size: 1em;
+  }
+  
+  .flashcard-list {
+    max-height: 300px;
+  }
+  
+  .flashcard-link {
+    padding: 14px 20px;
+  }
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Create control buttons
+  const flashcardIndex = document.querySelector('.flashcard-index');
+  if (flashcardIndex) {
+    const controls = document.createElement('div');
+    controls.className = 'category-controls';
+    controls.innerHTML = `
+      <button class="category-control-btn" onclick="expandAllCategories()">Expand All</button>
+      <button class="category-control-btn" onclick="collapseAllCategories()">Collapse All</button>
+    `;
+    flashcardIndex.insertBefore(controls, flashcardIndex.firstChild);
+  }
+});
+
+function expandAllCategories() {
+  document.querySelectorAll('.category-details').forEach(details => {
+    details.open = true;
+  });
+}
+
+function collapseAllCategories() {
+  document.querySelectorAll('.category-details').forEach(details => {
+    details.open = false;
+  });
+}
+</script>

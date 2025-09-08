@@ -1,17 +1,69 @@
-
-<!-- Simple breadcrumb component -->
-<div class="flashcard-breadcrumb">
-  <a href="{{ '/' | relative_url }}" class="breadcrumb-home">🏠 Home</a>
-  {% if page.category %}
-    <span class="breadcrumb-separator">→</span>
-    <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}" class="breadcrumb-category" 
-       onclick="setTimeout(function(){ 
-         const element = document.getElementById('{{ page.category | slugify }}'); 
-         if(element) element.open = true; 
-       }, 100);">
-      {{ page.category }}
+<div class="flashcard-top-navigation">
+  <!-- Breadcrumb -->
+  <div class="flashcard-breadcrumb">
+    <a href="{{ '/' | relative_url }}" class="breadcrumb-home">
+      <span class="breadcrumb-icon">🏠</span>
+      <span class="breadcrumb-text">Home</span>
     </a>
-    <span class="breadcrumb-separator">→</span>
-  {% endif %}
-  <span class="breadcrumb-current">{{ page.title }}</span>
+    {% if page.category %}
+      <span class="breadcrumb-separator">›</span>
+      <a href="{{ '/' | relative_url }}#{{ page.category | slugify }}" class="breadcrumb-category" 
+         onclick="setTimeout(function(){ 
+           const element = document.getElementById('{{ page.category | slugify }}'); 
+           if(element) element.open = true; 
+         }, 100);">
+        {{ page.category }}
+      </a>
+      <span class="breadcrumb-separator">›</span>
+    {% endif %}
+    <span class="breadcrumb-current">{{ page.title | truncate: 50 }}</span>
+  </div>
+  
+  <!-- Quick Navigation Bar -->
+  <div class="quick-nav-bar">
+    {% assign flashcards = site.flashcards | where: "category", page.category | sort: "order" %}
+    {% for flashcard in flashcards %}
+      {% if flashcard.url == page.url %}
+        {% assign current_index = forloop.index0 %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+    
+    {% assign prev_index = current_index | minus: 1 %}
+    {% assign next_index = current_index | plus: 1 %}
+    
+    <div class="quick-nav-left">
+      {% if prev_index >= 0 %}
+        <a href="{{ flashcards[prev_index].url | relative_url }}" class="quick-nav-btn quick-nav-prev" title="Previous: {{ flashcards[prev_index].title }}">
+          <span class="nav-arrow">←</span>
+          <span class="nav-label">Previous</span>
+        </a>
+      {% else %}
+        <span class="quick-nav-btn quick-nav-disabled">
+          <span class="nav-arrow">←</span>
+          <span class="nav-label">Previous</span>
+        </span>
+      {% endif %}
+    </div>
+    
+    <div class="quick-nav-center">
+      <span class="card-counter">
+        Card <strong>{{ current_index | plus: 1 }}</strong> of <strong>{{ flashcards.size }}</strong>
+      </span>
+    </div>
+    
+    <div class="quick-nav-right">
+      {% if next_index < flashcards.size %}
+        <a href="{{ flashcards[next_index].url | relative_url }}" class="quick-nav-btn quick-nav-next" title="Next: {{ flashcards[next_index].title }}">
+          <span class="nav-label">Next</span>
+          <span class="nav-arrow">→</span>
+        </a>
+      {% else %}
+        <span class="quick-nav-btn quick-nav-disabled">
+          <span class="nav-label">Next</span>
+          <span class="nav-arrow">→</span>
+        </span>
+      {% endif %}
+    </div>
+  </div>
 </div>
