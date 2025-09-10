@@ -970,11 +970,36 @@
        }
    }
   options:
-   - "true false true true "
    - "false false true true "
    - "true true true true "
+   - "true false true true "
    - "false true false true "
-   - "true false false false "
-  correct: 0
+   - "true false false true "
+  correct: 2
   explanation: "Integer caching applies to values -128 to 127. dadAge and momAge both reference the same cached Integer object for 127, so == returns true. sonAge and daughterAge are different objects for 128 (outside cache range), so == returns false. However, equals() compares values, not references, so both equals() calls return true regardless of caching."
   category: "Wrapper Classes"
+
+- question: "Which statement accurately describes the effect of 'requires transitive' in the module system for the code below?"
+  code: |
+    module module.a {
+        exports com.example.a;
+        requires transitive module.x;
+    }
+
+    module module.b {
+        requires module.a;
+        exports com.example.b;
+    }
+
+    module module.c {
+        requires module.b;
+    }
+  options:
+    - "module.c cannot access module.x types unless it explicitly declares requires module.x."
+    - "module.c only has read access to module.x at runtime but not at compile-time."
+    - "requires transitive has no impact on readability; module.c must add a requires directive to see module.x types."
+    - "module.c can access module.x types transitively through module.a because module.a declares requires transitive module.x."
+  correct: 3
+  explanation: >
+    The 'requires transitive' statement in module.a means any module requiring module.a, directly or transitively, also reads module.x.
+    Therefore, types from module.x that appear in module.a's API are accessible to module.c without module.c needing its own 'requires module.x' declaration.
