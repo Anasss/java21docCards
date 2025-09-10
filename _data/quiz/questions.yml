@@ -995,11 +995,11 @@
         requires module.b;
     }
   options:
-    - "module.c cannot access module.x types unless it explicitly declares requires module.x."
-    - "module.c only has read access to module.x at runtime but not at compile-time."
-    - "requires transitive has no impact on readability; module.c must add a requires directive to see module.x types."
-    - "module.c can access module.x types transitively through module.a because module.a declares requires transitive module.x."
+    - "Code in module.c may use types from module.x at runtime, but will always receive a compilation error if they attempt to reference them directly."
+    - "Code in module.c can use any exported type from module.x, even those not referenced in module.a or module.b."
+    - "To access types from module.x, module.c must always explicitly use 'requires module.x', regardless of any transitive requirements."
+    - "Code in module.c can use types from module.x if they are part of the public API exported from module.a, but not if they are only used internally in module.a."
   correct: 3
   explanation: >
-    The 'requires transitive' statement in module.a means any module requiring module.a, directly or transitively, also reads module.x.
-    Therefore, types from module.x that appear in module.a's API are accessible to module.c without module.c needing its own 'requires module.x' declaration.
+    'requires transitive' allows downstream modules like module.c to access types from module.x that are exposed in the exported API of module.a, but not those that are only used internally within module.a or module.b.
+    Types from module.x must be part of the transitive public API chain for module.c to use them without a direct 'requires' directive.
