@@ -22,6 +22,58 @@ layout: default
   </a>
 </div>
 
+## 💪 Exam Difficulty
+
+<div class="difficulty-section">
+  <div class="difficulty-warning">
+    <h4>The Java 21 OCP exam is challenging - even for experts</h4>
+    <p>Multiple attempts are common and nothing to be ashamed of. Learn from real experiences:</p>
+  </div>
+  
+  <div class="experiences-grid">
+    <div class="experience-card expert">
+      <div class="expert-info">
+        <strong>Jeanne Boyarsky</strong> 
+        <span class="credentials">Java Champion • Co-author of the OCP Guide</span>
+      </div>
+      <div class="attempt-results">
+        <span class="attempt failed">1st: ❌ 62%</span>
+        <span class="attempt passed">2nd: ✅ 74%</span>
+      </div>
+    </div>
+
+    <div class="experience-card expert">
+      <div class="expert-info">
+        <strong>Scott Selikoff</strong> 
+        <span class="credentials">Co-author of the OCP Guide</span>
+      </div>
+      <div class="attempt-results">
+        <span class="attempt passed">1st: ✅ Passed</span>
+        <span class="note">Called it "very difficult"</span>
+      </div>
+    </div>
+
+    <div class="experience-card developer">
+      <div class="expert-info">
+        <strong>Experienced Developer</strong> 
+        <span class="credentials">5+ years Java • Had OCP 11 & 17</span>
+      </div>
+      <div class="attempt-results">
+        <span class="attempt failed">1st: ❌ 48%</span>
+        <span class="attempt passed">2nd: ✅ 70%</span>
+      </div>
+    </div>
+  </div>
+  
+  <p class="difficulty-message">
+    <strong>Key takeaway:</strong> Even Java experts and book authors struggled with this exam. Prepare thoroughly, expect a challenge, and don't give up after one attempt.
+  </p>
+  
+  <p class="experiences-source">
+    <small>Experiences sourced from public blogs and community forums including <a href="https://coderanch.com" target="_blank">CodeRanch</a></small>
+  </p>
+</div>
+
 ## 📖 Study strategy
 
 <div style="margin-bottom: 25px;"></div>
@@ -217,6 +269,161 @@ layout: default
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
   border-color: #667eea;
+}
+
+/* Exam Difficulty Section */
+.difficulty-section {
+  background: linear-gradient(135deg, #fff3cd, #fef7e0);
+  border: 2px solid #ffc107;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 30px 0;
+  text-align: center;
+}
+
+.difficulty-warning h4 {
+  color: #856404;
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+}
+
+.difficulty-warning p {
+  color: #664d03;
+  margin: 0 0 25px 0;
+  font-size: 1em;
+}
+
+.experiences-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.experience-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-left: 4px solid #667eea;
+  text-align: left;
+  transition: transform 0.2s ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-2px);
+}
+
+.experience-card.expert {
+  border-left-color: #667eea;
+}
+
+.experience-card.developer {
+  border-left-color: #28a745;
+}
+
+.expert-info {
+  margin-bottom: 12px;
+}
+
+.expert-info strong {
+  color: #2c3e50;
+  font-size: 1.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.credentials {
+  font-size: 0.8em;
+  color: #667eea;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.experience-card.developer .credentials {
+  color: #28a745;
+}
+
+.source {
+  font-size: 0.7em;
+  color: #6c757d;
+  font-style: italic;
+  display: block;
+}
+
+.source a {
+  color: #6c757d;
+  text-decoration: none;
+}
+
+.source a:hover {
+  color: #495057;
+  text-decoration: underline;
+}
+
+.attempt-results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.attempt {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-align: center;
+  width: fit-content;
+}
+
+.attempt.failed {
+  background: #ffebee;
+  color: #d32f2f;
+  border: 1px solid #ffcdd2;
+}
+
+.attempt.passed {
+  background: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.note {
+  font-size: 0.8em;
+  color: #6c757d;
+  font-style: italic;
+  padding: 2px 0;
+}
+
+.difficulty-message {
+  color: #856404;
+  margin: 25px 0 15px 0;
+  font-size: 0.95em;
+  line-height: 1.5;
+  padding: 15px;
+  background: rgba(255, 193, 7, 0.1);
+  border-radius: 8px;
+}
+
+.difficulty-message strong {
+  color: #664d03;
+}
+
+.experiences-source {
+  color: #6c757d;
+  margin: 15px 0 0 0;
+  font-style: italic;
+  text-align: center;
+}
+
+.experiences-source a {
+  color: #667eea;
+  text-decoration: none;
+}
+
+.experiences-source a:hover {
+  text-decoration: underline;
 }
 
 /* Stats Dashboard */
@@ -504,6 +711,31 @@ layout: default
     width: 100%;
   }
   
+  .difficulty-section {
+    padding: 20px;
+  }
+  
+  .experiences-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .experience-card {
+    padding: 15px;
+  }
+  
+  .expert-info strong {
+    font-size: 1em;
+  }
+  
+  .credentials {
+    font-size: 0.75em;
+  }
+  
+  .source {
+    font-size: 0.65em;
+  }
+  
   .stats-grid {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 15px;
@@ -547,6 +779,23 @@ layout: default
   .btn {
     padding: 12px 20px;
     font-size: 0.95em;
+  }
+  
+  .difficulty-warning h4 {
+    font-size: 1.1em;
+  }
+  
+  .attempt-results {
+    align-items: stretch;
+  }
+  
+  .attempt {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .experiences-source {
+    font-size: 0.8em;
   }
 }
 </style>
