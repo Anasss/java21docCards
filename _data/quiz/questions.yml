@@ -979,7 +979,7 @@
   explanation: "Integer caching applies to values -128 to 127. dadAge and momAge both reference the same cached Integer object for 127, so == returns true. sonAge and daughterAge are different objects for 128 (outside cache range), so == returns false. However, equals() compares values, not references, so both equals() calls return true regardless of caching."
   category: "Wrapper Classes"
 
-- question: "Which statement accurately describes the effect of 'requires transitive' in the module system for the code below?"
+- question: "Which statement best describes what code in module.c can do with types from module.x when the modules are declared as below?"
   code: |
     module module.a {
         exports com.example.a;
@@ -1003,3 +1003,77 @@
   explanation: >
     'requires transitive' allows downstream modules like module.c to access types from module.x that are exposed in the exported API of module.a, but not those that are only used internally within module.a or module.b.
     Types from module.x must be part of the transitive public API chain for module.c to use them without a direct 'requires' directive.
+
+- question: "What is the output of this family genealogy processing code?"
+  code: |
+    import java.util.*;
+    import java.util.stream.*;
+    class Family {
+        public static void main(String[] args) {
+            List<String> genealogy = List.of("Abraham-Sara", "Adam");
+            
+            String result = genealogy.stream()
+                .flatMap(data -> Arrays.stream(data.split("-")))
+                .filter(part -> part.length() >= 4)
+                .map(part -> part.length() == 4 ? part.substring(1) : part.substring(1, 3))
+                .reduce("", (a, b) -> a + b.toUpperCase());
+            
+            System.out.println(result);
+        }
+    }
+  options:
+    - "BRARADAM"
+    - "BRAHAMSARA"
+    - "ABRASA"
+    - "ABARSADAM"
+    - "BRARDA"
+    - "ABSADAM"
+  correct: 0
+  explanation: "flatMap splits by '-' and flattens: ['Abraham','Sara','Adam']. filter(length >= 4) keeps all: ['Abraham','Sara','Adam']. map applies substring rules: Abraham(7chars)->substring(1,3)->'br', Sara(4chars)->substring(1)->'ara', Adam(4chars)->substring(1)->'dam'. reduce concatenates with toUpperCase: 'BR'+'ARA'+'DAM' = 'BRARADAM'."
+  category: "Streams"
+
+- question: "What are the states of the threads after the main thread calls dad.interrupt()?"
+  code: |
+    class FamilyMember extends Thread {
+        private String name;
+        private static final Object kitchen = new Object();
+        
+        FamilyMember(String name) { this.name = name; }
+        
+        public void run() {
+            System.out.println(name + " wants to cook");
+            synchronized(kitchen) {
+                System.out.println(name + " is cooking");
+                try {
+                    Thread.sleep(5000); // cook for 5 seconds
+                } catch(InterruptedException e) {
+                    System.out.println(name + " interrupted while cooking");
+                }
+                System.out.println(name + " finished cooking");
+            }
+        }
+    }
+    
+    public class FamilyDinner {
+        public static void main(String[] args) throws Exception {
+            FamilyMember mom = new FamilyMember("Mom");
+            FamilyMember dad = new FamilyMember("Dad");
+            
+            mom.start();
+            Thread.sleep(100); // ensure mom gets kitchen first
+            dad.start();
+            Thread.sleep(100); // ensure dad is blocked
+            dad.interrupt();
+            
+            // What are the thread states here?
+        }
+    }
+  options:
+    - "Mom: TIMED_WAITING, Dad: RUNNABLE, Main: RUNNABLE"
+    - "Mom: TIMED_WAITING, Dad: BLOCKED, Main: RUNNABLE" 
+    - "Mom: RUNNABLE, Dad: TERMINATED, Main: RUNNABLE"
+    - "Mom: BLOCKED, Dad: RUNNABLE, Main: TIMED_WAITING"
+    - "Mom: TIMED_WAITING, Dad: WAITING, Main: RUNNABLE"
+  correct: 1
+  explanation: "Mom acquired the kitchen lock and is sleeping (TIMED_WAITING). Dad is blocked waiting for the kitchen lock (BLOCKED). Interrupting a BLOCKED thread does NOT throw InterruptedException - Dad remains BLOCKED until he can acquire the lock, then he can check interrupt status. Main thread continues executing (RUNNABLE). Key point: interrupt() only throws InterruptedException for threads in WAITING or TIMED_WAITING states, not BLOCKED."
+  category: "Concurrency"
