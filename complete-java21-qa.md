@@ -1446,3 +1446,74 @@ int sum2 = numbers.stream()
 - ❌ Small datasets (overhead > benefit)
 
 ---
+
+### Q66: What are the types of record constructors and how do you ensure immutability?
+
+**Answer:**
+
+**Record Constructor Types:**
+
+**1. Compact Canonical Constructor** (short syntax, always canonical)
+```java
+public record FamilyTree(String surname, Map<String, Integer> ages) {
+    public FamilyTree {  // No parameter list
+        // Modify parameters before implicit assignment
+        surname = surname.toUpperCase();
+        ages = Map.copyOf(ages);  // Create immutable copy
+        // Implicit: this.surname = surname; this.ages = ages;
+    }
+}
+```
+
+**2. Explicit Canonical Constructor** (full syntax, covers all components)
+```java
+public record FamilyTree(String surname, Map<String, Integer> ages) {
+    public FamilyTree(String surname, Map<String, Integer> ages) {
+        // Must explicitly assign ALL fields
+        this.surname = surname.toUpperCase();
+        this.ages = Map.copyOf(ages);
+    }
+}
+```
+
+**3. Non-Canonical Constructor** (different parameters, must delegate)
+```java
+public record FamilyTree(String surname, Map<String, Integer> ages) {
+    public FamilyTree(String surname) {  // Missing 'ages'
+        this(surname, Map.of());  // Must call canonical constructor
+    }
+}
+```
+
+**Immutability in Records:**
+
+**What records guarantee (structural immutability):**
+- ✅ Fields are implicitly `final` (cannot be reassigned)
+- ✅ No setter methods generated
+
+**What records DON'T guarantee (behavioral immutability):**
+- ❌ Mutable field contents can still be modified
+- ❌ Accessors return direct references to mutable objects
+
+**Ensuring True Immutability:**
+```java
+public record FamilyTree(String surname, Map<String, Integer> ages) {
+    public FamilyTree {
+        ages = Map.copyOf(ages);  // Creates immutable Map
+    }
+    // Now ages().put() throws UnsupportedOperationException
+}
+```
+
+**Key Distinction:**
+- `new HashMap<>(ages)` → mutable copy (can be modified)
+- `Map.copyOf(ages)` → immutable copy (throws exception on modification)
+- `Collections.unmodifiableMap(ages)` → unmodifiable view (original can change)
+
+**Common Pitfall:**
+```java
+var family = new FamilyTree("Smith", new HashMap<>());
+family.ages().put("Dad", 45);  // Compiles but violates immutability intent
+```
+
+**Best Practice:** Use `Map.copyOf()`, `List.copyOf()`, or `Set.copyOf()` in constructors for true immutability with mutable types.
