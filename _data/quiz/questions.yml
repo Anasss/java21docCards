@@ -479,7 +479,7 @@
   explanation: "Init prints Dad once. Loop runs twice printing Son Son."
   category: "Control Flow"
 
-- question: "Which instanceof check returns false for a null reference?"
+- question: "What will this code print?"
   code: |
     class Family {
         public static void main(String[] args) {
@@ -492,6 +492,7 @@
     - "false"
     - "Compilation error"
     - "Throws exception"
+    - "Nothing is printed"
   correct: 1
   explanation: "instanceof returns false when the reference is null."
   category: "Operators"

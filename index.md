@@ -139,26 +139,83 @@ layout: default
   </p>
 </div>
 
+
 ## Resources & Support
 
-<div class="resources-grid">
-  <div class="resource-card">
-    <h4>📚 Additional Materials</h4>
-    <ul>
-      <li><a href="{{ '/complete-java21-qa.html' | relative_url }}">Complete Q&A Study Guide</a></li>
-      <li><a href="{{ '/quiz/' | relative_url }}">Interactive Practice Quiz</a></li>
-    </ul>
-  </div>
+### 💰 Paid Resources
+
+<div class="resource-category">
+  <h4>📚 Study Guides & Books</h4>
+  <ul>
+    <li><a href="https://www.amazon.com/Oracle-Certified-Professional-Developer-Study/dp/1394286619" target="_blank">OCP Oracle Certified Professional Java SE 21 Developer Study Guide</a> by Jeanne Boyarsky & Scott Selikoff (Sybex) - The most recommended book by exam authors</li>
+    <li><a href="https://enthuware.com/books/295-java-21-certification-fundamentals" target="_blank">OCP Java 21 Programmer Certification Fundamentals</a> by Hanumant Deshmukh - Comprehensive coverage with focus on fundamentals</li>
+    <li><a href="https://www.amazon.com/OCP-Java-Programmer-Certification-Fundamentals-ebook/dp/B0D2YHPNB9" target="_blank">OCP Java 17 & 21 Programmer Certification Fundamentals</a> by Hanumant Deshmukh - Covers both Java 17 and 21</li>
+    <li><a href="https://www.amazon.com/Java-Programmer-Certification-Fundamentals-Part/dp/B0DCJ45KJX" target="_blank">OCP Java 17 & 21 Programmer Certification Fundamentals Part 1</a> by Hanumant Deshmukh - First part of two-part series</li>
+    <li><a href="https://www.amazon.com/dp/B0DCGMFCDR" target="_blank">OCP Java 17 & 21 Programmer Certification Fundamentals Part 2</a> by Hanumant Deshmukh - Second part of comprehensive guide</li>
+    <li><a href="https://www.amazon.com/OCP-Java-Certification-Exam-Refresher-ebook/dp/B0FP9JYZ8M" target="_blank">OCP Java 21 Certification Exam Refresher: Study Notes for 1Z0-830</a> by Hanumant Deshmukh - Quick revision notes for experienced developers</li>
+    <li><a href="https://www.amazon.com/Java-Complete-Reference-Thirteenth-Herbert/dp/1265058415" target="_blank">Java: The Complete Reference, Thirteenth Edition</a> - In-depth coverage of Java 21 features</li>
+  </ul>
   
-  <div class="resource-card">
-    <h4>🤝 Contributing</h4>
-    <p>Help improve this study resource:</p>
-    <ul>
-      <li><a href="https://github.com/Anasss/java21docCards/blob/main/CONTRIBUTING.md" target="_blank">Contribution Guide</a></li>
-      <li><a href="https://github.com/Anasss/java21docCards/issues" target="_blank">Report Issues</a></li>
-      <li><a href="https://github.com/Anasss/java21docCards" target="_blank">View Source Code</a></li>
-    </ul>
-  </div>
+  <h4>🎯 Practice Tests & Mock Exams</h4>
+  <ul>
+    <li><a href="https://enthuware.com/java-certification-mock-exams/oracle-certified-professional/ocp-java-21-exam-1z0-830" target="_blank">Enthuware Mock Exams for Java 21</a> ($9.99) - 1200+ questions with detailed explanations, highly recommended by the community</li>
+    <li><a href="https://www.udemy.com/course/1z0-830-java-se-21-developer-professional-exam-practice-test/" target="_blank">1Z0-830 Java SE 21 Developer Professional Practice Test</a> (Udemy) - 250+ practice questions by javinpaul</li>
+  </ul>
+  
+  <h4>🎥 Video Courses</h4>
+  <ul>
+    <li><a href="https://www.udemy.com/course/ocp11_from_oca8/" target="_blank">Java 21, Java 17, Java 11, Java 8 and Spring Boot 3</a> (Udemy) - by Dr. Seán Kennedy OCA, OCP</li>
+    <li><a href="https://learn.oracle.com/ols/course/java-se-21-programming-complete/117252/138847" target="_blank">Oracle University: Java SE 21 Programming Complete</a> - Official Oracle training (subscription required)</li>
+    <li><a href="https://learning.oreilly.com/videos/java-se-17/9780138194796/" target="_blank">O'Reilly Java SE Courses</a> by Simon Roberts - Available through O'Reilly subscription</li>
+  </ul>
+</div>
+
+### 🆓 Free Resources
+
+<div class="resource-category">
+  <h4>📖 Online Study Guides</h4>
+  <ul>
+    <li><a href="http://ocpj21.javastudyguide.com/" target="_blank">Free Java SE 21 Developer Study Guide</a> by Esteban Herrera - Complete free online book</li>
+    <li><a href="https://github.com/r331/OCP-Oracle-Certified-Professional-Java-SE-21-1Z0-839-Open-Study-Guide" target="_blank">OCP Java SE 21 Open Study Guide</a> (GitHub) - Community-driven open study guide</li>
+    <li><a href="{{ '/complete-java21-qa.html' | relative_url }}">Our Complete Q&A Study Guide</a> - Comprehensive question and answer format</li>
+  </ul>
+  
+  <h4>📝 Free Practice Questions</h4>
+  <ul>
+    <li><a href="https://www.dbexam.com/oracle/oracle-1z0-830-certification-sample-questions-and-answers" target="_blank">DBExam Free Sample Questions</a> - Free practice questions with explanations</li>
+    <li><a href="{{ '/quiz/' | relative_url }}">Our Interactive Practice Quiz</a> - Free quiz with 40+ questions</li>
+  </ul>
+  
+  <h4>📘 Official Oracle Documentation</h4>
+  <ul>
+    <li><a href="https://docs.oracle.com/en/java/javase/21/" target="_blank">Oracle JDK 21 Documentation</a> - Official Java SE 21 documentation</li>
+    <li><a href="https://docs.oracle.com/javase/tutorial/" target="_blank">The Java Tutorials</a> - Oracle's official Java tutorials</li>
+    <li><a href="https://docs.oracle.com/en/java/javase/21/docs/api/index.html" target="_blank">Java SE 21 API Documentation</a> - Complete API reference</li>
+    <li><a href="https://education.oracle.com/java-se-21-developer-professional/pexam_1Z0-830" target="_blank">Official Exam Information</a> - Oracle's exam page for 1Z0-830</li>
+  </ul>
+  
+  <h4>💬 Community Forums</h4>
+  <ul>
+    <li><a href="https://coderanch.com/f/24/java-programmer-OCPJP" target="_blank">CodeRanch OCPJP Forum</a> - Active community forum with exam authors participating</li>
+    <li><a href="https://coderanch.com/forums/f-24/java-programmer-OCPJP" target="_blank">Java 21 OCP FAQ</a> - Frequently asked questions about the exam</li>
+  </ul>
+  
+  <h4>📰 Blogs & Articles</h4>
+  <ul>
+    <li><a href="https://www.selikoff.net/ocp21/" target="_blank">Scott Selikoff's OCP 21 Blog</a> - Updates and insights from the exam author</li>
+    <li><a href="https://medium.com/javarevisited" target="_blank">JavaRevisited on Medium</a> - Articles about Java certification and preparation tips</li>
+  </ul>
+</div>
+
+### 🤝 Contributing to This Site
+
+<div class="resource-category">
+  <p>Help improve this study resource for the community:</p>
+  <ul>
+    <li><a href="https://github.com/Anasss/java21docCards/blob/main/CONTRIBUTING.md" target="_blank">Contribution Guide</a> - Learn how to add flashcards and questions</li>
+    <li><a href="https://github.com/Anasss/java21docCards/issues" target="_blank">Report Issues</a> - Found a bug or have a suggestion?</li>
+    <li><a href="https://github.com/Anasss/java21docCards" target="_blank">View Source Code</a> - Fork and contribute on GitHub</li>
+  </ul>
 </div>
 
 <style>
