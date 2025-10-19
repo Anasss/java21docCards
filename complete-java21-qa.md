@@ -4,7 +4,7 @@ nav_order: 3
 layout: default
 ---
 
-# Java 21 OCP - Questions & Answers Study Guide
+# Java 21 OCP - Questions & Answers
 
 ## Java 21 Features
 
@@ -1195,32 +1195,7 @@ try (FileReader fr = new FileReader("file.txt")) {
 
 ---
 
-### Q55: What's the difference between character encoding in FileReader vs InputStreamReader?
-**Answer:**
-- **FileReader**: Always uses **platform default encoding** (can't be changed)
-- **InputStreamReader**: Allows **explicit encoding specification**
-
-```java
-// FileReader - platform dependent:
-try (FileReader fr = new FileReader("file.txt")) {
-    // Uses system default encoding (UTF-8 on Linux/Mac, Windows-1252 on Windows)
-}
-
-// InputStreamReader - explicit encoding:
-try (FileInputStream fis = new FileInputStream("file.txt");
-     InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
-    // Guaranteed UTF-8 regardless of platform
-}
-
-// Modern alternative - Files with explicit encoding:
-String content = Files.readString(Path.of("file.txt"), StandardCharsets.UTF_8);
-```
-
-**Best practice:** Always specify encoding explicitly for cross-platform compatibility.
-
----
-
-### Q56: What's the difference between Files.move() vs Files.copy() followed by Files.delete()?
+### Q55: What's the difference between Files.move() vs Files.copy() followed by Files.delete()?
 **Answer:**
 - **Files.move()**: **Atomic operation** when source and target are on same filesystem
 - **copy() + delete()**: **Two separate operations**, not atomic
@@ -1243,7 +1218,7 @@ Files.delete(source);  // If this fails, file exists in both locations!
 
 ---
 
-### Q57: What's the difference between Path.toAbsolutePath() and Path.toRealPath()?
+### Q56: What's the difference between Path.toAbsolutePath() and Path.toRealPath()?
 **Answer:**
 - **toAbsolutePath()**: Resolves to absolute path **textually** (doesn't check filesystem)
 - **toRealPath()**: Resolves to **canonical path** (checks filesystem, resolves links)
@@ -1266,7 +1241,7 @@ Path real2 = relative.toRealPath();       // /current/docs/file.txt (normalizes 
 
 ---
 
-### Q58: What are the key differences between binary streams, character streams, and bridge streams in Java I/O?
+### Q57: What are the key differences between binary streams, character streams, and bridge streams in Java I/O?
 
 **Answer:**
 
@@ -1387,7 +1362,7 @@ while ((count = reader.read(buffer)) != -1) {
 
 ---
 
-### Q59: What are the key concepts of file paths and the java.io.File class?
+### Q58: What are the key concepts of file paths and the java.io.File class?
 
 **Answer:**
 
@@ -1495,7 +1470,7 @@ long size = file.length();             // File size in bytes
 
 ---
 
-### Q60: What is the java.nio.file package and what are its key interfaces and classes?
+### Q59: What is the java.nio.file package and what are its key interfaces and classes?
 
 **Answer:**
 
@@ -1547,7 +1522,7 @@ NOFOLLOW_LINKS  // Don't follow symbolic links
 
 ---
 
-### Q61: What are the important Path methods and how do they work?
+### Q60: What are the important Path methods and how do they work?
 
 **Answer:**
 
@@ -1624,7 +1599,7 @@ File f = p.toFile();
 
 ---
 
-### Q62: How do resolve(), resolveSibling(), and relativize() work with Paths?
+### Q61: How do resolve(), resolveSibling(), and relativize() work with Paths?
 
 **Answer:**
 
@@ -1684,7 +1659,7 @@ abs.relativize(rel);  // ❌ IllegalArgumentException
 
 ---
 
-### Q63: How do you use the Files class to create streams for reading and writing?
+### Q62: How do you use the Files class to create streams for reading and writing?
 
 **Answer:**
 
@@ -1745,7 +1720,7 @@ bw = Files.newBufferedWriter(path,
 
 ---
 
-### Q64: How do you read and write files using Files class convenience methods?
+### Q63: How do you read and write files using Files class convenience methods?
 
 **Answer:**
 
@@ -1820,7 +1795,7 @@ Files.write(path, lines,
 
 ---
 
-### Q65: How do you use Stream API with Files for reading lines and directories?
+### Q64: How do you use Stream API with Files for reading lines and directories?
 
 **Answer:**
 
@@ -1907,7 +1882,7 @@ try (Stream<Path> paths = Files.walk(startPath,
 
 ## Concurrency
 
-### Q66: What's the difference between Runnable and Callable interfaces?
+### Q65: What's the difference between Runnable and Callable interfaces?
 **Answer:**
 - **Runnable**: `void run()` - no return value, no checked exceptions
 - **Callable**: `V call() throws Exception` - returns value, can throw checked exceptions
@@ -1929,7 +1904,7 @@ Future<String> future2 = executor.submit(task2);   // Future<String> - String re
 
 ---
 
-### Q67: What happens when you submit more tasks than thread pool capacity?
+### Q66: What happens when you submit more tasks than thread pool capacity?
 **Answer:** Tasks are **queued** and executed when threads become available. The behavior depends on the queue type:
 
 ```java
@@ -1953,7 +1928,7 @@ for (int i = 0; i < 5; i++) {
 
 ---
 
-### Q68: What's the difference between execute() and submit()?
+### Q67: What's the difference between execute() and submit()?
 **Answer:**
 - **execute()**: Fire-and-forget, no return value, for Runnable only
 - **submit()**: Returns Future for result/status tracking, works with Runnable and Callable
@@ -1971,7 +1946,7 @@ future.get();  // Wait for completion and handle exceptions
 
 ---
 
-### Q69: What's the difference between CountDownLatch and CyclicBarrier?
+### Q68: What's the difference between CountDownLatch and CyclicBarrier?
 **Answer:**
 - **CountDownLatch**: One-time use, threads wait for countdown to zero
 - **CyclicBarrier**: Reusable, threads wait for each other, then all proceed together
@@ -2008,7 +1983,7 @@ executor.submit(() -> {
 
 ---
 
-### Q70: What happens when you don't shut down an ExecutorService?
+### Q69: What happens when you don't shut down an ExecutorService?
 **Answer:** The **JVM won't terminate** because executor threads are still alive, even if main() completes:
 
 ```java
@@ -2038,13 +2013,13 @@ public static void main(String[] args) {
 
 ## Math, Arrays, and Wrappers
 
-### Q71: How does Arrays.binarySearch() indicate when an element is not found?
+### Q70: How does Arrays.binarySearch() indicate when an element is not found?
 **Answer:** Returns `-(insertion point) - 1` when element not found.
 
 **Formula:** If result is negative: `insertion point = -result - 1`
 
 ```java
-int[] sorted = {10, 20, 30, 40, 50};
+int[] sorted = {% raw %}{10, 20, 30, 40, 50}{% endraw %};
 int result = Arrays.binarySearch(sorted, 25);  // Returns -3
 int insertionPoint = -result - 1;              // -(-3) - 1 = 2
 // 25 would be inserted at index 2 (between 20 and 30)
@@ -2052,7 +2027,7 @@ int insertionPoint = -result - 1;              // -(-3) - 1 = 2
 
 ---
 
-### Q72: What are the wrapper class caching rules and why do they matter?
+### Q71: What are the wrapper class caching rules and why do they matter?
 **Answer:** Wrapper classes cache small values for performance:
 - **Integer**: -128 to 127
 - **Boolean**: TRUE and FALSE  
@@ -2073,14 +2048,14 @@ System.out.println(c.equals(d)); // true (value comparison)
 
 ---
 
-### Q73: What's the difference between Arrays.equals() and Arrays.deepEquals()?
+### Q72: What's the difference between Arrays.equals() and Arrays.deepEquals()?
 **Answer:**
 - **Arrays.equals()**: Shallow comparison - one level only
 - **Arrays.deepEquals()**: Deep comparison - recursively compares multi-dimensional arrays
 
 ```java
-int[][] array1 = {{1, 2}, {3, 4}};
-int[][] array2 = {{1, 2}, {3, 4}};
+int[][] array1 = {% raw %}{{1, 2}, {3, 4}}{% endraw %};
+int[][] array2 = {% raw %}{{1, 2}, {3, 4}}{% endraw %};
 
 Arrays.equals(array1, array2);     // false (compares references of sub-arrays)
 Arrays.deepEquals(array1, array2); // true (compares content recursively)
@@ -2092,7 +2067,7 @@ Arrays.deepEquals(array1, array2); // true (compares content recursively)
 
 ## Modules & Migration
 
-### Q74: What's the difference between named modules, automatic modules, and the unnamed module?
+### Q73: What's the difference between named modules, automatic modules, and the unnamed module?
 **Answer:**
 - **Named module**: Has `module-info.java`, explicit declarations
 - **Automatic module**: JAR on module path without `module-info.java`, gets automatic name from JAR filename
@@ -2103,7 +2078,7 @@ Arrays.deepEquals(array1, array2); // true (compares content recursively)
 
 ---
 
-### Q75: What's the difference between bottom-up and top-down module migration?
+### Q74: What's the difference between bottom-up and top-down module migration?
 **Answer:**
 - **Bottom-up**: Convert leaf dependencies first, work up to main app
   - ✅ Guaranteed to work, clear dependencies
@@ -2117,7 +2092,7 @@ Arrays.deepEquals(array1, array2); // true (compares content recursively)
 
 ---
 
-### Q76: What's the difference between exports and opens in module declarations?
+### Q75: What's the difference between exports and opens in module declarations?
 **Answer:**
 - **exports**: Makes packages visible for normal access (public API)
 - **opens**: Allows deep reflection access to private members (for frameworks)
