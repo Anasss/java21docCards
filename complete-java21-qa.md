@@ -1638,3 +1638,145 @@ while ((count = reader.read(buffer)) != -1) {
 - ❌ Forgetting that PrintStream doesn't throw checked exceptions
 - ❌ Not specifying encoding for InputStreamReader/OutputStreamWriter
 - ❌ Using `write(buffer)` instead of `write(buffer, 0, count)`
+
+---
+
+### Q68: What are the key concepts of file paths and the java.io.File class?
+
+**Answer:**
+
+**Path Types:**
+
+**1. Absolute Path:**
+- Starts with **root component**
+- Windows: `C:\temp\file.txt`
+- Unix/Linux: `/home/user/file.txt`
+- Complete path from root to file
+
+**2. Relative Path:**
+- Does NOT start with root component
+- Examples: `docs/file.txt`, `../parent/file.txt`
+- Resolved against **current directory** to get absolute path
+
+**3. Canonical Path:**
+- An absolute path with **no redundant fragments**
+- Removes `.` (current dir) and `..` (parent dir)
+
+**Examples:**
+```java
+// Absolute but NOT canonical:
+"C:\temp\a\..\test.txt"
+
+// Canonical (absolute + no redundancy):
+"C:\temp\test.txt"
+```
+
+**File Object Representation:**
+
+**Key Concept:** A `File` object can represent either a **file** or a **directory**
+```java
+File file1 = new File("C:\\temp\\test.txt");      // File
+File file2 = new File("C:\\temp");                // Directory
+File file3 = new File("docs/report.pdf");         // Relative path
+```
+
+**Important File Methods:**
+
+| Method | Return Type | Purpose |
+|--------|-------------|---------|
+| `renameTo(File dest)` | boolean | Rename/move file |
+| `delete()` | boolean | Delete file/directory |
+| `list()` | String[] | List contents (if directory) |
+| `getAbsolutePath()` | String | Get absolute path |
+| `getCanonicalPath()` | String | Get canonical path (throws IOException) |
+
+**Example:**
+```java
+File file = new File("../temp/test.txt");
+String absolute = file.getAbsolutePath();    // Might be: C:\current\..\temp\test.txt
+String canonical = file.getCanonicalPath();  // Would be: C:\temp\test.txt
+```
+
+**Platform-Independent Path Separators:**
+
+**Two Constants:**
+
+1. **`File.separatorChar`** (char):
+   - Windows: `'\'` (backslash)
+   - Unix/Linux: `'/'` (forward slash)
+
+2. **`File.separator`** (String):
+   - String version of separatorChar
+   - Windows: `"\"`
+   - Unix/Linux: `"/"`
+
+**Platform-Independent Code:**
+```java
+// ❌ Hard-coded (Windows only):
+String path = "temp\\a\\file.txt";
+
+// ❌ Hard-coded (Unix only):
+String path = "temp/a/file.txt";
+
+// ✅ Platform-independent:
+String path = "temp" + File.separator + "a" + File.separator + "file.txt";
+// Windows: "temp\a\file.txt"
+// Unix: "temp/a/file.txt"
+```
+
+**File Property Methods:**
+
+**Inquiry Methods:**
+```java
+File file = new File("C:\\temp");
+
+boolean isDir = file.isDirectory();    // Is it a directory?
+boolean isFile = file.isFile();        // Is it a regular file?
+boolean hidden = file.isHidden();      // Is it hidden?
+long modified = file.lastModified();   // Last modified timestamp (milliseconds)
+boolean exists = file.exists();        // Does it exist?
+long size = file.length();             // File size in bytes
+```
+
+**Example Usage:**
+```java
+File dir = new File("C:\\temp");
+
+if (dir.isDirectory()) {
+    String[] files = dir.list();  // Get all files/directories
+    for (String filename : files) {
+        File f = new File(dir, filename);
+        System.out.println(filename + " - " + 
+            (f.isFile() ? "File" : "Directory"));
+    }
+}
+```
+
+**Key Differences:**
+
+| Feature | getAbsolutePath() | getCanonicalPath() |
+|---------|-------------------|-------------------|
+| Throws exception? | No | Yes (IOException) |
+| Resolves `.` and `..`? | No | Yes |
+| Result | May contain redundancy | Clean, normalized path |
+| Example | `C:\temp\..\docs\file.txt` | `C:\docs\file.txt` |
+
+**Important Notes:**
+
+1. **File operations require absolute paths** - relative paths are resolved against current directory
+2. **File object doesn't require file to exist** - can create File object for non-existent file
+3. **Platform independence** - always use `File.separator` for cross-platform code
+4. **Directory vs File** - same File class represents both; use `isDirectory()` / `isFile()` to distinguish
+
+**Common Pattern:**
+```java
+File file = new File("test.txt");
+if (file.exists()) {
+    if (file.isFile()) {
+        System.out.println("Size: " + file.length() + " bytes");
+        System.out.println("Path: " + file.getCanonicalPath());
+    } else if (file.isDirectory()) {
+        System.out.println("Contents: " + file.list().length + " items");
+    }
+}
+```
