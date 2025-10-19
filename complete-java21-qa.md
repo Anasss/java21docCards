@@ -1780,3 +1780,445 @@ if (file.exists()) {
     }
 }
 ```
+
+---
+
+### Q69: What is the java.nio.file package and what are its key interfaces and classes?
+
+**Answer:**
+
+**Overview:**
+The `java.nio.file` package provides more comprehensive and platform-independent file system access than `java.io.File`.
+
+**Key Interfaces:**
+
+**Path Interface:**
+- Represents a file or directory path
+- Cannot be instantiated directly (no public implementing class)
+- Create using: `Path.of(String first, String... more)`
+
+**OpenOption Interface:**
+- Marker interface for file opening modes
+- No values defined in interface itself
+- Values defined in implementing classes
+
+**CopyOption Interface:**
+- Marker interface for copy operations
+- Values defined in implementing classes
+
+**Key Classes:**
+
+| Class | Type | Purpose |
+|-------|------|---------|
+| `FileSystems` | Static utility | Factory for file system objects |
+| `FileSystem` | Instance class | Interface to file system, creates Path objects |
+| `Paths` | Static utility | **Deprecated** - use `Path.of()` instead |
+| `Files` | Static utility | Operations on files/directories |
+
+**Enums (Options):**
+
+**StandardOpenOption (implements OpenOption):**
+```java
+READ, WRITE, APPEND, TRUNCATE_EXISTING, CREATE, CREATE_NEW,
+DELETE_ON_CLOSE, DSYNC, SYNC, SPARSE
+```
+
+**StandardCopyOption (implements CopyOption):**
+```java
+ATOMIC_MOVE, COPY_ATTRIBUTES, REPLACE_EXISTING
+```
+
+**LinkOption (implements both OpenOption and CopyOption):**
+```java
+NOFOLLOW_LINKS  // Don't follow symbolic links
+```
+
+---
+
+### Q70: What are the important Path methods and how do they work?
+
+**Answer:**
+
+**Path Creation:**
+```java
+// Static factory method (preferred):
+Path path = Path.of("./files");
+Path path2 = Path.of("C:", "temp", "file.txt");
+
+// Via FileSystem (alternative):
+FileSystem fs = FileSystems.getDefault();
+Path path3 = fs.getPath("temp", "file.txt");
+```
+
+**Path Information Methods:**
+
+**getName(int index)** - Get name element at index:
+```java
+Path p = Path.of("temp/docs/file.txt");
+p.getName(0);  // "temp"
+p.getName(1);  // "docs"
+p.getName(2);  // "file.txt"
+```
+
+**getFileName()** - Get file/directory name:
+```java
+Path.of("./files").getFileName();  // "files"
+Path.of("C:/temp/test.txt").getFileName();  // "test.txt"
+```
+
+**getParent()** - Get parent directory:
+```java
+Path.of("C:/temp/docs/file.txt").getParent();  // "C:/temp/docs"
+```
+
+**getRoot()** - Get root component:
+```java
+Path.of("C:/temp/file.txt").getRoot();  // "C:/"
+Path.of("./files").getRoot();  // null (relative path)
+```
+
+**subpath(int begin, int end)** - Extract portion of path:
+```java
+Path p = Path.of("temp/docs/files/test.txt");
+p.subpath(1, 3);  // "docs/files"
+```
+
+**Path Conversion Methods:**
+
+**toAbsolutePath()** - Convert to absolute:
+```java
+Path relative = Path.of("./files");
+Path absolute = relative.toAbsolutePath();
+// If run from C:/temp: "C:/temp/./files"
+```
+
+**normalize()** - Remove redundancy:
+```java
+Path messy = Path.of("C:/temp/./docs/../files");
+Path clean = messy.normalize();  // "C:/temp/files"
+```
+
+**toRealPath()** - Get canonical path (checks file exists):
+```java
+Path p = Path.of("./files");
+Path real = p.toRealPath();  // Throws NoSuchFileException if doesn't exist
+```
+
+**toFile()** - Convert to java.io.File:
+```java
+Path p = Path.of("C:/temp/file.txt");
+File f = p.toFile();
+```
+
+---
+
+### Q71: How do resolve(), resolveSibling(), and relativize() work with Paths?
+
+**Answer:**
+
+**resolve(Path other) - Combine paths:**
+
+**Rules:**
+- If `other` is absolute → returns `other` (absolute wins)
+- If `other` is relative → appends to current path
+```java
+Path base = Path.of("C:/temp");
+
+// Relative path - appends:
+Path file1 = base.resolve("docs/file.txt");
+// Result: "C:/temp/docs/file.txt"
+
+// Absolute path - replaces:
+Path file2 = base.resolve(Path.of("D:/data/file.txt"));
+// Result: "D:/data/file.txt"
+```
+
+**resolveSibling(Path other) - Replace last element:**
+
+Replaces the file/directory name with the given path:
+```java
+Path propFile = Path.of("C:/temp/props/values.properties");
+
+// Replace "values.properties" with "dbconnection.properties":
+Path dbFile = propFile.resolveSibling("dbconnection.properties");
+// Result: "C:/temp/props/dbconnection.properties"
+
+// Replace with path:
+Path other = propFile.resolveSibling("../config/app.properties");
+// Result: "C:/temp/props/../config/app.properties"
+```
+
+**relativize(Path other) - Find relative path:**
+
+**Inverse of resolve()** - finds path from current to target:
+```java
+Path base = Path.of("C:/temp");
+Path target = Path.of("C:/temp/docs/file.txt");
+
+// How to get from base to target?
+Path relative = base.relativize(target);
+// Result: "docs/file.txt"
+
+// Verify with resolve:
+base.resolve(relative).equals(target);  // true
+```
+
+**Important:** Both paths must be both absolute or both relative:
+```java
+Path abs = Path.of("C:/temp");
+Path rel = Path.of("docs");
+abs.relativize(rel);  // ❌ IllegalArgumentException
+```
+
+**Complete Example:**
+```java
+Path basePath = Path.of("C:/temp");
+Path propFilePath = basePath.resolve("props/values.properties");
+// propFilePath: "C:/temp/props/values.properties"
+
+Path dbPath = propFilePath.resolveSibling("dbconnection.properties");
+// dbPath: "C:/temp/props/dbconnection.properties"
+
+Path relativeBack = basePath.relativize(propFilePath);
+// relativeBack: "props/values.properties"
+```
+
+---
+
+### Q72: How do you use the Files class to create streams for reading and writing?
+
+**Answer:**
+
+**Pattern:** All Files methods:
+- Start with `new`
+- First parameter is always `Path`
+- Optional: `Charset` and/or `OpenOption...`
+
+**Binary Streams:**
+
+**newInputStream()** - Read bytes:
+```java
+// Default options:
+InputStream is = Files.newInputStream(path);
+
+// With options:
+is = Files.newInputStream(path, StandardOpenOption.READ);
+```
+
+**newOutputStream()** - Write bytes:
+```java
+// Default: CREATE, TRUNCATE_EXISTING:
+OutputStream os = Files.newOutputStream(path);
+
+// Explicit options:
+os = Files.newOutputStream(path, 
+    StandardOpenOption.CREATE, 
+    StandardOpenOption.TRUNCATE_EXISTING);
+```
+
+**Character Streams:**
+
+**newBufferedReader()** - Read characters:
+```java
+// Uses default Charset (UTF-8):
+BufferedReader br = Files.newBufferedReader(path);
+
+// Specify Charset:
+br = Files.newBufferedReader(path, Charset.forName("UTF-8"));
+```
+
+**newBufferedWriter()** - Write characters:
+```java
+// Default Charset:
+BufferedWriter bw = Files.newBufferedWriter(path);
+
+// Specify Charset:
+bw = Files.newBufferedWriter(path, Charset.forName("UTF-8"));
+
+// With OpenOptions:
+bw = Files.newBufferedWriter(path, StandardOpenOption.WRITE);
+
+// Both Charset and Options:
+bw = Files.newBufferedWriter(path, 
+    Charset.forName("UTF-8"), 
+    StandardOpenOption.CREATE);
+```
+
+**Key Points:**
+
+1. **OpenOption is an interface** - values come from `StandardOpenOption` enum
+2. **Default modes vary** by method type
+3. **Character streams** can specify `Charset`
+4. **All throw IOException** - must handle
+
+---
+
+### Q73: How do you read and write files using Files class convenience methods?
+
+**Answer:**
+
+**Reading Binary Data:**
+
+**readAllBytes()** - Read entire file as bytes:
+```java
+byte[] allBytes = Files.readAllBytes(path);
+```
+⚠️ **Memory warning:** Loads entire file into memory
+
+**Writing Binary Data:**
+
+**write(Path, byte[])** - Write bytes to file:
+```java
+Files.write(path, allBytes);
+
+// With options:
+Files.write(path, allBytes, StandardOpenOption.APPEND);
+```
+
+**Reading Text Data:**
+
+**readString()** - Read entire file as String:
+```java
+String data = Files.readString(path);
+
+// With Charset:
+data = Files.readString(path, StandardCharsets.UTF_8);
+```
+
+**readAllLines()** - Read as List of lines:
+```java
+List<String> lines = Files.readAllLines(path);
+
+// With Charset:
+lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+```
+
+**Writing Text Data:**
+
+**writeString()** - Write String to file:
+```java
+String data = "Hello World";
+Files.writeString(path, data);
+
+// With options:
+Files.writeString(path, data, StandardOpenOption.APPEND);
+```
+
+**write(Path, Iterable)** - Write lines to file:
+```java
+List<String> lines = List.of("Line 1", "Line 2", "Line 3");
+Files.write(path, lines);
+
+// With Charset and options:
+Files.write(path, lines, 
+    StandardCharsets.UTF_8, 
+    StandardOpenOption.CREATE);
+```
+
+**Key Characteristics:**
+
+| Method | Returns | Memory | Throws |
+|--------|---------|--------|--------|
+| `readAllBytes()` | byte[] | High | IOException |
+| `readString()` | String | High | IOException |
+| `readAllLines()` | List<String> | High | IOException |
+| `write()` | Path | N/A | IOException |
+
+⚠️ **Warning:** These methods load entire file into memory - not suitable for large files!
+
+---
+
+### Q74: How do you use Stream API with Files for reading lines and directories?
+
+**Answer:**
+
+**Reading Lines as Stream:**
+
+**Files.lines()** - Lazy line reading:
+```java
+// Returns Stream<String>:
+try (Stream<String> lines = Files.lines(path)) {
+    lines.filter(line -> line.contains("important"))
+         .forEach(System.out::println);
+}
+```
+
+**Must use try-with-resources** - Stream holds file handle:
+```java
+// ❌ Wrong - resource leak:
+Stream<String> lines = Files.lines(path);
+lines.forEach(System.out::println);
+
+// ✅ Correct - auto-closes:
+try (Stream<String> lines = Files.lines(path)) {
+    lines.forEach(System.out::println);
+}
+```
+
+**With Charset:**
+```java
+try (Stream<String> lines = Files.lines(path, StandardCharsets.UTF_8)) {
+    long count = lines.count();
+}
+```
+
+**Reading Directory Contents:**
+
+**Files.list()** - List direct children:
+```java
+// Returns Stream<Path>:
+try (Stream<Path> paths = Files.list(dirPath)) {
+    paths.filter(Files::isRegularFile)
+         .forEach(System.out::println);
+}
+```
+
+**Walking Directory Tree:**
+
+**Files.walk()** - Recursive traversal:
+```java
+// Unlimited depth:
+try (Stream<Path> paths = Files.walk(startPath)) {
+    paths.filter(p -> p.toString().endsWith(".txt"))
+         .forEach(System.out::println);
+}
+
+// Limited depth:
+try (Stream<Path> paths = Files.walk(startPath, 2)) {  // Max 2 levels deep
+    paths.forEach(System.out::println);
+}
+
+// With options:
+try (Stream<Path> paths = Files.walk(startPath, 
+                                     Integer.MAX_VALUE,
+                                     FileVisitOption.FOLLOW_LINKS)) {
+    // Process paths
+}
+```
+
+**Key Differences:**
+
+| Method | Purpose | Recursive | Must Close |
+|--------|---------|-----------|------------|
+| `lines()` | Read file lines | N/A | ✅ Yes |
+| `list()` | Directory contents | ❌ No (direct children only) | ✅ Yes |
+| `walk()` | Directory tree | ✅ Yes (configurable depth) | ✅ Yes |
+
+**Best Practices:**
+
+1. **Always use try-with-resources** with these streams
+2. **Process lazily** - don't collect() unless necessary
+3. **Handle IOException** - all throw IOException
+4. **Be careful with walk()** - can be expensive on large trees
+
+**Example combining multiple operations:**
+```java
+try (Stream<Path> paths = Files.walk(Path.of("C:/projects"))) {
+    long javaFileCount = paths
+        .filter(Files::isRegularFile)
+        .filter(p -> p.toString().endsWith(".java"))
+        .count();
+    
+    System.out.println("Java files: " + javaFileCount);
+}
+```
