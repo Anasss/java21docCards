@@ -1517,3 +1517,124 @@ family.ages().put("Dad", 45);  // Compiles but violates immutability intent
 ```
 
 **Best Practice:** Use `Map.copyOf()`, `List.copyOf()`, or `Set.copyOf()` in constructors for true immutability with mutable types.
+
+---
+
+### Q67: What are the key differences between binary streams, character streams, and bridge streams in Java I/O?
+
+**Answer:**
+
+**Binary Streams vs Character Streams:**
+
+**PrintStream (Binary Stream):**
+- Writes **binary data** (bytes) to destination
+- Example: `System.out` (console output)
+- Converts input to bytes using charset/encoding
+- Methods do **NOT throw checked exceptions** (unique feature)
+```java
+PrintStream ps = System.out;
+ps.println("Hello");  // Converts to bytes, no IOException
+```
+
+**Character Streams:**
+- Work with **characters** instead of bytes
+- Examples: `Reader`, `Writer`, `BufferedReader`, `BufferedWriter`
+- Better for text processing
+
+**Bridge Streams:**
+
+**Purpose:** Convert between binary and character streams
+
+**InputStreamReader / OutputStreamWriter:**
+```java
+// Bridge from binary (InputStream) to character (Reader)
+FileInputStream fis = new FileInputStream("file.txt");
+InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+BufferedReader br = new BufferedReader(isr);  // Character stream
+
+// Bridge from character (Writer) to binary (OutputStream)
+FileOutputStream fos = new FileOutputStream("file.txt");
+OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+BufferedWriter bw = new BufferedWriter(osw);  // Character stream
+```
+
+**PrintWriter (Special Case):**
+- Character stream class
+- Creates bridge internally (no manual bridge needed)
+```java
+PrintWriter pw = new PrintWriter("file.txt");  // No bridge needed
+pw.println("Hello");  // Works directly with characters
+```
+
+**Reader.read(char[] buffer) Method:**
+
+**Behavior:**
+- Reads characters equal to (or less than) buffer size
+- Returns number of characters actually read
+- Returns **-1** when end of file reached
+- **Critical:** Buffer may contain leftover data from previous reads
+
+**Standard Pattern:**
+```java
+char[] buffer = new char[1024];
+int count;
+
+while ((count = reader.read(buffer)) != -1) {
+    // Use only 'count' characters, not entire buffer
+    String data = new String(buffer, 0, count);
+    // Process data
+}
+```
+
+**Why this matters:**
+```java
+// ❌ Wrong - may include junk from previous read
+char[] buffer = new char[10];
+reader.read(buffer);  // Reads 5 chars, buffer has 5 leftover
+String wrong = new String(buffer);  // Includes 5 junk chars!
+
+// ✅ Correct - use only what was read
+int count = reader.read(buffer);
+String correct = new String(buffer, 0, count);  // Only 5 chars
+```
+
+**Writer.write(char[] buffer) Methods:**
+
+**Two versions:**
+
+1. **write(char[] buffer)** - writes entire buffer
+```java
+writer.write(buffer);  // Writes ALL characters, including junk
+```
+
+2. **write(char[] buffer, int offset, int length)** - writes specific range
+```java
+int count = reader.read(buffer);
+writer.write(buffer, 0, count);  // ✅ Writes only what was read
+```
+
+**Best Practice Pattern:**
+```java
+char[] buffer = new char[1024];
+int count;
+
+while ((count = reader.read(buffer)) != -1) {
+    writer.write(buffer, 0, count);  // Write only valid data
+}
+```
+
+**Key Takeaways:**
+
+| Stream Type | Handles | Encoding | Checked Exceptions |
+|-------------|---------|----------|-------------------|
+| Binary (InputStream/OutputStream) | Bytes | Manual | Yes (IOException) |
+| Character (Reader/Writer) | Characters | Automatic | Yes (IOException) |
+| PrintStream | Bytes (but looks like characters) | Automatic | **No** |
+| Bridge (InputStreamReader) | Byte→Character conversion | Specified | Yes (IOException) |
+| PrintWriter | Characters | Automatic (bridge internal) | **No** |
+
+**Common Pitfalls:**
+- ❌ Using entire buffer without checking read count
+- ❌ Forgetting that PrintStream doesn't throw checked exceptions
+- ❌ Not specifying encoding for InputStreamReader/OutputStreamWriter
+- ❌ Using `write(buffer)` instead of `write(buffer, 0, count)`
