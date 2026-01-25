@@ -352,8 +352,8 @@
     - "Empty string"
     - "MomSon"
     - "DadMomSon"
-  correct: 2
-  explanation: "dropWhile removes elements from the start while the predicate is true. Prints MomSon."
+  correct: 1
+  explanation: "dropWhile removes elements from the start while the predicate is true. Prints empty string"
   category: "Streams"
 
 - question: "Which value is returned by Arrays.binarySearch when the key is absent?"
